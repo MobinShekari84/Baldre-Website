@@ -1037,6 +1037,7 @@ export const UI_TEXT = {
   fa: {
     brandSubtitle: 'طراحی و معماری روشنایی — تهران',
     nav: {
+      home: 'خانه',
       products: 'محصولات',
       projects: 'پروژه‌ها',
       professionals: 'معماران و متخصصان',
@@ -1195,10 +1196,32 @@ export const UI_TEXT = {
       iesBtn: 'فایل نورسنجی (IES)',
       cadBtn: 'مدل سه‌بعدی (STEP/CAD)',
     },
+    footer: {
+      aboutText:
+        'استودیو طراحی و مهندسی روشنایی بالدر با تلفیق فرم‌های مینیمال، متریال‌های اصیل و تکنولوژی اپتیکال ضد خیرگی، راهکارهای نوری ماندگار برای فضاهای مسکونی لوکس، گالری‌ها و معماری معاصر خلق می‌کند.',
+      quickLinksTitle: 'دسترسی سریع',
+      resourcesTitle: 'کالکشن و منابع فنی',
+      contactTitle: 'اطلاعات تماس',
+      addressLabel: 'آدرس:',
+      addressValue: 'تهران، الهیه، خیابان فرشته، پلاک ۱۴۲، ساختمان آرک، طبقه سوم',
+      phoneLabel: 'تلفن:',
+      phoneValue: '+98 (21) 2620 4800',
+      emailLabel: 'ایمیل:',
+      emailValue: 'info@baldre.ir',
+      copyright: '© ۱۴۰۵ استودیو طراحی و مهندسی روشنایی بالدر — تهران. تمامی حقوق محفوظ است.',
+      resourceLinks: [
+        { label: 'چراغ‌های آویز و خطی', href: '#products' },
+        { label: 'چراغ‌های ایستاده و دیواری', href: '#products' },
+        { label: 'سیستم‌های سقفی و مگنتی ۴۸ ولت', href: '#products' },
+        { label: 'کتابخانه فایل‌های IES و CAD', href: '#professionals' },
+        { label: 'شبیه‌ساز زاویه تابش و کلوین', href: '#professionals' },
+      ],
+    },
   },
   en: {
     brandSubtitle: 'Architectural Lighting Studio — Tehran',
     nav: {
+      home: 'Home',
       products: 'Products',
       projects: 'Projects',
       professionals: 'Professionals',
@@ -1356,6 +1379,27 @@ export const UI_TEXT = {
       manualBtn: 'Installation Manual (PDF)',
       iesBtn: 'Photometric File (.IES)',
       cadBtn: '3D CAD Model (.STEP)',
+    },
+    footer: {
+      aboutText:
+        'Baldre Architectural Lighting Studio blends minimalist form, authentic materials, and glare-free optical engineering to craft timeless illumination for luxury residences, art galleries, and contemporary architecture.',
+      quickLinksTitle: 'Quick Links',
+      resourcesTitle: 'Collections & B2B',
+      contactTitle: 'Contact Details',
+      addressLabel: 'Address:',
+      addressValue: 'Level 3, Ark Building, No. 142 Fereshteh St., Elahiyeh, Tehran',
+      phoneLabel: 'Phone:',
+      phoneValue: '+98 (21) 2620 4800',
+      emailLabel: 'Email:',
+      emailValue: 'info@baldre.ir',
+      copyright: '© 2026 Baldre Architectural Lighting Studio — Tehran. All rights reserved.',
+      resourceLinks: [
+        { label: 'Pendant & Linear Luminaires', href: '#products' },
+        { label: 'Floor & Wall Luminaires', href: '#products' },
+        { label: '48V Magnetic Track Systems', href: '#products' },
+        { label: 'IES & 3D CAD Library', href: '#professionals' },
+        { label: 'Photometric Beam Simulator', href: '#professionals' },
+      ],
     },
   },
 };

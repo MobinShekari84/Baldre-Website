@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import RedirectView
 from catalog.views import (
     HomepageDataAPIView,
     ProductListAPIView,
@@ -14,6 +15,7 @@ admin.site.site_title = "Baldre Lighting Admin"
 admin.site.index_title = "مدیریت کاتالوگ محصولات، پروژه‌های معماری و اخبار"
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='http://localhost:3000', permanent=False), name='root-redirect'),
     path('admin/', admin.site.urls),
     path('api/homepage/', HomepageDataAPIView.as_view(), name='api-homepage'),
     path('api/products/', ProductListAPIView.as_view(), name='api-products'),

@@ -167,8 +167,9 @@ export default function BaldreFlosLightHomePage() {
 
   const ArrowIcon = isFa ? ArrowUpLeft : ArrowUpRight;
 
-  // The exact 6 navbar items requested: products, projects, professionals, about, contact us, showroom
+  // Navbar items: Home + Products, Projects, Professionals, About, Contact Us, Showroom
   const navItems = [
+    { href: '#home', label: t.nav.home },
     { href: '#products', label: t.nav.products },
     { href: '#projects', label: t.nav.projects },
     { href: '#professionals', label: t.nav.professionals },
@@ -198,14 +199,13 @@ export default function BaldreFlosLightHomePage() {
           1. STICKY RECTANGULAR NAVBAR ABOVE HERO SECTION
              - Rectangular outer bar, positioned ABOVE the hero section initially
              - Follows scroll smoothly via sticky top-0
-             - Internal elements keep sleek styling + minimal hover underline animation
-             - Only 6 nav links: Products, Projects, Professionals, About, Contact Us, Showroom
+             - Links: Home, Products, Projects, Professionals, About, Contact Us, Showroom
              - Language switcher button shows ONLY "Fa" and "En"
          ===================================================================== */}
       <header className="sticky top-0 z-40 w-full bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-[#E6E4DF] shadow-[0_4px_24px_rgb(0,0,0,0.03)] transition-all">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
           {/* Brand Wordmark */}
-          <a href="#" className="flex items-center gap-3 group shrink-0">
+          <a href="#home" className="flex items-center gap-3 group shrink-0">
             <span
               dir="ltr"
               className="text-xl sm:text-2xl font-extrabold tracking-[0.2em] text-[#111111]"
@@ -216,7 +216,7 @@ export default function BaldreFlosLightHomePage() {
             <span className="text-base sm:text-lg font-bold text-[#111111]">بالدر</span>
           </a>
 
-          {/* Primary Navigation Links (Only the 6 specified sections) with Minimal Hover Underline Animation */}
+          {/* Primary Navigation Links with Minimal Hover Underline Animation */}
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium text-[#3D3C38]">
             {navItems.map((item) => (
               <a
@@ -229,7 +229,7 @@ export default function BaldreFlosLightHomePage() {
             ))}
           </nav>
 
-          {/* Right/End Actions: Compact "Fa | En" Language Toggle */}
+          {/* Compact "Fa | En" Language Toggle */}
           <div className="flex items-center gap-3 shrink-0">
             <div
               dir="ltr"
@@ -278,10 +278,13 @@ export default function BaldreFlosLightHomePage() {
       </header>
 
       {/* =====================================================================
-          2. FULL-DISPLAY HERO SECTION (Directly Below Navbar)
+          2. FULL-DISPLAY HERO SECTION (#home — Directly Below Navbar)
              - 1 Full-Display Image + 1 Captivating Headline + 1 Short Subtitle
          ===================================================================== */}
-      <section className="relative w-full h-[calc(100vh-5rem)] min-h-[600px] overflow-hidden bg-[#F5F4F0]">
+      <section
+        id="home"
+        className="scroll-mt-20 relative w-full h-[calc(100vh-5rem)] min-h-[600px] overflow-hidden bg-[#F5F4F0]"
+      >
         {/* Full-Display Background Photograph */}
         <AnimatePresence mode="wait">
           <motion.img
@@ -316,7 +319,7 @@ export default function BaldreFlosLightHomePage() {
                   {isFa ? currentSlide.title_fa : currentSlide.title_en}
                 </h1>
 
-                {/* 2. Single Short, Justified Text Underneath */}
+                {/* 2. Single Short, Justified Text Underneath (Kept only in Hero Section) */}
                 <p className="text-sm sm:text-base lg:text-lg text-[#F5F4F0]/90 leading-[1.85] text-justify mb-8 max-w-xl font-light">
                   {isFa ? currentSlide.subtitle_fa : currentSlide.subtitle_en}
                 </p>
@@ -387,23 +390,16 @@ export default function BaldreFlosLightHomePage() {
           - Part B: Signature Flos Studio Product Cards (with Modal Datasheet)
           - Part C: Explore by Architectural Space (Dining, Living, Bedroom)
          ===================================================================== */}
-      <section id="products" className="scroll-mt-20 py-16 lg:py-24 bg-[#FFFFFF] border-b border-[#E6E4DF]">
+      <section
+        id="products"
+        className="scroll-mt-20 py-16 lg:py-24 bg-[#FFFFFF] border-b border-[#E6E4DF]"
+      >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
-          {/* Part A: 6-Column Category Strip */}
+          {/* Part A: 6-Column Category Strip (Title only — no eyebrow, no description) */}
           <div className="mb-20">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                  {t.categoryStrip.eyebrow}
-                </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight">
-                  {t.categoryStrip.title}
-                </h2>
-              </div>
-              <p className="text-sm text-[#686662] max-w-md text-justify leading-relaxed">
-                {t.categoryStrip.subtitle}
-              </p>
-            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight mb-10">
+              {t.categoryStrip.title}
+            </h2>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
               {FLOS_CATEGORY_STRIP.map((cat) => {
@@ -447,20 +443,12 @@ export default function BaldreFlosLightHomePage() {
             </div>
           </div>
 
-          {/* Part B: Flagship Studio Product Collection */}
+          {/* Part B: Flagship Studio Product Collection (Title + Filter pills only) */}
           <div className="mb-24">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 pb-8 border-b border-[#E6E4DF]">
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                  {t.productsSection.eyebrow}
-                </span>
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight mb-3">
-                  {t.productsSection.title}
-                </h3>
-                <p className="text-sm text-[#686662] max-w-2xl leading-relaxed text-justify">
-                  {t.productsSection.subtitle}
-                </p>
-              </div>
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12 pb-8 border-b border-[#E6E4DF]">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight">
+                {t.productsSection.title}
+              </h3>
 
               {/* Soft Rounded Filter Pills */}
               <div className="flex flex-wrap items-center gap-2">
@@ -615,20 +603,12 @@ export default function BaldreFlosLightHomePage() {
             </div>
           </div>
 
-          {/* Part C: Explore by Architectural Space (Dining, Living, Bedroom) */}
+          {/* Part C: Explore by Architectural Space (Title + Room Tabs only) */}
           <div className="pt-8 border-t border-[#E6E4DF]">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                  {t.roomsSection.eyebrow}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight mb-2">
-                  {t.roomsSection.title}
-                </h3>
-                <p className="text-sm text-[#686662] max-w-2xl text-justify leading-relaxed">
-                  {t.roomsSection.subtitle}
-                </p>
-              </div>
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight">
+                {t.roomsSection.title}
+              </h3>
 
               <div className="flex flex-wrap items-center gap-2">
                 {FLOS_ROOMS.map((room) => (
@@ -671,9 +651,6 @@ export default function BaldreFlosLightHomePage() {
 
               <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between bg-[#FFFFFF]">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#9E7B4F] block mb-2">
-                    {isFa ? currentRoom.name_fa : currentRoom.name_en}
-                  </span>
                   <h4 className="text-xl sm:text-2xl font-bold text-[#111111] mb-4">
                     {isFa ? currentRoom.caption_fa : currentRoom.caption_en}
                   </h4>
@@ -730,23 +707,16 @@ export default function BaldreFlosLightHomePage() {
 
       {/* =====================================================================
           SECTION 2: PROJECTS (#projects)
-          - Selected Architectural Commissions in Tehran & Lavasan
+          - Selected Architectural Commissions in Tehran & Lavasan (Title only)
          ===================================================================== */}
-      <section id="projects" className="scroll-mt-20 py-16 lg:py-24 bg-[#F5F4F0] border-b border-[#E6E4DF]">
+      <section
+        id="projects"
+        className="scroll-mt-20 py-16 lg:py-24 bg-[#F5F4F0] border-b border-[#E6E4DF]"
+      >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                {t.projectsSection.eyebrow}
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight">
-                {t.projectsSection.title}
-              </h2>
-            </div>
-            <p className="text-sm text-[#686662] max-w-md text-justify leading-relaxed">
-              {t.projectsSection.subtitle}
-            </p>
-          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight mb-12">
+            {t.projectsSection.title}
+          </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
             {data.projects.map((project) => (
@@ -813,20 +783,15 @@ export default function BaldreFlosLightHomePage() {
           - Part A: B2B Specification Hub (.IES / .STEP / Master Monograph)
           - Part B: Interactive Goniophotometric Beam Angle & Kelvin Simulator
          ===================================================================== */}
-      <section id="professionals" className="scroll-mt-20 py-16 lg:py-24 bg-[#FFFFFF] border-b border-[#E6E4DF]">
+      <section
+        id="professionals"
+        className="scroll-mt-20 py-16 lg:py-24 bg-[#FFFFFF] border-b border-[#E6E4DF]"
+      >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
-          {/* Part A: B2B Download Cards */}
-          <div className="max-w-2xl mb-12">
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-              {t.professionalsSection.eyebrow}
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight mb-3">
-              {t.professionalsSection.title}
-            </h2>
-            <p className="text-sm text-[#55534E] leading-relaxed text-justify">
-              {t.professionalsSection.subtitle}
-            </p>
-          </div>
+          {/* Part A: B2B Download Cards (Title only) */}
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight mb-10">
+            {t.professionalsSection.title}
+          </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
             {t.professionalsSection.cards.map((card, i) => (
@@ -873,19 +838,13 @@ export default function BaldreFlosLightHomePage() {
             ))}
           </div>
 
-          {/* Part B: Interactive Photometric Beam & Kelvin Lab */}
+          {/* Part B: Interactive Photometric Beam & Kelvin Lab (Title only) */}
           <div className="rounded-3xl bg-[#F5F4F0] border border-[#E6E4DF] p-6 sm:p-10 lg:p-14">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               <div className="lg:col-span-6">
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                  {t.opticsSection.eyebrow}
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight mb-4">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#111111] tracking-tight mb-6">
                   {t.opticsSection.title}
                 </h3>
-                <p className="text-sm text-[#55534E] leading-relaxed text-justify mb-8">
-                  {t.opticsSection.subtitle}
-                </p>
 
                 {/* Beam Angle Selector */}
                 <div className="mb-5 bg-[#FFFFFF] p-5 rounded-2xl border border-[#E6E4DF]">
@@ -1085,15 +1044,15 @@ export default function BaldreFlosLightHomePage() {
           - About Baldre Lighting Philosophy + 4 Key Engineering Pillars
           - "A Culture of Light" Editorial Essays & Research
          ===================================================================== */}
-      <section id="about" className="scroll-mt-20 py-16 lg:py-24 bg-[#F5F4F0] border-b border-[#E6E4DF]">
+      <section
+        id="about"
+        className="scroll-mt-20 py-16 lg:py-24 bg-[#F5F4F0] border-b border-[#E6E4DF]"
+      >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
-          {/* Split About Showcase */}
+          {/* Split About Showcase (No eyebrow) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 rounded-3xl overflow-hidden border border-[#E6E4DF] bg-[#EFECE6] mb-20">
             <div className="lg:col-span-6 p-8 sm:p-12 lg:p-16 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-3">
-                  {t.aboutSection.eyebrow}
-                </span>
                 <h2 className="text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#111111] leading-[1.3] mb-5">
                   {t.aboutSection.title}
                 </h2>
@@ -1175,16 +1134,11 @@ export default function BaldreFlosLightHomePage() {
             </div>
           </div>
 
-          {/* Culture of Light Editorial Cards inside About Section */}
+          {/* Culture of Light Editorial Cards inside About Section (Title only) */}
           <div>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#111111]">
-                {t.aboutSection.cultureTitle}
-              </h3>
-              <p className="text-sm text-[#686662] max-w-md text-justify">
-                {t.aboutSection.cultureSubtitle}
-              </p>
-            </div>
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#111111] mb-10">
+              {t.aboutSection.cultureTitle}
+            </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
               {data.news.map((item) => (
@@ -1223,25 +1177,20 @@ export default function BaldreFlosLightHomePage() {
 
       {/* =====================================================================
           SECTION 5: SHOWROOM (#showroom)
-          - Dedicated Tehran Flagship Showroom on Fereshteh St.
+          - Dedicated Tehran Flagship Showroom on Fereshteh St. (Title only)
          ===================================================================== */}
-      <section id="showroom" className="scroll-mt-20 py-16 lg:py-24 bg-[#FFFFFF] border-b border-[#E6E4DF]">
+      <section
+        id="showroom"
+        className="scroll-mt-20 py-16 lg:py-24 bg-[#FFFFFF] border-b border-[#E6E4DF]"
+      >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                {t.showroomSection.eyebrow}
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight mb-3">
-                {t.showroomSection.title}
-              </h2>
-              <p className="text-sm text-[#55534E] max-w-2xl leading-relaxed text-justify">
-                {t.showroomSection.subtitle}
-              </p>
-            </div>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111111] tracking-tight">
+              {t.showroomSection.title}
+            </h2>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#111111] text-[#FFFFFF] hover:bg-[#2B2B2B] transition-colors text-xs sm:text-sm font-semibold shrink-0 self-start lg:self-end"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#111111] text-[#FFFFFF] hover:bg-[#2B2B2B] transition-colors text-xs sm:text-sm font-semibold shrink-0 self-start lg:self-auto"
             >
               <span>{t.showroomSection.bookBtn}</span>
               <ArrowIcon className="w-4 h-4" />
@@ -1306,23 +1255,20 @@ export default function BaldreFlosLightHomePage() {
 
       {/* =====================================================================
           SECTION 6: CONTACT US (#contact)
-          - Direct Engineering & Sales Desk + Project Consultation Form
+          - Direct Engineering & Sales Desk + Project Consultation Form (Title only)
          ===================================================================== */}
-      <section id="contact" className="scroll-mt-20 py-16 lg:py-24 bg-[#F5F4F0] border-b border-[#E6E4DF]">
+      <section
+        id="contact"
+        className="scroll-mt-20 py-16 lg:py-24 bg-[#F5F4F0] border-b border-[#E6E4DF]"
+      >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Direct Contact Channels (5 cols) */}
             <div className="lg:col-span-5 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#686662] block mb-2">
-                  {t.contactSection.eyebrow}
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-bold text-[#111111] mb-4 leading-snug">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#111111] mb-8 leading-snug">
                   {t.contactSection.title}
                 </h2>
-                <p className="text-sm text-[#55534E] leading-relaxed text-justify mb-8">
-                  {t.contactSection.subtitle}
-                </p>
 
                 <div className="space-y-4 bg-[#FFFFFF] p-6 sm:p-8 rounded-3xl border border-[#E6E4DF]">
                   <div className="flex items-start gap-3.5">
@@ -1472,38 +1418,126 @@ export default function BaldreFlosLightHomePage() {
       </section>
 
       {/* =====================================================================
-          MINIMALIST FLOS-STYLE GALLERY FOOTER (#FFFFFF)
+          MINIMALIST ARCHITECTURAL FOOTER (#FFFFFF)
+          - Brief About, Navigation Links, Collection Links, Address, Phone & Email
          ===================================================================== */}
-      <footer className="bg-[#FFFFFF] py-12 px-4 sm:px-8 lg:px-14 text-xs text-[#686662]">
-        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span dir="ltr" className="font-extrabold tracking-[0.22em] text-[#111111] text-sm">
-              BALDRE
-            </span>
-            <span>•</span>
-            <span>
-              {isFa
-                ? '© ۱۴۰۵ استودیو طراحی و مهندسی روشنایی بالدر — تهران. تمامی حقوق محفوظ است.'
-                : '© 2026 Baldre Architectural Lighting Studio — Tehran. All rights reserved.'}
-            </span>
+      <footer className="bg-[#FFFFFF] border-t border-[#E6E4DF] pt-16 pb-10 px-4 sm:px-8 lg:px-14 text-xs text-[#686662]">
+        <div className="max-w-[1440px] mx-auto">
+          {/* Top 4-Column Minimalist Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#E6E4DF]">
+            {/* Col 1: Brand & Brief About (4 cols) */}
+            <div className="lg:col-span-4 space-y-4">
+              <a href="#home" className="inline-flex flex-col leading-none">
+                <span
+                  dir="ltr"
+                  className="text-xl font-extrabold tracking-[0.24em] text-[#111111]"
+                >
+                  BALDRE
+                </span>
+                <span className="text-[11px] text-[#686662] mt-1.5 font-medium">
+                  {t.brandSubtitle}
+                </span>
+              </a>
+              <p className="text-xs text-[#55534E] leading-[1.9] text-justify max-w-sm">
+                {t.footer.aboutText}
+              </p>
+            </div>
+
+            {/* Col 2: Quick Navigation Links (2 cols) */}
+            <div className="lg:col-span-2">
+              <h4 className="text-xs font-bold text-[#111111] mb-4">
+                {t.footer.quickLinksTitle}
+              </h4>
+              <ul className="space-y-2.5">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      className="text-xs text-[#55534E] hover:text-[#111111] transition-colors inline-block"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Col 3: Collections & B2B Links (3 cols) */}
+            <div className="lg:col-span-3">
+              <h4 className="text-xs font-bold text-[#111111] mb-4">
+                {t.footer.resourcesTitle}
+              </h4>
+              <ul className="space-y-2.5">
+                {t.footer.resourceLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-xs text-[#55534E] hover:text-[#111111] transition-colors inline-block"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Col 4: Contact Info — Address, Phone, Email (3 cols) */}
+            <div className="lg:col-span-3">
+              <h4 className="text-xs font-bold text-[#111111] mb-4">
+                {t.footer.contactTitle}
+              </h4>
+              <ul className="space-y-3.5">
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-[#111111] shrink-0 mt-0.5" />
+                  <p className="text-xs text-[#55534E] leading-relaxed text-justify">
+                    {t.footer.addressValue}
+                  </p>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-[#111111] shrink-0" />
+                  <a
+                    href="tel:+982126204800"
+                    dir="ltr"
+                    className="text-xs font-semibold text-[#111111] hover:text-[#9E7B4F] transition-colors"
+                  >
+                    {t.footer.phoneValue}
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Mail className="w-4 h-4 text-[#111111] shrink-0" />
+                  <a
+                    href="mailto:info@baldre.ir"
+                    dir="ltr"
+                    className="text-xs font-semibold text-[#111111] hover:text-[#9E7B4F] transition-colors"
+                  >
+                    {t.footer.emailValue}
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="flex items-center gap-2" dir="ltr">
-            <button
-              onClick={() => setLang('fa')}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-colors cursor-pointer ${
-                isFa ? 'bg-[#111111] text-[#FFFFFF]' : 'bg-[#F5F4F0] text-[#111111]'
-              }`}
-            >
-              Fa
-            </button>
-            <button
-              onClick={() => setLang('en')}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-colors cursor-pointer ${
-                !isFa ? 'bg-[#111111] text-[#FFFFFF]' : 'bg-[#F5F4F0] text-[#111111]'
-              }`}
-            >
-              En
-            </button>
+
+          {/* Bottom Copyright & Language Bar */}
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span>{t.footer.copyright}</span>
+            <div className="flex items-center gap-2" dir="ltr">
+              <button
+                onClick={() => setLang('fa')}
+                className={`px-3 py-1 rounded-full text-xs font-bold transition-colors cursor-pointer ${
+                  isFa ? 'bg-[#111111] text-[#FFFFFF]' : 'bg-[#F5F4F0] text-[#111111]'
+                }`}
+              >
+                Fa
+              </button>
+              <button
+                onClick={() => setLang('en')}
+                className={`px-3 py-1 rounded-full text-xs font-bold transition-colors cursor-pointer ${
+                  !isFa ? 'bg-[#111111] text-[#FFFFFF]' : 'bg-[#F5F4F0] text-[#111111]'
+                }`}
+              >
+                En
+              </button>
+            </div>
           </div>
         </div>
       </footer>
