@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2001%20Hairline.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2002%20Thin.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2003%20Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2004%20Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2005%20Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2006%20Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2007%20Heavy.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Yekan Bakh Fa';
+  src: url('/fonts/Yekan%20Bakh%20Fa%2008%20Fat.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  --bg-gallery: #FFFFFF;
+  --bg-stone: #F5F4F0;
+  --bg-travertine: #EFECE6;
+  --text-ink: #111111;
+  --text-muted: #686662;
+  --border-hairline: #E6E4DF;
+  --accent-bronze: #9E7B4F;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #FFFFFF;
+  color: #111111;
+  font-family: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #111111;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-farsi {
+  font-family: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.font-english {
+  font-family: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif !important;
+}
+
+/* Global Justified Text Rule */
+p,
+.text-justify-force {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* Custom subtle Flos gallery scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F4F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #D0CEC7;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #111111;
+}

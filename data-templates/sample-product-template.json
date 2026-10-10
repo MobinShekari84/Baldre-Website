@@ -1,0 +1,86 @@
+{
+  "product": {
+    "identity": {
+      "name_en": "Linear Suspension 01",
+      "name_fa": "چراغ آویز خطی ۰۱",
+      "sku": "BAL-LS-01-BLK",
+      "slug": "linear-suspension-01",
+      "category": "Pendant",
+      "designer_en": "Baldre Studio",
+      "designer_fa": "استودیو بالدر",
+      "year": 2024,
+      "short_description_en": "A minimalist linear pendant designed for modern workspaces and dining areas.",
+      "short_description_fa": "یک آویز خطی مینیمال طراحی شده برای فضاهای کاری مدرن و اتاق‌های غذاخوری.",
+      "long_description_en": "Crafted from extruded aluminum, the Linear Suspension 01 provides glare-free, uniform downward illumination. Its ultra-slim profile makes it practically invisible from a distance, drawing attention only to the light it casts.",
+      "long_description_fa": "ساخته شده از آلومینیوم اکسترود شده، این چراغ نوری یکنواخت و بدون خیرگی به سمت پایین ارائه می‌دهد. ضخامت بسیار کم آن باعث می‌شود از دور تقریباً نامرئی به نظر برسد و توجهات تنها به نوری که می‌تاباند جلب شود."
+    },
+    
+    "physical_specs": {
+      "materials_en": ["Extruded Aluminum", "Polycarbonate Diffuser"],
+      "materials_fa": ["آلومینیوم اکسترود شده", "دیفیوزر پلی‌کربنات"],
+      "finish_color_en": "Matte Black",
+      "finish_color_fa": "مشکی مات",
+      "dimensions": {
+        "length_mm": 1200,
+        "width_mm": 35,
+        "height_mm": 40
+      },
+      "weight_kg": 2.5,
+      "suspension_cable_max_mm": 2000,
+      "mounting_type_en": "Suspended / Ceiling Rose",
+      "mounting_type_fa": "آویز / رزت سقفی"
+    },
+    
+    "electrical_and_lighting": {
+      "light_source_en": "Integrated LED",
+      "light_source_fa": "ال‌ای‌دی یکپارچه",
+      "wattage_w": 36,
+      "luminous_flux_lm": 3200,
+      "color_temperature_cct_en": "3000K (Warm White)",
+      "color_temperature_cct_fa": "3000K (سفید گرم)",
+      "color_rendering_index_cri": ">95",
+      "beam_angle_degrees": 90,
+      "dimmability_en": "DALI / Push Dim",
+      "dimmability_fa": "دالی / پوش دیم (DALI/Push Dim)",
+      "input_voltage": "220-240V AC",
+      "driver_location_en": "Built into canopy",
+      "driver_location_fa": "تعبیه شده در روزت سقفی"
+    },
+    
+    "compliance": {
+      "ip_rating": "IP20",
+      "insulation_class_en": "Class I",
+      "insulation_class_fa": "کلاس یک",
+      "energy_class": "A+"
+    },
+    
+    "media": {
+      "hero_image_url": "/media/products/bal-ls-01/hero-cutout.png",
+      "gallery_images": [
+        "/media/products/bal-ls-01/lifestyle-dining.jpg",
+        "/media/products/bal-ls-01/lifestyle-office.jpg",
+        "/media/products/bal-ls-01/detail-texture.jpg"
+      ],
+      "dimension_diagram_url": "/media/products/bal-ls-01/diagram.svg"
+    },
+    
+    "professional_downloads": {
+      "data_sheet_pdf": "/media/downloads/bal-ls-01-datasheet.pdf",
+      "installation_manual_pdf_en": "/media/downloads/bal-ls-01-install-en.pdf",
+      "installation_manual_pdf_fa": "/media/downloads/bal-ls-01-install-fa.pdf",
+      "photometric_ies_file": "/media/downloads/bal-ls-01.ies",
+      "cad_3d_file": "/media/downloads/bal-ls-01.step"
+    },
+    
+    "variants": [
+      {
+        "name_en": "Linear Suspension 01 - Matte White",
+        "name_fa": "چراغ آویز خطی ۰۱ - سفید مات",
+        "sku": "BAL-LS-01-WHT",
+        "finish_color_en": "Matte White",
+        "finish_color_fa": "سفید مات",
+        "hero_image_url": "/media/products/bal-ls-01-wht/hero-cutout.png"
+      }
+    ]
+  }
+}
