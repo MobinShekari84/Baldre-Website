@@ -53,3 +53,33 @@
 *   **Executive PDF Reports (`pdf-reports/`):**
     *   `pdf-reports/Baldre_Sitemap_FA.pdf`
     *   `pdf-reports/Baldre_Phases_FA.pdf`
+
+
+---
+
+## 5. راهنمای راه‌اندازی و دپلوی لوکال (Local Deployment Guide)
+
+### ۱) اجرای لوکال فرانت‌اند (Next.js)
+```bash
+cd frontend
+npm install
+# حالت توسعه (Development):
+npm run dev
+# یا حالت پروداکشن لوکال (Production):
+npm run build
+npm run start -- -p 3000
+```
+- مشاهده در مرورگر: `http://localhost:3000`
+
+### ۲) اجرای لوکال بک‌اند و پنل ادمین (Django REST API)
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate   # در ویندوز: .venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_baldre
+python manage.py runserver 127.0.0.1:8000
+```
+- پنل مدیریت جنگو: `http://127.0.0.1:8000/admin/` (نام کاربری: `admin` / رمز عبور: `baldre2026`)
+- آدرس API صفحه اصلی: `http://127.0.0.1:8000/api/homepage/`
