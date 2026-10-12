@@ -71,11 +71,9 @@
 
 :root {
   --bg-gallery: #FFFFFF;
-  --bg-stone: #F5F4F0;
-  --bg-travertine: #EFECE6;
   --text-ink: #111111;
-  --text-muted: #686662;
-  --border-hairline: #E6E4DF;
+  --text-muted: #555555;
+  --border-hairline: #E5E5E5;
   --accent-bronze: #9E7B4F;
 }
 
@@ -122,11 +120,11 @@ p,
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F5F4F0;
+  background: #FFFFFF;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D0CEC7;
-  border-radius: 9999px;
+  background: #CCCCCC;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #111111;
