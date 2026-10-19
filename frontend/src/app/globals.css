@@ -74,7 +74,7 @@
   --text-ink: #111111;
   --text-muted: #555555;
   --border-hairline: #E5E5E5;
-  --accent-bronze: #9E7B4F;
+  --accent-red: #E40521;
 }
 
 html {
@@ -90,6 +90,13 @@ input,
 select,
 textarea {
   font-family: var(--font-yekan-bakh), 'Yekan Bakh Fa', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Eliminate 300ms mobile tap delay and prevent double-tap requirement on touch devices */
+a,
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {

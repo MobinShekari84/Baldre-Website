@@ -72,8 +72,41 @@ class ProductAdmin(admin.ModelAdmin):
 class ArchitecturalProjectAdmin(admin.ModelAdmin):
     list_display = ('code', 'title_fa', 'title_en', 'location_fa', 'architect_fa', 'year', 'order')
     list_editable = ('order',)
-    search_fields = ('title_fa', 'title_en', 'location_fa', 'architect_fa')
+    search_fields = ('code', 'title_fa', 'title_en', 'location_fa', 'architect_fa')
     prepopulated_fields = {'slug': ('title_en',)}
+    fieldsets = (
+        ('۱. مشخصات هویتی و مکانی پروژه (Identity & Location)', {
+            'fields': (
+                ('code', 'slug', 'order'),
+                ('title_fa', 'title_en'),
+                ('location_fa', 'location_en'),
+                ('architect_fa', 'architect_en'),
+                ('sector_fa', 'sector_en', 'year'),
+            )
+        }),
+        ('۲. متن معرفی، چالش معماری و راهکار نورپردازی (Editorial Narrative)', {
+            'fields': (
+                ('summary_fa', 'summary_en'),
+                ('description_fa', 'description_en'),
+                ('challenge_fa', 'challenge_en'),
+                ('solution_fa', 'solution_en'),
+            )
+        }),
+        ('۳. تصاویر، گالری و متریال (Media & Gallery)', {
+            'fields': (
+                'image_url',
+                'gallery_images',
+            ),
+            'description': 'تمام تصاویر باید با فرمت .webp و در پوشه frontend/public/images/ باشند.'
+        }),
+        ('۴. چراغ‌های استفاده‌شده و شاخص‌های فنی (Luminaires & Technical Metrics)', {
+            'fields': (
+                'luminaires_used',
+                'metrics_json',
+            ),
+            'description': 'کدهای SKU چراغ‌های به‌کاررفته در پروژه و شاخص‌های مساحت، CRI، CCT و پروتکل کنترل به صورت JSON.'
+        }),
+    )
 
 
 @admin.register(NewsHighlight)

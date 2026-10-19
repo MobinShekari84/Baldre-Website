@@ -20,6 +20,32 @@ class Category(models.Model):
         return f"{self.name_fa} / {self.name_en}"
 
 
+def default_dimensions():
+    return {"length_mm": 600, "width_mm": 60, "height_mm": 80}
+
+
+def default_materials_fa():
+    return ["برنج برس‌خورده", "آلومینیوم آنودایز", "دیفیوزر اپتیکال"]
+
+
+def default_materials_en():
+    return ["Brushed Brass", "Anodized Aluminum", "Optical Diffuser"]
+
+
+def default_gallery_images():
+    return ["/images/flos-prod-pendant.webp"]
+
+
+def default_professional_downloads():
+    return {
+        "data_sheet_pdf": "/downloads/Baldre-2026-Catalogue.pdf",
+        "installation_manual_pdf_fa": "/downloads/Baldre-2026-Catalogue.pdf",
+        "installation_manual_pdf_en": "/downloads/Baldre-2026-Catalogue.pdf",
+        "photometric_ies_file": "/downloads/BAL-LS-01-Photometric.ies",
+        "cad_3d_file": "/downloads/BAL-LS-01-3DModel.step",
+    }
+
+
 class Product(models.Model):
     # 1. Core Identity & Marketing (Bilingual)
     name_fa = models.CharField(max_length=200)
@@ -27,52 +53,52 @@ class Product(models.Model):
     sku = models.CharField(max_length=60, unique=True)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    designer_fa = models.CharField(max_length=120, default='استودیو طراحی بالدر')
-    designer_en = models.CharField(max_length=120, default='Baldre Design Studio')
+    designer_fa = models.CharField(max_length=120, default='استودیو طراحی بالدر', blank=True)
+    designer_en = models.CharField(max_length=120, default='Baldre Design Studio', blank=True)
     year = models.PositiveIntegerField(default=2026)
     short_description_fa = models.TextField()
     short_description_en = models.TextField()
-    long_description_fa = models.TextField()
-    long_description_en = models.TextField()
+    long_description_fa = models.TextField(blank=True, default='')
+    long_description_en = models.TextField(blank=True, default='')
 
     # 2. Physical & Material Specifications
-    materials_fa = models.JSONField(default=list)
-    materials_en = models.JSONField(default=list)
-    finish_color_fa = models.CharField(max_length=100)
-    finish_color_en = models.CharField(max_length=100)
-    dimensions = models.JSONField(default=dict)  # e.g. {"length_mm": 1200, "width_mm": 35, "height_mm": 40}
+    materials_fa = models.JSONField(default=default_materials_fa, blank=True)
+    materials_en = models.JSONField(default=default_materials_en, blank=True)
+    finish_color_fa = models.CharField(max_length=100, default='برنج شامپاینی و مشکی مات', blank=True)
+    finish_color_en = models.CharField(max_length=100, default='Champagne Brass & Matte Black', blank=True)
+    dimensions = models.JSONField(default=default_dimensions, blank=True)
     weight_kg = models.FloatField(default=2.4)
     suspension_cable_max_mm = models.PositiveIntegerField(default=2000)
-    mounting_type_fa = models.CharField(max_length=120)
-    mounting_type_en = models.CharField(max_length=120)
+    mounting_type_fa = models.CharField(max_length=120, default='سقفی / آویز معماری', blank=True)
+    mounting_type_en = models.CharField(max_length=120, default='Suspended / Surface Mounted', blank=True)
 
     # 3. Electrical & Photometric Specifications
-    light_source_fa = models.CharField(max_length=120, default='ال‌ای‌دی یکپارچه (Integrated LED)')
-    light_source_en = models.CharField(max_length=120, default='Integrated LED')
+    light_source_fa = models.CharField(max_length=120, default='ال‌ای‌دی یکپارچه (Integrated LED)', blank=True)
+    light_source_en = models.CharField(max_length=120, default='Integrated LED', blank=True)
     wattage_w = models.PositiveIntegerField(default=36)
     luminous_flux_lm = models.PositiveIntegerField(default=3200)
-    color_temperature_cct_fa = models.CharField(max_length=100, default='3000K (سفید گرم)')
-    color_temperature_cct_en = models.CharField(max_length=100, default='3000K (Warm White)')
-    color_rendering_index_cri = models.CharField(max_length=30, default='>95')
+    color_temperature_cct_fa = models.CharField(max_length=100, default='3000K (سفید گرم)', blank=True)
+    color_temperature_cct_en = models.CharField(max_length=100, default='3000K (Warm White)', blank=True)
+    color_rendering_index_cri = models.CharField(max_length=30, default='>95', blank=True)
     beam_angle_degrees = models.PositiveIntegerField(default=90)
-    dimmability_fa = models.CharField(max_length=120, default='دالی / پوش دیم (DALI / Push)')
-    dimmability_en = models.CharField(max_length=120, default='DALI / Push Dim')
-    input_voltage = models.CharField(max_length=80, default='220-240V AC')
-    driver_location_fa = models.CharField(max_length=120, default='تعبیه‌شده در رزت سقفی')
-    driver_location_en = models.CharField(max_length=120, default='Built into canopy')
+    dimmability_fa = models.CharField(max_length=120, default='دالی ۲ / پوش دیم (DALI-2 / Push)', blank=True)
+    dimmability_en = models.CharField(max_length=120, default='DALI-2 / Push Dim', blank=True)
+    input_voltage = models.CharField(max_length=80, default='220-240V AC', blank=True)
+    driver_location_fa = models.CharField(max_length=120, default='تعبیه‌شده در رزت سقفی', blank=True)
+    driver_location_en = models.CharField(max_length=120, default='Built into canopy', blank=True)
 
     # 4. Compliance & Environment
-    ip_rating = models.CharField(max_length=30, default='IP20')
-    insulation_class_fa = models.CharField(max_length=60, default='کلاس یک (Class I)')
-    insulation_class_en = models.CharField(max_length=60, default='Class I')
-    energy_class = models.CharField(max_length=20, default='A++')
+    ip_rating = models.CharField(max_length=30, default='IP20', blank=True)
+    insulation_class_fa = models.CharField(max_length=60, default='کلاس یک (Class I)', blank=True)
+    insulation_class_en = models.CharField(max_length=60, default='Class I', blank=True)
+    energy_class = models.CharField(max_length=20, default='A++', blank=True)
 
     # 5. Media & Downloads
-    hero_image_url = models.CharField(max_length=500)
-    gallery_images = models.JSONField(default=list)
-    dimension_diagram_url = models.CharField(max_length=500, default='/diagrams/linear-01-blueprint.svg')
-    professional_downloads = models.JSONField(default=dict)
-    variants = models.JSONField(default=list)
+    hero_image_url = models.CharField(max_length=500, default='/images/flos-prod-pendant.webp')
+    gallery_images = models.JSONField(default=default_gallery_images, blank=True)
+    dimension_diagram_url = models.CharField(max_length=500, default='/diagrams/linear-01.svg', blank=True)
+    professional_downloads = models.JSONField(default=default_professional_downloads, blank=True)
+    variants = models.JSONField(default=list, blank=True)
 
     is_featured = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
@@ -100,7 +126,14 @@ class ArchitecturalProject(models.Model):
     year = models.PositiveIntegerField(default=2026)
     summary_fa = models.TextField()
     summary_en = models.TextField()
+    description_fa = models.TextField(blank=True, default='')
+    description_en = models.TextField(blank=True, default='')
+    challenge_fa = models.TextField(blank=True, default='')
+    challenge_en = models.TextField(blank=True, default='')
+    solution_fa = models.TextField(blank=True, default='')
+    solution_en = models.TextField(blank=True, default='')
     image_url = models.CharField(max_length=500)
+    gallery_images = models.JSONField(default=list, blank=True)
     luminaires_used = models.JSONField(default=list)
     metrics_json = models.JSONField(default=dict)
     order = models.PositiveIntegerField(default=0)

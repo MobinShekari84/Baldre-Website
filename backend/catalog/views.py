@@ -19,7 +19,7 @@ class HomepageDataAPIView(APIView):
     """
     def get(self, request):
         categories = Category.objects.all()
-        products = Product.objects.filter(is_featured=True)
+        products = Product.objects.select_related('category').all()
         projects = ArchitecturalProject.objects.all()
         news = NewsHighlight.objects.all()
 
@@ -60,6 +60,12 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 class ProjectListAPIView(generics.ListAPIView):
     queryset = ArchitecturalProject.objects.all()
     serializer_class = ArchitecturalProjectSerializer
+
+
+class ProjectDetailAPIView(generics.RetrieveAPIView):
+    queryset = ArchitecturalProject.objects.all()
+    serializer_class = ArchitecturalProjectSerializer
+    lookup_field = 'slug'
 
 
 class NewsListAPIView(generics.ListAPIView):

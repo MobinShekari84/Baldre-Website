@@ -21,6 +21,14 @@ export const metadata: Metadata = {
   title: 'BALDRE | بالدر — طراحی و مهندسی روشنایی مدرن تهران',
   description:
     'استودیو طراحی و مهندسی روشنایی بالدر (Baldre Lighting). کلکسیون چراغ‌های دکوراتیو، آویزهای خطی، سیستم‌های مگنتی ۴۸ ولت و چراغ‌های معماری با استاندارد CRI >97.',
+  alternates: {
+    canonical: '/',
+    languages: {
+      'fa-IR': '/',
+      'en-US': '/en',
+      'x-default': '/',
+    },
+  },
 };
 
 export default function RootLayout({

@@ -6,6 +6,7 @@ from catalog.views import (
     ProductListAPIView,
     ProductDetailAPIView,
     ProjectListAPIView,
+    ProjectDetailAPIView,
     NewsListAPIView,
     ConsultationInquiryAPIView,
 )
@@ -21,6 +22,7 @@ urlpatterns = [
     path('api/products/', ProductListAPIView.as_view(), name='api-products'),
     path('api/products/<slug:slug>/', ProductDetailAPIView.as_view(), name='api-product-detail'),
     path('api/projects/', ProjectListAPIView.as_view(), name='api-projects'),
+    path('api/projects/<slug:slug>/', ProjectDetailAPIView.as_view(), name='api-project-detail'),
     path('api/news/', NewsListAPIView.as_view(), name='api-news'),
     path('api/inquiries/', ConsultationInquiryAPIView.as_view(), name='api-inquiries'),
 ]

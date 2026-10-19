@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sun,
@@ -28,11 +30,12 @@ import {
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
 export default function BaldreFlosLightHomePage() {
-  // Bilingual state: Farsi ('fa') default with 1-click toggle to English ('en')
-  const [lang, setLang] = useState<Lang>('fa');
+  const pathname = usePathname();
+  const lang: Lang = pathname?.startsWith('/en') ? 'en' : 'fa';
   const isFa = lang === 'fa';
   const dir = isFa ? 'rtl' : 'ltr';
   const t = UI_TEXT[lang];
+  const productsBase = isFa ? '/products' : '/en/products';
 
   // Track scroll position: transparent navbar over hero at top, white background on scroll
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -151,13 +154,28 @@ export default function BaldreFlosLightHomePage() {
 
   const ArrowIcon = isFa ? ArrowUpLeft : ArrowUpRight;
 
-  // Navbar items including Professionals (معماران و متخصصان)
+  const homeHref = isFa ? '/' : '/en';
+  const projectsHref = isFa ? '/projects' : '/en/projects';
+  const professionalsHref = isFa ? '/professionals' : '/en/professionals';
+  const aboutHref = isFa ? '/about' : '/en/about';
+  const contactHref = isFa ? '/contact' : '/en/contact';
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href === '#home' || href === homeHref) {
+      if (typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '/en')) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
+  // Navbar items linking to dedicated architectural pages (Showroom is housed inside About Us)
   const navItems = [
-    { href: '#products', label: t.nav.products },
-    { href: '#projects', label: t.nav.projects },
-    { href: '#professionals', label: t.nav.professionals },
-    { href: '#about', label: t.nav.about },
-    { href: '#contact', label: t.nav.contact },
+    { href: productsBase, label: t.nav.products },
+    { href: projectsHref, label: t.nav.projects },
+    { href: professionalsHref, label: t.nav.professionals },
+    { href: aboutHref, label: t.nav.about },
+    { href: contactHref, label: t.nav.contact },
   ];
 
   return (
@@ -171,7 +189,7 @@ export default function BaldreFlosLightHomePage() {
             exit={{ opacity: 0, y: 24 }}
             className="fixed bottom-6 start-6 z-50 flex items-center gap-3 bg-black/75 backdrop-blur-md text-[#FFFFFF] px-6 py-4 rounded-none border border-white/20 max-w-md"
           >
-            <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-[#E40521] shrink-0" />
             <p className="text-xs md:text-sm leading-relaxed text-justify">{toastMessage}</p>
           </motion.div>
         )}
@@ -181,8 +199,8 @@ export default function BaldreFlosLightHomePage() {
           FIXED RECTANGULAR NAVBAR (TRANSPARENT AT TOP OVER HERO, WHITE ON SCROLL)
           - At top of page (!isScrolled): transparent background so Hero image shows underneath
           - When scrolling down (isScrolled): pure white background (#FFFFFF/95)
-          - Links: Products, Projects, Professionals, About & Showroom, Contact Us
-          - Language switcher button shows ONLY "Fa" and "En" with sharp corners
+          - Links: Products, Projects, Professionals, About (incorporates Showroom), Contact Us
+          - Language switcher links to "/" (Fa) and "/en" (En) for SEO
          ===================================================================== */}
       <header
         className={`fixed top-0 inset-x-0 z-40 w-full rounded-none transition-all duration-300 ${
@@ -192,48 +210,38 @@ export default function BaldreFlosLightHomePage() {
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Brand Wordmark */}
-          <a href="#home" className="flex items-center gap-3 group shrink-0">
-            <span
-              dir="ltr"
-              className={`text-xl sm:text-2xl font-extrabold tracking-[0.2em] transition-colors duration-300 ${
-                isScrolled ? 'text-[#111111]' : 'text-[#FFFFFF]'
-              }`}
-            >
-              BALDRE
-            </span>
-            <span
-              className={`h-4 w-[1px] transition-colors duration-300 ${
-                isScrolled ? 'bg-[#CCCCCC]' : 'bg-white/40'
-              }`}
+          {/* Official Baldre Red Logo */}
+          <Link
+            href={homeHref}
+            onClick={(e) => handleNavClick(e, '#home')}
+            className="flex items-center group shrink-0 cursor-pointer"
+          >
+            <img
+              src="/images/baldre-logo-red.webp"
+              alt="Baldre Lighting"
+              className="h-7 sm:h-8 w-auto object-contain"
             />
-            <span
-              className={`text-base sm:text-lg font-bold transition-colors duration-300 ${
-                isScrolled ? 'text-[#111111]' : 'text-[#FFFFFF]'
-              }`}
-            >
-              بالدر
-            </span>
-          </a>
+          </Link>
 
-          {/* Primary Navigation Links with Minimal Hover Underline Animation */}
+          {/* Primary Navigation Links with Subtle Red Hover Underline Animation */}
           <nav className="hidden lg:flex items-center gap-8 text-[14px] font-medium">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
-                className={`relative py-1.5 transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:inset-x-0 after:h-[1.5px] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-out ${
+                onClick={(e) => handleNavClick(e, item.href)}
+                className={`relative py-1.5 transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:inset-x-0 after:h-[1.5px] after:bg-[#E40521] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-out cursor-pointer ${
                   isScrolled
-                    ? 'text-[#333333] hover:text-[#111111] after:bg-[#111111]'
-                    : 'text-white/90 hover:text-[#FFFFFF] after:bg-[#FFFFFF]'
+                    ? 'text-[#333333] hover:text-[#111111]'
+                    : 'text-white/90 hover:text-[#FFFFFF]'
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
-          {/* Minimal Transparent Language Toggle ("Fa | En") */}
+          {/* Minimal Transparent Language Toggle ("Fa | En" SEO Route Links) */}
           <div className="flex items-center gap-3 shrink-0">
             <div
               dir="ltr"
@@ -243,9 +251,8 @@ export default function BaldreFlosLightHomePage() {
               role="group"
               aria-label="Language Switcher"
             >
-              <button
-                type="button"
-                onClick={() => setLang('fa')}
+              <Link
+                href="/"
                 className={`px-3.5 py-1.5 rounded-none text-xs font-bold transition-all duration-300 cursor-pointer ${
                   isFa
                     ? isScrolled
@@ -257,10 +264,9 @@ export default function BaldreFlosLightHomePage() {
                 }`}
               >
                 Fa
-              </button>
-              <button
-                type="button"
-                onClick={() => setLang('en')}
+              </Link>
+              <Link
+                href="/en"
                 className={`px-3.5 py-1.5 rounded-none text-xs font-bold transition-all duration-300 cursor-pointer ${
                   !isFa
                     ? isScrolled
@@ -272,8 +278,21 @@ export default function BaldreFlosLightHomePage() {
                 }`}
               >
                 En
-              </button>
+              </Link>
             </div>
+
+            {/* Standardized Navbar CTA Button: "مشاهده کاتالوگ" */}
+            <Link
+              href={productsBase}
+              className={`hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-none text-xs font-semibold transition-colors cursor-pointer ${
+                isScrolled
+                  ? 'bg-[#111111] text-[#FFFFFF] hover:bg-[#E40521]'
+                  : 'bg-white/15 backdrop-blur-xs text-[#FFFFFF] border border-white/25 hover:bg-[#E40521] hover:border-[#E40521]'
+              }`}
+            >
+              <span>{isFa ? 'مشاهده کاتالوگ' : 'View Catalog'}</span>
+              <ArrowIcon className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 
@@ -286,17 +305,18 @@ export default function BaldreFlosLightHomePage() {
           }`}
         >
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
-              className={`relative whitespace-nowrap py-1 after:content-[''] after:absolute after:bottom-0 after:inset-x-0 after:h-[1.5px] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 ${
+              onClick={(e) => handleNavClick(e, item.href)}
+              className={`relative whitespace-nowrap py-1 after:content-[''] after:absolute after:bottom-0 after:inset-x-0 after:h-[1.5px] after:bg-[#E40521] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 cursor-pointer ${
                 isScrolled
-                  ? 'text-[#333333] hover:text-[#111111] after:bg-[#111111]'
-                  : 'text-white/90 hover:text-[#FFFFFF] after:bg-[#FFFFFF]'
+                  ? 'text-[#333333] hover:text-[#111111]'
+                  : 'text-white/90 hover:text-[#FFFFFF]'
               }`}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
       </header>
@@ -338,13 +358,13 @@ export default function BaldreFlosLightHomePage() {
 
             <div className="flex flex-wrap items-center gap-3">
               {/* Transparent Glass CTA Button */}
-              <a
-                href="#products"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-none bg-white/15 backdrop-blur-sm text-[#FFFFFF] hover:bg-white/25 border border-white/35 transition-all text-xs sm:text-sm font-semibold"
+              <Link
+                href={productsBase}
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-none bg-white/15 backdrop-blur-sm text-[#FFFFFF] hover:bg-white/25 border border-white/35 transition-all text-xs sm:text-sm font-semibold cursor-pointer"
               >
                 <span>{t.hero.exploreBtn}</span>
-                <ArrowIcon className="w-4 h-4" />
-              </a>
+                <ArrowIcon className="w-4 h-4 text-[#E40521]" />
+              </Link>
 
               {/* Icon-Only Daylight / Night Toggle (ONLY Sun & Moon Icons) */}
               <div className="inline-flex items-center bg-transparent border border-white/25">
@@ -413,16 +433,19 @@ export default function BaldreFlosLightHomePage() {
                           : 'text-[#666666] hover:text-[#111111] font-medium'
                       }`}
                     >
-                      <span className="text-sm sm:text-base">
-                        {isFa ? cat.name_fa : cat.name_en}
+                      <span className="text-sm sm:text-base flex items-center gap-2.5">
+                        {isSelected && (
+                          <span className="w-1.5 h-1.5 bg-[#E40521] shrink-0" />
+                        )}
+                        <span>{isFa ? cat.name_fa : cat.name_en}</span>
                       </span>
                       <div className="flex items-center gap-2.5 shrink-0">
                         <span dir="ltr" className="text-[11px] text-[#888888]">
                           {cat.count}
                         </span>
                         <ArrowIcon
-                          className={`w-3.5 h-3.5 transition-transform duration-300 ${
-                            isSelected ? 'text-[#111111] scale-110' : 'text-[#BBBBBB]'
+                          className={`w-3.5 h-3.5 text-[#E40521] transition-transform duration-300 ${
+                            isSelected ? 'scale-115 opacity-100' : 'opacity-75'
                           }`}
                         />
                       </div>
@@ -456,22 +479,13 @@ export default function BaldreFlosLightHomePage() {
                   {isFa ? activeCategory.desc_fa : activeCategory.desc_en}
                 </p>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    const matchingProduct =
-                      data.products.find((p) => p.category_slug === activeCategory.filterSlug) ||
-                      data.products[0];
-                    if (matchingProduct) {
-                      setActiveProductModal(matchingProduct);
-                      setModalTab('identity');
-                    }
-                  }}
+                <Link
+                  href={`${productsBase}?category=${activeCategory.filterSlug}`}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-none bg-[#111111] text-[#FFFFFF] hover:bg-[#333333] transition-colors text-xs font-semibold cursor-pointer shrink-0"
                 >
                   <span>{t.categoryStrip.moreProductsBtn}</span>
-                  <ArrowIcon className="w-3.5 h-3.5" />
-                </button>
+                  <ArrowIcon className="w-3.5 h-3.5 text-[#E40521]" />
+                </Link>
               </div>
             </div>
           </div>
@@ -518,7 +532,7 @@ export default function BaldreFlosLightHomePage() {
                 onClick={() => setActiveRoomId(room.id)}
                 className={`pb-2 text-xs sm:text-sm font-semibold transition-all cursor-pointer relative ${
                   activeRoomId === room.id
-                    ? 'text-[#FFFFFF] after:content-[""] after:absolute after:bottom-[-9px] after:inset-x-0 after:h-[2px] after:bg-[#FFFFFF]'
+                    ? 'text-[#FFFFFF] after:content-[""] after:absolute after:bottom-[-9px] after:inset-x-0 after:h-[2px] after:bg-[#E40521]'
                     : 'text-white/65 hover:text-white'
                 }`}
               >
@@ -549,12 +563,9 @@ export default function BaldreFlosLightHomePage() {
 
               <div className="divide-y divide-white/15">
                 {roomProducts.map((prod) => (
-                  <div
+                  <Link
                     key={prod.slug}
-                    onClick={() => {
-                      setActiveProductModal(prod);
-                      setModalTab('identity');
-                    }}
+                    href={`${productsBase}/${prod.slug}`}
                     className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0 bg-transparent hover:opacity-85 transition-opacity cursor-pointer"
                   >
                     <img
@@ -568,15 +579,16 @@ export default function BaldreFlosLightHomePage() {
                         <span dir="ltr" className="text-[11px] text-white/70">
                           {prod.sku}
                         </span>
-                        <span className="text-[11px] text-white/80">
-                          {t.roomsSection.inspectProduct} →
+                        <span className="inline-flex items-center gap-1 text-[11px] text-white/85">
+                          <span>{t.roomsSection.inspectProduct}</span>
+                          <ArrowIcon className="w-3.5 h-3.5 text-[#E40521]" />
                         </span>
                       </div>
                       <div className="text-xs sm:text-sm font-bold text-[#FFFFFF] truncate">
                         {isFa ? prod.identity.name_fa : prod.identity.name_en}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -587,24 +599,35 @@ export default function BaldreFlosLightHomePage() {
       {/* =====================================================================
           SECTION 4 (PURE WHITE #FFFFFF): PROJECTS (#projects)
           - Minimalist Editorial Project Columns with Very Short Text on Pure White
+          - Hovering over a project turns its title red (#E40521)
          ===================================================================== */}
       <section
         id="projects"
         className="scroll-mt-20 py-20 lg:py-28 bg-[#FFFFFF]"
       >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#111111] tracking-tight mb-10">
-            {t.projectsSection.title}
-          </h2>
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#111111] tracking-tight">
+              {t.projectsSection.title}
+            </h2>
+            <Link
+              href={isFa ? '/projects' : '/en/projects'}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors cursor-pointer"
+            >
+              <span>{isFa ? 'مشاهده همه پروژه‌ها' : 'View All Projects'}</span>
+              <ArrowIcon className="w-3.5 h-3.5" />
+            </Link>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {data.projects.map((project) => (
-              <article
+              <Link
                 key={project.slug}
-                className="flex flex-col justify-between group bg-transparent"
+                href={isFa ? `/projects/${project.slug}` : `/en/projects/${project.slug}`}
+                className="flex flex-col justify-between group bg-transparent cursor-pointer"
               >
                 <div>
-                  <div className="aspect-[16/11] bg-[#FFFFFF] overflow-hidden relative mb-4">
+                  <div className="aspect-[16/11] bg-[#F5F4F0] rounded-none overflow-hidden relative mb-4">
                     <img
                       src={project.image_url}
                       alt={isFa ? project.title_fa : project.title_en}
@@ -613,10 +636,13 @@ export default function BaldreFlosLightHomePage() {
                     />
                     <span
                       dir="ltr"
-                      className="absolute top-3 start-3 bg-black/40 backdrop-blur-xs text-[#FFFFFF] text-[11px] font-medium px-2.5 py-0.5 rounded-none border border-white/20"
+                      className="absolute top-3 start-3 bg-black/50 backdrop-blur-xs text-[#FFFFFF] text-[11px] font-medium px-2.5 py-0.5 rounded-none border border-white/20"
                     >
                       {project.code}
                     </span>
+                    <div className="absolute bottom-3 end-3 w-8 h-8 rounded-none bg-white/90 text-[#111111] flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-md">
+                      <ArrowIcon className="w-3.5 h-3.5 text-[#E40521]" />
+                    </div>
                   </div>
 
                   <div>
@@ -624,10 +650,10 @@ export default function BaldreFlosLightHomePage() {
                       {isFa ? project.location_fa : project.location_en} •{' '}
                       {isFa ? project.architect_fa : project.architect_en}
                     </div>
-                    <h3 className="text-base font-bold text-[#111111] mb-1.5">
+                    <h3 className="text-base font-bold text-[#111111] group-hover:text-[#E40521] transition-colors mb-1.5">
                       {isFa ? project.title_fa : project.title_en}
                     </h3>
-                    <p className="text-xs text-[#555555] font-light mb-3">
+                    <p className="text-xs text-[#555555] font-light mb-3 text-justify">
                       {isFa ? project.summary_fa : project.summary_en}
                     </p>
                   </div>
@@ -648,7 +674,7 @@ export default function BaldreFlosLightHomePage() {
                     {project.metrics_json.area_sqm}m²
                   </span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -664,7 +690,7 @@ export default function BaldreFlosLightHomePage() {
         className="scroll-mt-20 relative w-full min-h-screen overflow-hidden bg-[#111111] flex items-end py-20 lg:py-24"
       >
         <img
-          src="/images/baldre-catalogue-spread.jpg"
+          src="/images/baldre-catalogue-spread.webp"
           alt={t.catalogueSection.title}
           loading="lazy"
           className="w-full h-full object-cover absolute inset-0"
@@ -710,7 +736,7 @@ export default function BaldreFlosLightHomePage() {
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-none bg-transparent text-[#FFFFFF] border border-white/30 hover:border-[#FFFFFF] transition-colors text-xs sm:text-sm font-semibold"
               >
                 <span>{t.catalogueSection.viewPdfBtn}</span>
-                <ArrowIcon className="w-4 h-4" />
+                <ArrowIcon className="w-4 h-4 text-[#E40521]" />
               </a>
             </div>
           </div>
@@ -731,7 +757,7 @@ export default function BaldreFlosLightHomePage() {
             {data.news.map((item) => (
               <article
                 key={item.slug}
-                className="group flex flex-col bg-transparent"
+                className="group flex flex-col bg-transparent cursor-pointer"
               >
                 <div className="aspect-[16/10] bg-[#FFFFFF] rounded-none overflow-hidden mb-3.5 relative">
                   <img
@@ -746,7 +772,7 @@ export default function BaldreFlosLightHomePage() {
                   <span>•</span>
                   <span>{isFa ? item.date_fa : item.date_en}</span>
                 </div>
-                <h4 className="text-sm sm:text-base font-bold text-[#111111] group-hover:text-[#9E7B4F] transition-colors mb-1.5">
+                <h4 className="text-sm sm:text-base font-bold text-[#111111] group-hover:text-[#E40521] transition-colors mb-1.5">
                   {isFa ? item.title_fa : item.title_en}
                 </h4>
                 <p className="text-xs text-[#555555] font-light">
@@ -768,7 +794,7 @@ export default function BaldreFlosLightHomePage() {
         className="scroll-mt-20 relative w-full min-h-screen overflow-hidden bg-[#111111] flex items-center py-20 lg:py-28"
       >
         <img
-          src="/images/flos-hero-seki.jpg"
+          src="/images/flos-hero-seki.webp"
           alt={t.aboutSection.title}
           loading="lazy"
           className="w-full h-full object-cover absolute inset-0"
@@ -812,8 +838,20 @@ export default function BaldreFlosLightHomePage() {
                     <div className="text-[11px] text-[#FFFFFF]/75 mb-0.5">
                       {t.contactSection.phoneTitle}
                     </div>
-                    <div dir="ltr" className="text-xs sm:text-sm font-bold text-[#FFFFFF]">
-                      +98 (21) 2620 4800 • +98 (21) 2620 4801
+                    <div dir="ltr" className="text-xs sm:text-sm font-bold text-[#FFFFFF] flex items-center gap-2">
+                      <a
+                        href="tel:+982126204800"
+                        className="hover:text-[#E40521] hover:underline transition-colors"
+                      >
+                        +98 (21) 2620 4800
+                      </a>
+                      <span>•</span>
+                      <a
+                        href="tel:+982126204801"
+                        className="hover:text-[#E40521] hover:underline transition-colors"
+                      >
+                        +98 (21) 2620 4801
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -825,8 +863,20 @@ export default function BaldreFlosLightHomePage() {
                     <div className="text-[11px] text-[#FFFFFF]/75 mb-0.5">
                       {t.contactSection.emailTitle}
                     </div>
-                    <div dir="ltr" className="text-xs sm:text-sm font-bold text-[#FFFFFF]">
-                      info@baldre.ir • projects@baldre.ir
+                    <div dir="ltr" className="text-xs sm:text-sm font-bold text-[#FFFFFF] flex items-center gap-2">
+                      <a
+                        href="mailto:info@baldre.ir"
+                        className="hover:text-[#E40521] hover:underline transition-colors"
+                      >
+                        info@baldre.ir
+                      </a>
+                      <span>•</span>
+                      <a
+                        href="mailto:projects@baldre.ir"
+                        className="hover:text-[#E40521] hover:underline transition-colors"
+                      >
+                        projects@baldre.ir
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -838,9 +888,14 @@ export default function BaldreFlosLightHomePage() {
                     <div className="text-[11px] text-[#FFFFFF]/75 mb-0.5">
                       {t.contactSection.addressTitle}
                     </div>
-                    <p className="text-xs text-[#FFFFFF]/90 leading-relaxed text-justify font-light">
+                    <a
+                      href="https://maps.google.com/?q=Tehran+Elahiyeh+Fereshteh"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#FFFFFF]/90 hover:text-[#E40521] hover:underline leading-relaxed text-justify font-light block transition-colors"
+                    >
                       {t.contactSection.addressText}
-                    </p>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -950,7 +1005,7 @@ export default function BaldreFlosLightHomePage() {
                       ? t.contactSection.formSubmitting
                       : t.contactSection.formSubmit}
                   </span>
-                  <ArrowIcon className="w-4 h-4" />
+                  <ArrowIcon className="w-4 h-4 text-[#E40521]" />
                 </button>
               </form>
             </div>
@@ -968,17 +1023,20 @@ export default function BaldreFlosLightHomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#E5E5E5]">
             {/* Col 1: Brand & Brief About (4 cols) */}
             <div className="lg:col-span-4 space-y-4">
-              <a href="#home" className="inline-flex flex-col leading-none">
-                <span
-                  dir="ltr"
-                  className="text-xl font-extrabold tracking-[0.24em] text-[#111111]"
-                >
-                  BALDRE
-                </span>
-                <span className="text-[11px] text-[#555555] mt-1.5 font-medium">
+              <Link
+                href={homeHref}
+                onClick={(e) => handleNavClick(e, '#home')}
+                className="inline-flex flex-col leading-none cursor-pointer"
+              >
+                <img
+                  src="/images/baldre-logo-red.webp"
+                  alt="Baldre Lighting"
+                  className="h-7 w-auto object-contain self-start"
+                />
+                <span className="text-[11px] text-[#555555] mt-2 font-medium">
                   {t.brandSubtitle}
                 </span>
-              </a>
+              </Link>
               <p className="text-xs text-[#444444] leading-[1.9] text-justify max-w-sm">
                 {t.footer.aboutText}
               </p>
@@ -992,12 +1050,13 @@ export default function BaldreFlosLightHomePage() {
               <ul className="space-y-2.5">
                 {navItems.map((item) => (
                   <li key={item.href}>
-                    <a
+                    <Link
                       href={item.href}
-                      className="text-xs text-[#444444] hover:text-[#111111] transition-colors inline-block"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                      className="text-xs text-[#444444] hover:text-[#E40521] transition-colors inline-block cursor-pointer"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -1011,12 +1070,13 @@ export default function BaldreFlosLightHomePage() {
               <ul className="space-y-2.5">
                 {t.footer.resourceLinks.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
-                      className="text-xs text-[#444444] hover:text-[#111111] transition-colors inline-block"
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="text-xs text-[#444444] hover:text-[#E40521] transition-colors inline-block cursor-pointer"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -1030,16 +1090,21 @@ export default function BaldreFlosLightHomePage() {
               <ul className="space-y-3.5">
                 <li className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-[#111111] shrink-0 mt-0.5" />
-                  <p className="text-xs text-[#444444] leading-relaxed text-justify">
+                  <a
+                    href="https://maps.google.com/?q=Tehran+Elahiyeh+Fereshteh"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[#444444] hover:text-[#E40521] leading-relaxed text-justify transition-colors"
+                  >
                     {t.footer.addressValue}
-                  </p>
+                  </a>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 text-[#111111] shrink-0" />
                   <a
                     href="tel:+982126204800"
                     dir="ltr"
-                    className="text-xs font-semibold text-[#111111] hover:text-[#9E7B4F] transition-colors"
+                    className="text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors"
                   >
                     {t.footer.phoneValue}
                   </a>
@@ -1049,7 +1114,7 @@ export default function BaldreFlosLightHomePage() {
                   <a
                     href="mailto:info@baldre.ir"
                     dir="ltr"
-                    className="text-xs font-semibold text-[#111111] hover:text-[#9E7B4F] transition-colors"
+                    className="text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors"
                   >
                     {t.footer.emailValue}
                   </a>
@@ -1062,8 +1127,8 @@ export default function BaldreFlosLightHomePage() {
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span>{t.footer.copyright}</span>
             <div className="flex items-center gap-2" dir="ltr">
-              <button
-                onClick={() => setLang('fa')}
+              <Link
+                href="/"
                 className={`px-3 py-1 rounded-none border text-xs font-bold transition-colors cursor-pointer ${
                   isFa
                     ? 'bg-[#111111] text-[#FFFFFF] border-[#111111]'
@@ -1071,9 +1136,9 @@ export default function BaldreFlosLightHomePage() {
                 }`}
               >
                 Fa
-              </button>
-              <button
-                onClick={() => setLang('en')}
+              </Link>
+              <Link
+                href="/en"
                 className={`px-3 py-1 rounded-none border text-xs font-bold transition-colors cursor-pointer ${
                   !isFa
                     ? 'bg-[#111111] text-[#FFFFFF] border-[#111111]'
@@ -1081,7 +1146,7 @@ export default function BaldreFlosLightHomePage() {
                 }`}
               >
                 En
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -1179,13 +1244,13 @@ export default function BaldreFlosLightHomePage() {
                         : activeProductModal.identity.long_description_en}
                     </p>
 
-                    {/* Spec Tabs (Minimalist Underline) */}
+                    {/* Spec Tabs (Minimalist Red Underline) */}
                     <div className="flex gap-6 mb-6 border-b border-[#E5E5E5]">
                       <button
                         onClick={() => setModalTab('identity')}
                         className={`pb-3 text-xs font-bold transition-colors cursor-pointer relative ${
                           modalTab === 'identity'
-                            ? 'text-[#111111] after:content-[""] after:absolute after:bottom-[-1px] after:inset-x-0 after:h-[2px] after:bg-[#111111]'
+                            ? 'text-[#111111] after:content-[""] after:absolute after:bottom-[-1px] after:inset-x-0 after:h-[2px] after:bg-[#E40521]'
                             : 'text-[#666666] hover:text-[#111111]'
                         }`}
                       >
@@ -1195,7 +1260,7 @@ export default function BaldreFlosLightHomePage() {
                         onClick={() => setModalTab('electrical')}
                         className={`pb-3 text-xs font-bold transition-colors cursor-pointer relative ${
                           modalTab === 'electrical'
-                            ? 'text-[#111111] after:content-[""] after:absolute after:bottom-[-1px] after:inset-x-0 after:h-[2px] after:bg-[#111111]'
+                            ? 'text-[#111111] after:content-[""] after:absolute after:bottom-[-1px] after:inset-x-0 after:h-[2px] after:bg-[#E40521]'
                             : 'text-[#666666] hover:text-[#111111]'
                         }`}
                       >
@@ -1341,3 +1406,4 @@ export default function BaldreFlosLightHomePage() {
     </div>
   );
 }
+
