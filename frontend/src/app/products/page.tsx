@@ -17,6 +17,8 @@ import {
   Mail,
   Search,
   RotateCcw,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import {
   Lang,
@@ -234,6 +236,58 @@ export default function BaldreProductsCatalogPage() {
     selectedMounting !== 'all' ||
     searchQuery.trim() !== '';
 
+  // =========================================================================
+  // RESPONSIVE PAGINATION (9 products for Laptop/Desktop, 4 for Mobile)
+  // =========================================================================
+  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  // Dynamically set items per page based on viewport (4 on mobile < 768px, 9 on desktop/laptop)
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      if (typeof window !== 'undefined') {
+        const isMobileScreen = window.innerWidth < 768;
+        setItemsPerPage(isMobileScreen ? 4 : 9);
+      }
+    };
+    updateItemsPerPage();
+    window.addEventListener('resize', updateItemsPerPage, { passive: true });
+    return () => window.removeEventListener('resize', updateItemsPerPage);
+  }, []);
+
+  // Reset to page 1 whenever any filter, search query, or itemsPerPage changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    selectedCategory,
+    selectedEnv,
+    selectedCct,
+    selectedControl,
+    selectedMounting,
+    searchQuery,
+    itemsPerPage,
+  ]);
+
+  const totalItems = filteredProducts.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+  const validCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (validCurrentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredProducts, validCurrentPage, itemsPerPage]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setCurrentPage(newPage);
+    if (typeof window !== 'undefined') {
+      const el = document.getElementById('catalog-grid');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const resetAllFilters = () => {
     setSelectedCategory('all');
     setSelectedEnv('all');
@@ -241,9 +295,12 @@ export default function BaldreProductsCatalogPage() {
     setSelectedControl('all');
     setSelectedMounting('all');
     setSearchQuery('');
+    setCurrentPage(1);
   };
 
   const ArrowIcon = isFa ? ArrowUpLeft : ArrowUpRight;
+  const NextChevron = isFa ? ChevronLeft : ChevronRight;
+  const PrevChevron = isFa ? ChevronRight : ChevronLeft;
 
   const projectsHref = isFa ? '/projects' : '/en/projects';
   const professionalsHref = isFa ? '/professionals' : '/en/professionals';
@@ -551,8 +608,21 @@ export default function BaldreProductsCatalogPage() {
           {/* Active Filters & Result Count Bar */}
           <div className="pt-4 pb-10 flex flex-wrap items-center justify-between gap-4 text-xs text-[#666666]">
             <div>
-              <span className="font-bold text-[#111111]">{filteredProducts.length}</span>{' '}
-              <span>{t.productsPage.resultsCountSuffix}</span>
+              {totalItems > 0 ? (
+                <span>
+                  {isFa
+                    ? `نمایش ${(validCurrentPage - 1) * itemsPerPage + 1} تا ${Math.min(
+                        validCurrentPage * itemsPerPage,
+                        totalItems
+                      )} از ${totalItems} محصول`
+                    : `Showing ${(validCurrentPage - 1) * itemsPerPage + 1}–${Math.min(
+                        validCurrentPage * itemsPerPage,
+                        totalItems
+                      )} of ${totalItems} luminaires`}
+                </span>
+              ) : (
+                <span>0 {t.productsPage.resultsCountSuffix}</span>
+              )}
             </div>
 
             {hasActiveFilters && (
@@ -584,7 +654,7 @@ export default function BaldreProductsCatalogPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
-              {filteredProducts.map((product) => {
+              {paginatedProducts.map((product) => {
                 const activeVarIdx = selectedVariants[product.sku] ?? 0;
                 const activeVariant = product.variants[activeVarIdx] || product.variants[0];
                 const primaryImg = activeVariant
@@ -714,6 +784,74 @@ export default function BaldreProductsCatalogPage() {
                   </motion.article>
                 );
               })}
+            </div>
+          )}
+
+          {/* -----------------------------------------------------------------
+              PAGINATION BAR (12 items per page — 1, 2, 3... + Next / Prev Buttons)
+             ----------------------------------------------------------------- */}
+          {totalPages > 1 && (
+            <div className="mt-20 pt-10 border-t border-[#E5E5E5] flex flex-col sm:flex-row items-center justify-between gap-6" dir={dir}>
+              {/* Pagination Info */}
+              <div className="text-xs text-[#666666] font-medium">
+                {isFa
+                  ? `صفحه ${validCurrentPage} از ${totalPages} (مجموع ${totalItems} چراغ معماری)`
+                  : `Page ${validCurrentPage} of ${totalPages} (${totalItems} luminaires)`}
+              </div>
+
+              {/* Pagination Controls */}
+              <div className="flex flex-wrap items-center justify-center gap-1.5" dir="ltr">
+                {/* Previous Page Button */}
+                <button
+                  type="button"
+                  onClick={() => handlePageChange(validCurrentPage - 1)}
+                  disabled={validCurrentPage === 1}
+                  aria-label={isFa ? 'صفحه قبلی' : 'Previous page'}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border transition-all cursor-pointer shrink-0 ${
+                    validCurrentPage === 1
+                      ? 'opacity-35 cursor-not-allowed border-[#E5E5E5] text-[#999999]'
+                      : 'border-[#E5E5E5] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF]'
+                  }`}
+                >
+                  <PrevChevron className="w-3.5 h-3.5" />
+                  <span>{isFa ? 'قبلی' : 'Prev'}</span>
+                </button>
+
+                {/* Numbered Page Buttons: 1, 2, 3... */}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                  const isActive = pageNum === validCurrentPage;
+                  return (
+                    <button
+                      key={pageNum}
+                      type="button"
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`w-9 h-9 flex items-center justify-center rounded-none text-xs font-bold transition-all cursor-pointer shrink-0 ${
+                        isActive
+                          ? 'bg-[#111111] text-[#FFFFFF] border border-[#111111]'
+                          : 'bg-transparent border border-[#E5E5E5] text-[#444444] hover:border-[#111111] hover:text-[#111111]'
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                {/* Next Page Button */}
+                <button
+                  type="button"
+                  onClick={() => handlePageChange(validCurrentPage + 1)}
+                  disabled={validCurrentPage === totalPages}
+                  aria-label={isFa ? 'صفحه بعدی' : 'Next page'}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border transition-all cursor-pointer shrink-0 ${
+                    validCurrentPage === totalPages
+                      ? 'opacity-35 cursor-not-allowed border-[#E5E5E5] text-[#999999]'
+                      : 'border-[#E5E5E5] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF]'
+                  }`}
+                >
+                  <span>{isFa ? 'بعدی' : 'Next'}</span>
+                  <NextChevron className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           )}
         </div>

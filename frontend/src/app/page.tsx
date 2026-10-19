@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,6 +9,8 @@ import {
   Moon,
   ArrowUpLeft,
   ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
   Download,
   CheckCircle2,
   MapPin,
@@ -55,7 +57,7 @@ export default function BaldreFlosLightHomePage() {
   const [activeProductModal, setActiveProductModal] = useState<BaldreProduct | null>(null);
   const [modalTab, setModalTab] = useState<'identity' | 'electrical'>('identity');
 
-  // Flos "Explore the Home / Shop by Space" state
+  // Architectural Spaces ("نور در فضای معماری") Slideshow state
   const [activeRoomId, setActiveRoomId] = useState<string>('dining');
 
   // Showroom Reservation & Contact Form state
@@ -112,7 +114,25 @@ export default function BaldreFlosLightHomePage() {
   const currentSlide = FLOS_HERO_SLIDES[0];
   const activeCategory =
     FLOS_CATEGORY_STRIP.find((c) => c.slug === activeCategorySlug) || FLOS_CATEGORY_STRIP[0];
-  const currentRoom = FLOS_ROOMS.find((r) => r.id === activeRoomId) || FLOS_ROOMS[0];
+
+  const currentRoomIndex = Math.max(0, FLOS_ROOMS.findIndex((r) => r.id === activeRoomId));
+  const currentRoom = FLOS_ROOMS[currentRoomIndex] || FLOS_ROOMS[0];
+
+  const handleNextRoom = useCallback(() => {
+    setActiveRoomId((prevId) => {
+      const idx = FLOS_ROOMS.findIndex((r) => r.id === prevId);
+      const nextIdx = (idx + 1) % FLOS_ROOMS.length;
+      return FLOS_ROOMS[nextIdx].id;
+    });
+  }, []);
+
+  const handlePrevRoom = useCallback(() => {
+    setActiveRoomId((prevId) => {
+      const idx = FLOS_ROOMS.findIndex((r) => r.id === prevId);
+      const prevIdx = (idx - 1 + FLOS_ROOMS.length) % FLOS_ROOMS.length;
+      return FLOS_ROOMS[prevIdx].id;
+    });
+  }, []);
 
   const roomProducts = useMemo(() => {
     return data.products.filter((p) => currentRoom.featured_skus.includes(p.sku));
@@ -153,6 +173,8 @@ export default function BaldreFlosLightHomePage() {
   };
 
   const ArrowIcon = isFa ? ArrowUpLeft : ArrowUpRight;
+  const NextChevron = isFa ? ChevronLeft : ChevronRight;
+  const PrevChevron = isFa ? ChevronRight : ChevronLeft;
 
   const homeHref = isFa ? '/' : '/en';
   const projectsHref = isFa ? '/projects' : '/en/projects';
@@ -493,104 +515,189 @@ export default function BaldreFlosLightHomePage() {
       </section>
 
       {/* =====================================================================
-          SECTION 3 (FULL-SCREEN IMAGE): ARCHITECTURAL SPACE & PROFESSIONALS (#professionals)
-          - Full-Screen Architectural Room Photograph (Dining / Living / Bedroom)
-          - Ultra-Short Text & Transparent Minimalist Luminaires List
+          SECTION 3 (FULL-SCREEN SLIDESHOW): ARCHITECTURAL SPACE (#professionals)
+          - Full-Screen Room Photograph Slideshow ("نور در فضای معماری")
+          - Manual Slideshow with Side & Header Arrows, Room Tabs & Slide Indicators
          ===================================================================== */}
       <section
         id="professionals"
         className="scroll-mt-20 relative w-full min-h-screen overflow-hidden bg-[#111111] flex flex-col justify-between py-20 lg:py-24"
       >
-        {/* Full-Screen Room Photograph */}
+        {/* Full-Screen Room Photograph Slideshow with Cross-Fade */}
         <AnimatePresence mode="wait">
           <motion.img
             key={currentRoom.id}
             src={currentRoom.image_url}
             alt={isFa ? currentRoom.name_fa : currentRoom.name_en}
             loading="lazy"
-            initial={{ opacity: 0.35, scale: 1.03 }}
+            initial={{ opacity: 0.25, scale: 1.04 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0.35 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0.25, scale: 0.98 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="w-full h-full object-cover absolute inset-0"
           />
         </AnimatePresence>
 
         {/* Atmospheric Gradient Scrim over Full-Screen Room Image */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/50 pointer-events-none" />
 
-        {/* Top Bar inside Full-Screen Section: Section Title + Transparent Room Switcher Tabs */}
+        {/* Side Floating Prev & Next Arrows (Desktop) */}
+        <button
+          type="button"
+          onClick={handlePrevRoom}
+          aria-label={isFa ? 'اسلاید قبلی' : 'Previous slide'}
+          className="hidden md:flex absolute top-1/2 -translate-y-1/2 start-4 lg:start-8 z-20 w-11 h-11 items-center justify-center rounded-none bg-black/40 hover:bg-[#E40521] text-white border border-white/20 transition-all cursor-pointer backdrop-blur-xs"
+        >
+          <PrevChevron className="w-5 h-5" />
+        </button>
+        <button
+          type="button"
+          onClick={handleNextRoom}
+          aria-label={isFa ? 'اسلاید بعدی' : 'Next slide'}
+          className="hidden md:flex absolute top-1/2 -translate-y-1/2 end-4 lg:end-8 z-20 w-11 h-11 items-center justify-center rounded-none bg-black/40 hover:bg-[#E40521] text-white border border-white/20 transition-all cursor-pointer backdrop-blur-xs"
+        >
+          <NextChevron className="w-5 h-5" />
+        </button>
+
+        {/* Top Bar inside Full-Screen Section: Section Title + Transparent Room Switcher Tabs + Arrows */}
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <h3 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF] tracking-tight">
-            {t.roomsSection.title}
-          </h3>
+          <div className="flex items-center gap-3.5">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF] tracking-tight">
+              {t.roomsSection.title}
+            </h3>
+            <span dir="ltr" className="text-[11px] font-mono text-white/60 px-2 py-0.5 border border-white/20">
+              0{currentRoomIndex + 1} / 0{FLOS_ROOMS.length}
+            </span>
+          </div>
 
-          <div className="flex flex-wrap items-center gap-6 border-b border-white/20 pb-2">
-            {FLOS_ROOMS.map((room) => (
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 border-b border-white/20 pb-2">
+              {FLOS_ROOMS.map((room, idx) => (
+                <button
+                  key={room.id}
+                  onClick={() => setActiveRoomId(room.id)}
+                  className={`pb-2 text-xs sm:text-sm font-semibold transition-all cursor-pointer relative ${
+                    activeRoomId === room.id
+                      ? 'text-[#FFFFFF] after:content-[""] after:absolute after:bottom-[-9px] after:inset-x-0 after:h-[2px] after:bg-[#E40521]'
+                      : 'text-white/65 hover:text-white'
+                  }`}
+                >
+                  <span className="opacity-45 text-[10px] me-1 font-mono">0{idx + 1}</span>
+                  {isFa ? room.name_fa : room.name_en}
+                </button>
+              ))}
+            </div>
+
+            {/* Prev / Next Header Buttons */}
+            <div className="flex items-center gap-1.5 shrink-0 pb-2">
               <button
-                key={room.id}
-                onClick={() => setActiveRoomId(room.id)}
-                className={`pb-2 text-xs sm:text-sm font-semibold transition-all cursor-pointer relative ${
-                  activeRoomId === room.id
-                    ? 'text-[#FFFFFF] after:content-[""] after:absolute after:bottom-[-9px] after:inset-x-0 after:h-[2px] after:bg-[#E40521]'
-                    : 'text-white/65 hover:text-white'
-                }`}
+                type="button"
+                onClick={handlePrevRoom}
+                aria-label={isFa ? 'اسلاید قبلی' : 'Previous slide'}
+                className="w-8 h-8 flex items-center justify-center rounded-none border border-white/25 bg-black/30 backdrop-blur-xs text-white hover:bg-[#E40521] hover:border-[#E40521] transition-all cursor-pointer"
               >
-                {isFa ? room.name_fa : room.name_en}
+                <PrevChevron className="w-4 h-4" />
               </button>
-            ))}
+              <button
+                type="button"
+                onClick={handleNextRoom}
+                aria-label={isFa ? 'اسلاید بعدی' : 'Next slide'}
+                className="w-8 h-8 flex items-center justify-center rounded-none border border-white/25 bg-black/30 backdrop-blur-xs text-white hover:bg-[#E40521] hover:border-[#E40521] transition-all cursor-pointer"
+              >
+                <NextChevron className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Bottom Content inside Full-Screen Section: Concise Room Caption + Transparent Featured Luminaires */}
-        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 mt-16 lg:mt-32">
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 mt-12 lg:mt-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             {/* Concise Room Narrative (7 cols) */}
             <div className="lg:col-span-7">
-              <h4 className="text-xl sm:text-3xl font-bold text-[#FFFFFF] mb-2 leading-snug">
-                {isFa ? currentRoom.caption_fa : currentRoom.caption_en}
-              </h4>
-              <p className="text-xs sm:text-sm text-[#FFFFFF]/80 font-light">
-                {isFa ? currentRoom.description_fa : currentRoom.description_en}
-              </p>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentRoom.id}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.45 }}
+                >
+                  <h4 className="text-xl sm:text-3xl font-bold text-[#FFFFFF] mb-2 leading-snug">
+                    {isFa ? currentRoom.caption_fa : currentRoom.caption_en}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-[#FFFFFF]/80 font-light max-w-xl">
+                    {isFa ? currentRoom.description_fa : currentRoom.description_en}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Slide Indicator Bars */}
+              <div className="flex items-center gap-2 mt-6">
+                {FLOS_ROOMS.map((room, idx) => (
+                  <button
+                    key={room.id}
+                    type="button"
+                    onClick={() => setActiveRoomId(room.id)}
+                    aria-label={isFa ? room.name_fa : room.name_en}
+                    className={`h-1.5 transition-all duration-300 rounded-none cursor-pointer ${
+                      activeRoomId === room.id
+                        ? 'w-10 bg-[#E40521]'
+                        : 'w-4 bg-white/35 hover:bg-white/70'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Featured Luminaires in this Space (5 cols — Transparent Glass over Image) */}
             <div className="lg:col-span-5 bg-white/10 backdrop-blur-md p-5 rounded-none border border-white/20 text-[#FFFFFF]">
-              <div className="text-[11px] font-bold text-white/75 mb-3 pb-2 border-b border-white/15">
-                {t.roomsSection.featuredInRoom}
+              <div className="text-[11px] font-bold text-white/75 mb-3 pb-2 border-b border-white/15 flex items-center justify-between">
+                <span>{t.roomsSection.featuredInRoom}</span>
+                <span dir="ltr" className="text-[10px] text-white/50 font-mono">
+                  {roomProducts.length} {isFa ? 'چراغ' : 'Luminaires'}
+                </span>
               </div>
 
-              <div className="divide-y divide-white/15">
-                {roomProducts.map((prod) => (
-                  <Link
-                    key={prod.slug}
-                    href={`${productsBase}/${prod.slug}`}
-                    className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0 bg-transparent hover:opacity-85 transition-opacity cursor-pointer"
-                  >
-                    <img
-                      src={prod.media.hero_image_url}
-                      alt={isFa ? prod.identity.name_fa : prod.identity.name_en}
-                      loading="lazy"
-                      className="w-12 h-12 object-cover rounded-none border border-white/20 shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <span dir="ltr" className="text-[11px] text-white/70">
-                          {prod.sku}
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-[11px] text-white/85">
-                          <span>{t.roomsSection.inspectProduct}</span>
-                          <ArrowIcon className="w-3.5 h-3.5 text-[#E40521]" />
-                        </span>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentRoom.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.4 }}
+                  className="divide-y divide-white/15"
+                >
+                  {roomProducts.map((prod) => (
+                    <Link
+                      key={prod.slug}
+                      href={`${productsBase}/${prod.slug}`}
+                      className="flex items-center gap-3.5 py-3 first:pt-0 last:pb-0 bg-transparent hover:opacity-85 transition-opacity cursor-pointer"
+                    >
+                      <img
+                        src={prod.media.hero_image_url}
+                        alt={isFa ? prod.identity.name_fa : prod.identity.name_en}
+                        loading="lazy"
+                        className="w-12 h-12 object-cover rounded-none border border-white/20 shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <span dir="ltr" className="text-[11px] text-white/70">
+                            {prod.sku}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[11px] text-white/85">
+                            <span>{t.roomsSection.inspectProduct}</span>
+                            <ArrowIcon className="w-3.5 h-3.5 text-[#E40521]" />
+                          </span>
+                        </div>
+                        <div className="text-xs sm:text-sm font-bold text-[#FFFFFF] truncate">
+                          {isFa ? prod.identity.name_fa : prod.identity.name_en}
+                        </div>
                       </div>
-                      <div className="text-xs sm:text-sm font-bold text-[#FFFFFF] truncate">
-                        {isFa ? prod.identity.name_fa : prod.identity.name_en}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    </Link>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
