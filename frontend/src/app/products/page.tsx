@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -30,14 +30,26 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreProductsCatalogPage() {
+function ProductsCatalogContent() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const lang: Lang = pathname?.startsWith('/en') ? 'en' : 'fa';
   const isFa = lang === 'fa';
   const dir = isFa ? 'rtl' : 'ltr';
   const t = UI_TEXT[lang];
   const homeHref = isFa ? '/' : '/en';
   const productsBase = isFa ? '/products' : '/en/products';
+
+  // Read URL query parameters (?category=..., ?page=..., etc.)
+  const categoryFromUrl = searchParams?.get('category') || 'all';
+  const pageParam = searchParams?.get('page');
+  const isAllPages = pageParam === 'all';
+  const rawPage = parseInt(pageParam || '1', 10);
+  const urlPage = isNaN(rawPage) || rawPage < 1 ? 1 : rawPage;
+
+  // Selected category is directly driven by the URL parameter
+  const selectedCategory = categoryFromUrl;
 
   // Full 12-product catalog (merging any backend products with the full 12 architectural items)
   const [products, setProducts] = useState<BaldreProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
@@ -51,14 +63,27 @@ export default function BaldreProductsCatalogPage() {
   // =========================================================================
   // MINIMALIST ARCHITECTURAL FILTERS (Flos / Vibia / Davide Groppi Inspired)
   // =========================================================================
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedEnv, setSelectedEnv] = useState<'all' | 'IP20' | 'IP65'>('all');
-  const [selectedCct, setSelectedCct] = useState<'all' | '2700K' | '3000K'>('all');
-  const [selectedControl, setSelectedControl] = useState<'all' | 'dali' | 'dimmer'>('all');
+  const [searchQuery, setSearchQuery] = useState<string>(() => searchParams?.get('q') || '');
+  const [selectedEnv, setSelectedEnv] = useState<'all' | 'IP20' | 'IP65'>(() => {
+    const val = searchParams?.get('env');
+    return val === 'IP20' || val === 'IP65' ? val : 'all';
+  });
+  const [selectedCct, setSelectedCct] = useState<'all' | '2700K' | '3000K'>(() => {
+    const val = searchParams?.get('cct');
+    return val === '2700K' || val === '3000K' ? val : 'all';
+  });
+  const [selectedControl, setSelectedControl] = useState<'all' | 'dali' | 'dimmer'>(() => {
+    const val = searchParams?.get('control');
+    return val === 'dali' || val === 'dimmer' ? val : 'all';
+  });
   const [selectedMounting, setSelectedMounting] = useState<
     'all' | 'suspended' | 'wall-floor' | 'table' | 'track'
-  >('all');
+  >(() => {
+    const val = searchParams?.get('mounting');
+    return ['suspended', 'wall-floor', 'table', 'track'].includes(val || '')
+      ? (val as any)
+      : 'all';
+  });
 
   // Product Technical Datasheet Modal state
   const [activeProductModal, setActiveProductModal] = useState<BaldreProduct | null>(null);
@@ -70,17 +95,6 @@ export default function BaldreProductsCatalogPage() {
     document.documentElement.lang = lang;
     document.documentElement.dir = dir;
   }, [lang, dir]);
-
-  // Read initial ?category=... query parameter if navigated from Homepage
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const catParam = params.get('category');
-      if (catParam && ['pendant', 'sculptural', 'wall-floor', 'magnetic', 'outdoor'].includes(catParam)) {
-        setSelectedCategory(catParam);
-      }
-    }
-  }, []);
 
   // Fetch live product catalog from Django REST API (/api/products/) so Admin edits/additions/deletions work live
   useEffect(() => {
@@ -238,9 +252,9 @@ export default function BaldreProductsCatalogPage() {
 
   // =========================================================================
   // RESPONSIVE PAGINATION (9 products for Laptop/Desktop, 4 for Mobile)
+  // URL-driven so opening in a new tab / sharing keeps all products intact
   // =========================================================================
   const [itemsPerPage, setItemsPerPage] = useState<number>(9);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   // Dynamically set items per page based on viewport (4 on mobile < 768px, 9 on desktop/laptop)
   useEffect(() => {
@@ -255,31 +269,75 @@ export default function BaldreProductsCatalogPage() {
     return () => window.removeEventListener('resize', updateItemsPerPage);
   }, []);
 
-  // Reset to page 1 whenever any filter, search query, or itemsPerPage changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
-    selectedCategory,
-    selectedEnv,
-    selectedCct,
-    selectedControl,
-    selectedMounting,
-    searchQuery,
-    itemsPerPage,
-  ]);
-
   const totalItems = filteredProducts.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
-  const validCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+  const validCurrentPage = Math.min(Math.max(1, urlPage), totalPages);
 
   const paginatedProducts = useMemo(() => {
+    if (isAllPages) {
+      return filteredProducts;
+    }
     const startIndex = (validCurrentPage - 1) * itemsPerPage;
     return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredProducts, validCurrentPage, itemsPerPage]);
+  }, [filteredProducts, validCurrentPage, itemsPerPage, isAllPages]);
 
-  const handlePageChange = (newPage: number) => {
-    if (newPage < 1 || newPage > totalPages) return;
-    setCurrentPage(newPage);
+  // Construct URL preserving existing query filters
+  const buildUrl = (overrides?: {
+    category?: string | null;
+    page?: number | string | null;
+    env?: string;
+    cct?: string;
+    control?: string;
+    mounting?: string;
+    q?: string;
+  }) => {
+    const q = new URLSearchParams();
+
+    // Category
+    const cat =
+      overrides?.category !== undefined
+        ? overrides.category === 'all'
+          ? null
+          : overrides.category
+        : selectedCategory === 'all'
+        ? null
+        : selectedCategory;
+    if (cat) q.set('category', cat);
+
+    // Page: if 'all', set page=all; if number > 1, set page=X; if 1 or null, omitted
+    const pg =
+      overrides?.page !== undefined
+        ? overrides.page
+        : isAllPages
+        ? 'all'
+        : validCurrentPage;
+    if (pg === 'all') {
+      q.set('page', 'all');
+    } else if (pg && Number(pg) > 1) {
+      q.set('page', String(pg));
+    }
+
+    // Secondary filters
+    const envVal = overrides?.env !== undefined ? overrides.env : selectedEnv;
+    if (envVal && envVal !== 'all') q.set('env', envVal);
+
+    const cctVal = overrides?.cct !== undefined ? overrides.cct : selectedCct;
+    if (cctVal && cctVal !== 'all') q.set('cct', cctVal);
+
+    const ctrlVal = overrides?.control !== undefined ? overrides.control : selectedControl;
+    if (ctrlVal && ctrlVal !== 'all') q.set('control', ctrlVal);
+
+    const mountVal = overrides?.mounting !== undefined ? overrides.mounting : selectedMounting;
+    if (mountVal && mountVal !== 'all') q.set('mounting', mountVal);
+
+    const qVal = overrides?.q !== undefined ? overrides.q : searchQuery.trim();
+    if (qVal) q.set('q', qVal);
+
+    const qs = q.toString();
+    return qs ? `${productsBase}?${qs}` : productsBase;
+  };
+
+  const handleScrollToGrid = () => {
     if (typeof window !== 'undefined') {
       const el = document.getElementById('catalog-grid');
       if (el) {
@@ -289,13 +347,12 @@ export default function BaldreProductsCatalogPage() {
   };
 
   const resetAllFilters = () => {
-    setSelectedCategory('all');
     setSelectedEnv('all');
     setSelectedCct('all');
     setSelectedControl('all');
     setSelectedMounting('all');
     setSearchQuery('');
-    setCurrentPage(1);
+    router.push(productsBase, { scroll: false });
   };
 
   const ArrowIcon = isFa ? ArrowUpLeft : ArrowUpRight;
@@ -316,10 +373,14 @@ export default function BaldreProductsCatalogPage() {
     { href: contactHref, label: t.nav.contact, active: false },
   ];
 
-  const faCatalogHref =
-    selectedCategory !== 'all' ? `/products?category=${selectedCategory}` : '/products';
-  const enCatalogHref =
-    selectedCategory !== 'all' ? `/en/products?category=${selectedCategory}` : '/en/products';
+  const faCatalogHref = (() => {
+    const url = buildUrl({});
+    return url.startsWith('/en/products') ? url.replace('/en/products', '/products') : url;
+  })();
+  const enCatalogHref = (() => {
+    const url = buildUrl({});
+    return url.startsWith('/en/products') ? url : url.replace('/products', '/en/products');
+  })();
 
   // Category filter tabs (All + 5 unique categories from FALLBACK_HOMEPAGE_DATA.categories)
   const categoryTabs = [
@@ -455,11 +516,16 @@ export default function BaldreProductsCatalogPage() {
               {categoryTabs.map((tab) => {
                 const isActive = selectedCategory === tab.slug;
                 const count = getCategoryCount(tab.slug);
+                const href = buildUrl({
+                  category: tab.slug === 'all' ? 'all' : tab.slug,
+                  page: null,
+                });
                 return (
-                  <button
+                  <Link
                     key={tab.slug}
-                    type="button"
-                    onClick={() => setSelectedCategory(tab.slug)}
+                    href={href}
+                    scroll={false}
+                    onClick={handleScrollToGrid}
                     className={`relative pb-4 text-xs sm:text-sm whitespace-nowrap transition-colors cursor-pointer flex items-center gap-2 after:content-[''] after:absolute after:bottom-0 after:inset-x-0 after:h-[2px] after:transition-transform after:duration-300 ${
                       isActive
                         ? 'text-[#111111] font-bold after:bg-[#E40521] after:scale-x-100'
@@ -470,7 +536,7 @@ export default function BaldreProductsCatalogPage() {
                     <span dir="ltr" className="text-[11px] text-[#888888]">
                       ({count})
                     </span>
-                  </button>
+                  </Link>
                 );
               })}
             </div>
@@ -610,7 +676,11 @@ export default function BaldreProductsCatalogPage() {
             <div>
               {totalItems > 0 ? (
                 <span>
-                  {isFa
+                  {isAllPages
+                    ? isFa
+                      ? `نمایش یک‌جای تمام ${totalItems} محصول`
+                      : `Showing all ${totalItems} luminaires`
+                    : isFa
                     ? `نمایش ${(validCurrentPage - 1) * itemsPerPage + 1} تا ${Math.min(
                         validCurrentPage * itemsPerPage,
                         totalItems
@@ -626,14 +696,15 @@ export default function BaldreProductsCatalogPage() {
             </div>
 
             {hasActiveFilters && (
-              <button
-                type="button"
+              <Link
+                href={productsBase}
+                scroll={false}
                 onClick={resetAllFilters}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>{t.productsPage.clearFilters}</span>
-              </button>
+              </Link>
             )}
           </div>
 
@@ -643,14 +714,15 @@ export default function BaldreProductsCatalogPage() {
           {filteredProducts.length === 0 ? (
             <div className="py-24 text-center border border-[#E5E5E5] rounded-none">
               <p className="text-sm text-[#444444] mb-5">{t.productsPage.noResultsTitle}</p>
-              <button
-                type="button"
+              <Link
+                href={productsBase}
+                scroll={false}
                 onClick={resetAllFilters}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-none bg-[#111111] text-[#FFFFFF] text-xs font-semibold hover:bg-[#333333] transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>{t.productsPage.noResultsReset}</span>
-              </button>
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
@@ -788,43 +860,54 @@ export default function BaldreProductsCatalogPage() {
           )}
 
           {/* -----------------------------------------------------------------
-              PAGINATION BAR (12 items per page — 1, 2, 3... + Next / Prev Buttons)
+              PAGINATION BAR (Real Links with ?page=1,2,3... & ?page=all for new tab)
              ----------------------------------------------------------------- */}
-          {totalPages > 1 && (
+          {(totalPages > 1 || isAllPages) && (
             <div className="mt-20 pt-10 border-t border-[#E5E5E5] flex flex-col sm:flex-row items-center justify-between gap-6" dir={dir}>
               {/* Pagination Info */}
               <div className="text-xs text-[#666666] font-medium">
-                {isFa
+                {isAllPages
+                  ? isFa
+                    ? `نمایش یک‌جای تمام ${totalItems} چراغ معماری`
+                    : `Displaying all ${totalItems} architectural luminaires`
+                  : isFa
                   ? `صفحه ${validCurrentPage} از ${totalPages} (مجموع ${totalItems} چراغ معماری)`
                   : `Page ${validCurrentPage} of ${totalPages} (${totalItems} luminaires)`}
               </div>
 
               {/* Pagination Controls */}
               <div className="flex flex-wrap items-center justify-center gap-1.5" dir="ltr">
-                {/* Previous Page Button */}
-                <button
-                  type="button"
-                  onClick={() => handlePageChange(validCurrentPage - 1)}
-                  disabled={validCurrentPage === 1}
-                  aria-label={isFa ? 'صفحه قبلی' : 'Previous page'}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border transition-all cursor-pointer shrink-0 ${
-                    validCurrentPage === 1
-                      ? 'opacity-35 cursor-not-allowed border-[#E5E5E5] text-[#999999]'
-                      : 'border-[#E5E5E5] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF]'
-                  }`}
-                >
-                  <PrevChevron className="w-3.5 h-3.5" />
-                  <span>{isFa ? 'قبلی' : 'Prev'}</span>
-                </button>
+                {/* Previous Page Link */}
+                {validCurrentPage > 1 && !isAllPages ? (
+                  <Link
+                    href={buildUrl({ page: validCurrentPage - 1 })}
+                    scroll={false}
+                    onClick={handleScrollToGrid}
+                    aria-label={isFa ? 'صفحه قبلی' : 'Previous page'}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border border-[#E5E5E5] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF] transition-all cursor-pointer shrink-0"
+                  >
+                    <PrevChevron className="w-3.5 h-3.5" />
+                    <span>{isFa ? 'قبلی' : 'Prev'}</span>
+                  </Link>
+                ) : (
+                  <span
+                    aria-disabled="true"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border border-[#E5E5E5] opacity-35 cursor-not-allowed text-[#999999] shrink-0"
+                  >
+                    <PrevChevron className="w-3.5 h-3.5" />
+                    <span>{isFa ? 'قبلی' : 'Prev'}</span>
+                  </span>
+                )}
 
-                {/* Numbered Page Buttons: 1, 2, 3... */}
+                {/* Numbered Page Links: 1, 2, 3... */}
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                  const isActive = pageNum === validCurrentPage;
+                  const isActive = !isAllPages && pageNum === validCurrentPage;
                   return (
-                    <button
+                    <Link
                       key={pageNum}
-                      type="button"
-                      onClick={() => handlePageChange(pageNum)}
+                      href={buildUrl({ page: pageNum })}
+                      scroll={false}
+                      onClick={handleScrollToGrid}
                       className={`w-9 h-9 flex items-center justify-center rounded-none text-xs font-bold transition-all cursor-pointer shrink-0 ${
                         isActive
                           ? 'bg-[#111111] text-[#FFFFFF] border border-[#111111]'
@@ -832,25 +915,46 @@ export default function BaldreProductsCatalogPage() {
                       }`}
                     >
                       {pageNum}
-                    </button>
+                    </Link>
                   );
                 })}
 
-                {/* Next Page Button */}
-                <button
-                  type="button"
-                  onClick={() => handlePageChange(validCurrentPage + 1)}
-                  disabled={validCurrentPage === totalPages}
-                  aria-label={isFa ? 'صفحه بعدی' : 'Next page'}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border transition-all cursor-pointer shrink-0 ${
-                    validCurrentPage === totalPages
-                      ? 'opacity-35 cursor-not-allowed border-[#E5E5E5] text-[#999999]'
-                      : 'border-[#E5E5E5] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF]'
+                {/* "All" / "همه" Page Link: ?page=all */}
+                <Link
+                  href={buildUrl({ page: 'all' })}
+                  scroll={false}
+                  onClick={handleScrollToGrid}
+                  title={isFa ? 'نمایش تمام محصولات در یک صفحه' : 'View all products on one page'}
+                  className={`px-3.5 h-9 flex items-center justify-center rounded-none text-xs font-bold transition-all cursor-pointer shrink-0 ${
+                    isAllPages
+                      ? 'bg-[#111111] text-[#FFFFFF] border border-[#111111]'
+                      : 'bg-transparent border border-[#E5E5E5] text-[#444444] hover:border-[#111111] hover:text-[#111111]'
                   }`}
                 >
-                  <span>{isFa ? 'بعدی' : 'Next'}</span>
-                  <NextChevron className="w-3.5 h-3.5" />
-                </button>
+                  <span>{isFa ? 'همه' : 'All'}</span>
+                </Link>
+
+                {/* Next Page Link */}
+                {validCurrentPage < totalPages && !isAllPages ? (
+                  <Link
+                    href={buildUrl({ page: validCurrentPage + 1 })}
+                    scroll={false}
+                    onClick={handleScrollToGrid}
+                    aria-label={isFa ? 'صفحه بعدی' : 'Next page'}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border border-[#E5E5E5] text-[#111111] hover:bg-[#111111] hover:text-[#FFFFFF] transition-all cursor-pointer shrink-0"
+                  >
+                    <span>{isFa ? 'بعدی' : 'Next'}</span>
+                    <NextChevron className="w-3.5 h-3.5" />
+                  </Link>
+                ) : (
+                  <span
+                    aria-disabled="true"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-none text-xs font-semibold border border-[#E5E5E5] opacity-35 cursor-not-allowed text-[#999999] shrink-0"
+                  >
+                    <span>{isFa ? 'بعدی' : 'Next'}</span>
+                    <NextChevron className="w-3.5 h-3.5" />
+                  </span>
+                )}
               </div>
             </div>
           )}
@@ -963,16 +1067,14 @@ export default function BaldreProductsCatalogPage() {
               <ul className="space-y-2.5">
                 {FLOS_CATEGORY_STRIP.map((cat) => (
                   <li key={cat.slug}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedCategory(cat.filterSlug);
-                        window.scrollTo({ top: 500, behavior: 'smooth' });
-                      }}
+                    <Link
+                      href={buildUrl({ category: cat.filterSlug, page: null })}
+                      scroll={false}
+                      onClick={handleScrollToGrid}
                       className="text-xs text-[#444444] hover:text-[#E40521] transition-colors inline-block cursor-pointer"
                     >
                       {isFa ? cat.name_fa : cat.name_en}
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -1304,6 +1406,14 @@ export default function BaldreProductsCatalogPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function BaldreProductsCatalogPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FFFFFF]" />}>
+      <ProductsCatalogContent />
+    </Suspense>
   );
 }
 
