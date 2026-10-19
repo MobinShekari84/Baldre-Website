@@ -22,7 +22,7 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreAboutPage() {
+export default function BaldrAboutPage() {
   const pathname = usePathname();
   const lang: Lang = pathname?.startsWith('/en') ? 'en' : 'fa';
   const isFa = lang === 'fa';
@@ -120,15 +120,15 @@ export default function BaldreAboutPage() {
          ===================================================================== */}
       <header className="fixed top-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-b border-[#E5E5E5] transition-all">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo */}
+          {/* Official Baldr Red Logo */}
           <Link
             href={homeHref}
             className="flex items-center group shrink-0 cursor-pointer"
-            aria-label="Baldre Lighting"
+            aria-label="Baldr Lighting"
           >
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -215,14 +215,14 @@ export default function BaldreAboutPage() {
           <div className="relative aspect-[16/9] lg:aspect-[21/9] w-full rounded-none overflow-hidden bg-[#111111] mb-12">
             <img
               src="/images/flos-hero-seki.webp"
-              alt="Baldre Studio Narrative"
+              alt="Baldr Studio Narrative"
               className="w-full h-full object-cover opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
 
             <div className="absolute bottom-8 sm:bottom-12 start-8 sm:start-12 end-8 max-w-2xl text-white">
               <span className="text-xs font-semibold tracking-wider text-[#E40521] uppercase block mb-2">
-                {isFa ? 'استودیو طراحی و مهندسی بالدر' : 'Baldre Studio Narrative'}
+                {isFa ? 'استودیو طراحی و مهندسی بالدر' : 'Baldr Studio Narrative'}
               </span>
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-4">
                 {isFa ? 'نور، هندسه ناب و آرامش معماری' : 'Light, Pure Geometry & Spatial Serenity'}
@@ -258,7 +258,7 @@ export default function BaldreAboutPage() {
               <p>
                 {isFa
                   ? 'در بالدر، چراغ‌ها برای جلب توجه کاذب طراحی نمی‌شوند؛ بلکه هدف بنیادین ما نامرئی‌سازی منبع آزاردهنده نور و خلق حسی از آرامش عمیق در فضا است. ما نور را نه به عنوان عنصری تزیینی، بلکه به عنوان ساختاردهنده اصلی اتمسفر و ادراک حجم‌ها در معماری تعریف می‌کنیم.'
-                  : 'At Baldre, luminaires are not designed for intrusive spectacle. Our core pursuit is eliminating aggressive glare to reveal the serene intimacy of space. Light is treated not as mere decor, but as the essential catalyst defining volume and materiality.'}
+                  : 'At Baldr, luminaires are not designed for intrusive spectacle. Our core pursuit is eliminating aggressive glare to reveal the serene intimacy of space. Light is treated not as mere decor, but as the essential catalyst defining volume and materiality.'}
               </p>
               <p>
                 {isFa
@@ -320,7 +320,7 @@ export default function BaldreAboutPage() {
               <div className="aspect-[4/3] rounded-none overflow-hidden bg-[#F5F4F0]">
                 <img
                   src="/images/project-art-gallery.webp"
-                  alt="Baldre Tehran Showroom"
+                  alt="Baldr Tehran Showroom"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -420,9 +420,9 @@ export default function BaldreAboutPage() {
                     <Phone className="w-3.5 h-3.5 text-[#E40521]" />
                     <span>+98 21 2620 4800</span>
                   </a>
-                  <a href="mailto:showroom@baldre.ir" className="flex items-center gap-1.5 font-bold text-[#111111] hover:text-[#E40521] transition-colors">
+                  <a href="mailto:showroom@baldr.ir" className="flex items-center gap-1.5 font-bold text-[#111111] hover:text-[#E40521] transition-colors">
                     <Mail className="w-3.5 h-3.5 text-[#E40521]" />
-                    <span>showroom@baldre.ir</span>
+                    <span>showroom@baldr.ir</span>
                   </a>
                 </div>
 
@@ -448,7 +448,7 @@ export default function BaldreAboutPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Link href={homeHref} className="shrink-0">
-              <img src="/images/baldre-logo-red.webp" alt="Baldre Lighting" className="h-5 w-auto object-contain" />
+              <img src="/images/baldr-logo-red.webp" alt="Baldr Lighting" className="h-5 w-auto object-contain" />
             </Link>
             <span>•</span>
             <span>{isFa ? 'استودیو مهندسی و طراحی روشنایی معماری' : 'Architectural Lighting Studio'}</span>
@@ -458,8 +458,8 @@ export default function BaldreAboutPage() {
             <a href="tel:+982126204800" className="hover:text-[#E40521] transition-colors cursor-pointer" dir="ltr">
               +98 21 2620 4800
             </a>
-            <a href="mailto:info@baldre.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
-              info@baldre.ir
+            <a href="mailto:info@baldr.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
+              info@baldr.ir
             </a>
             <Link href={projectsHref} className="hover:text-[#E40521] transition-colors cursor-pointer">
               {isFa ? 'پروژه‌های معماری' : 'Projects'}

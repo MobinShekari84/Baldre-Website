@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About Us | Baldre Lighting Design & Engineering Studio',
+  title: 'About Us | Baldr Lighting Design & Engineering Studio',
   description:
-    'Discover the philosophy, museum-grade optical engineering (CRI >97), and architectural craftsmanship of Baldre Lighting in Tehran.',
+    'Discover the philosophy, museum-grade optical engineering (CRI >97), and architectural craftsmanship of Baldr Lighting in Tehran.',
   alternates: {
     canonical: '/en/about',
     languages: {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'About Us | Baldre Lighting Studio',
+    title: 'About Us | Baldr Lighting Studio',
     description:
       'Pure geometric forms, timeless materiality, and bespoke architectural luminaires engineered for contemporary spaces.',
     locale: 'en_US',

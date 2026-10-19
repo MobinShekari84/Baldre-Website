@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Baldre Lighting | Luxury Architectural & Sculptural Lighting in Tehran',
+  title: 'Baldr Lighting | Luxury Architectural & Sculptural Lighting in Tehran',
   description:
-    'Baldre Lighting Studio — Bespoke architectural luminaires, linear suspension systems, 48V magnetic tracks, and CAD/BIM/IES engineering resources for architects and interior designers.',
+    'Baldr Lighting Studio — Bespoke architectural luminaires, linear suspension systems, 48V magnetic tracks, and CAD/BIM/IES engineering resources for architects and interior designers.',
   keywords: [
-    'Baldre Lighting',
+    'Baldr Lighting',
     'Architectural Lighting Tehran',
     'Luxury Chandeliers Iran',
     'Linear Suspension Luminaires',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Baldre Lighting | Luxury Architectural Lighting',
+    title: 'Baldr Lighting | Luxury Architectural Lighting',
     description:
       'Bespoke architectural lighting, sculptural luminaires, and technical CAD/IES documentation for luxury residential and commercial spaces.',
     locale: 'en_US',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BaldreEnglishLayout({
+export default function BaldrEnglishLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

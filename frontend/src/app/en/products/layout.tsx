@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Architectural Luminaires & Products | Baldre Lighting',
+  title: 'Architectural Luminaires & Products | Baldr Lighting',
   description:
-    'Explore the complete Baldre Lighting collection: linear suspension systems, sculptural chandeliers, wall & floor luminaires, 48V magnetic track lights, and IP65 outdoor bollards with CAD/IES downloads.',
+    'Explore the complete Baldr Lighting collection: linear suspension systems, sculptural chandeliers, wall & floor luminaires, 48V magnetic track lights, and IP65 outdoor bollards with CAD/IES downloads.',
   alternates: {
     canonical: '/en/products',
     languages: {
@@ -13,16 +13,16 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Architectural Luminaires & Products | Baldre Lighting',
+    title: 'Architectural Luminaires & Products | Baldr Lighting',
     description:
-      'Browse Baldre architectural lighting collections with photometric filters (CCT, CRI, IP rating, DALI-2) and B2B CAD/IES files.',
+      'Browse Baldr architectural lighting collections with photometric filters (CCT, CRI, IP rating, DALI-2) and B2B CAD/IES files.',
     locale: 'en_US',
     alternateLocale: 'fa_IR',
     type: 'website',
   },
 };
 
-export default function BaldreEnglishProductsLayout({
+export default function BaldrEnglishProductsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

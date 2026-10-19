@@ -4,11 +4,11 @@ from catalog.models import Category, Product, ArchitecturalProject, NewsHighligh
 
 
 class Command(BaseCommand):
-    help = 'Seeds the Baldre Lighting database with bright Flos-style light-mode images and bilingual data.'
+    help = 'Seeds the Baldr Lighting database with bright Flos-style light-mode images and bilingual data.'
 
     def handle(self, *args, **options):
         if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@baldre.ir', 'baldre2026')
+            User.objects.create_superuser('admin', 'admin@baldr.ir', 'baldre2026')
             self.stdout.write(self.style.SUCCESS('Created admin user (admin / baldre2026)'))
 
         categories_data = [
@@ -77,7 +77,7 @@ class Command(BaseCommand):
                 'name_en': 'Crux Linear Suspension 01',
                 'category': cat_map['pendant'],
                 'designer_fa': 'استودیو طراحی بالدر — تهران',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'چراغ آویز خطی مینیمال با پروفیل برنج برس‌خورده و دیفیوزر شیشه‌ای موج‌دار بدون خیرگی.',
                 'short_description_en': 'Minimalist architectural linear pendant in brushed champagne brass with hand-formed optical glass.',
@@ -161,7 +161,7 @@ class Command(BaseCommand):
                 'name_en': 'Luna Marble & Opal Sphere Floor Lamp',
                 'category': cat_map['wall-floor'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'ستون برنجی ظریف بر روی پایه سنگ مرمر سفید یکپارچه با گوی شیشه‌ای اپال دست‌ساز.',
                 'short_description_en': 'Slender brushed brass stem anchored in honed white Carrara marble with a glowing opal glass sphere.',
@@ -236,7 +236,7 @@ class Command(BaseCommand):
                 'name_en': 'Skygarden Architectural Dome Pendant',
                 'category': cat_map['pendant'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'نیم‌کره مینیمال با سطح بیرونی مات و نقش‌برجسته‌های گچی دست‌ساز در سطح درونی.',
                 'short_description_en': 'Hemispherical architectural pendant with a minimalist exterior and sculpted plaster interior diffuser.',
@@ -308,7 +308,7 @@ class Command(BaseCommand):
                 'name_en': '265 Architectural Counterweight Wall Lamp',
                 'category': cat_map['wall-floor'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'چراغ دیواری بازویی با وزنه تعادلی چدنی و قابلیت چرخش ۳۶۰ درجه بر فراز فضای نشیمن و میز کار.',
                 'short_description_en': 'Precision balanced counterweight wall luminaire with adjustable steel arm and directional reflector.',
@@ -380,7 +380,7 @@ class Command(BaseCommand):
                 'name_en': 'Taccia Indirect Glass Bowl Table Lamp',
                 'category': cat_map['sculptural'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'چراغ رومیزی نمادین با پایه ستونی آلومینیوم شیاردار و کاسه شیشه‌ای شفاف برای بازتاب غیرمستقیم نور.',
                 'short_description_en': 'Iconic indirect table luminaire with extruded fluted aluminum column and adjustable blown-glass bowl.',
@@ -452,7 +452,7 @@ class Command(BaseCommand):
                 'name_en': 'Aria Architectural Fabric & Magnetic System',
                 'category': cat_map['magnetic'],
                 'designer_fa': 'بخش مهندسی اپتیک بالدر',
-                'designer_en': 'Baldre Optical Engineering',
+                'designer_en': 'Baldr Optical Engineering',
                 'year': 2026,
                 'short_description_fa': 'سیستم روشنایی سقفی و دیواری با بافت پارچه‌ای نسوز و اسپات‌های مگنتی ۴۸ ولت با CRI >97.',
                 'short_description_en': 'Soft architectural diffused surface luminaire paired with precision 48V magnetic accent optics.',
@@ -524,7 +524,7 @@ class Command(BaseCommand):
                 'name_en': 'Terra Travertine & Bronze Landscape Bollard',
                 'category': cat_map['outdoor'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'بولارد معماری فضای باز با بدنه برنز آنودایز و پخش نور نامتقارن بدون خیرگی.',
                 'short_description_en': 'Weather-sealed IP65 architectural bollard in deep anodized bronze with asymmetric path optics.',
@@ -560,9 +560,9 @@ class Command(BaseCommand):
                 'gallery_images': ['/images/flos-cat-portable.webp'],
                 'dimension_diagram_url': '/diagrams/linear-01.svg',
                 'professional_downloads': {
-                    'data_sheet_pdf': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_fa': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_en': '/downloads/Baldre-2026-Catalogue.pdf',
+                    'data_sheet_pdf': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_fa': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_en': '/downloads/Baldr-2026-Catalogue.pdf',
                     'photometric_ies_file': '/downloads/BAL-OD-11-Photometric.ies',
                     'cad_3d_file': '/downloads/BAL-OD-11-3DModel.step',
                 },
@@ -596,7 +596,7 @@ class Command(BaseCommand):
                 'name_en': 'Bell Architectural Portable Table Lamp',
                 'category': cat_map['outdoor'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'چراغ پرتابل بدون سیم با شارژدهی ۱۸ ساعته و سنسور دیمر لمسی ۴ حالته.',
                 'short_description_en': 'Cordless rechargeable luminaire with 18-hour battery life and 4-step optical touch dimmer.',
@@ -632,9 +632,9 @@ class Command(BaseCommand):
                 'gallery_images': ['/images/product-outdoor-bollard.webp'],
                 'dimension_diagram_url': '/diagrams/linear-01.svg',
                 'professional_downloads': {
-                    'data_sheet_pdf': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_fa': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_en': '/downloads/Baldre-2026-Catalogue.pdf',
+                    'data_sheet_pdf': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_fa': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_en': '/downloads/Baldr-2026-Catalogue.pdf',
                     'photometric_ies_file': '/downloads/BAL-PT-14-Photometric.ies',
                     'cad_3d_file': '/downloads/BAL-PT-14-3DModel.step',
                 },
@@ -668,7 +668,7 @@ class Command(BaseCommand):
                 'name_en': 'Helios 48V Magnetic Zoom Spotlight',
                 'category': cat_map['magnetic'],
                 'designer_fa': 'بخش مهندسی اپتیک بالدر',
-                'designer_en': 'Baldre Optical Lab',
+                'designer_en': 'Baldr Optical Lab',
                 'year': 2026,
                 'short_description_fa': 'اسپات‌لایت مگنتی ۴۸ ولت با لنز اپتیکال متغیر ۱۵ تا ۴۵ درجه و لوور ضد خیرگی لانه زنبوری.',
                 'short_description_en': 'Precision 48V magnetic track spotlight with 15°–45° zoomable PMMA lens and honeycomb louver.',
@@ -704,9 +704,9 @@ class Command(BaseCommand):
                 'gallery_images': ['/images/flos-cat-ceiling.webp'],
                 'dimension_diagram_url': '/diagrams/linear-01.svg',
                 'professional_downloads': {
-                    'data_sheet_pdf': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_fa': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_en': '/downloads/Baldre-2026-Catalogue.pdf',
+                    'data_sheet_pdf': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_fa': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_en': '/downloads/Baldr-2026-Catalogue.pdf',
                     'photometric_ies_file': '/downloads/BAL-MG-19-Photometric.ies',
                     'cad_3d_file': '/downloads/BAL-MG-19-3DModel.step',
                 },
@@ -740,7 +740,7 @@ class Command(BaseCommand):
                 'name_en': 'Aura Poised Sphere & Brass Table Lamp',
                 'category': cat_map['sculptural'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'تعادل هندسی گوی شیشه اپال دست‌ساز بر روی محور مورب برنج برس‌خورده.',
                 'short_description_en': 'Mouth-blown opal glass sphere balanced delicately on an angled brushed brass stem.',
@@ -776,9 +776,9 @@ class Command(BaseCommand):
                 'gallery_images': ['/images/flos-cat-table.webp'],
                 'dimension_diagram_url': '/diagrams/linear-01.svg',
                 'professional_downloads': {
-                    'data_sheet_pdf': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_fa': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_en': '/downloads/Baldre-2026-Catalogue.pdf',
+                    'data_sheet_pdf': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_fa': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_en': '/downloads/Baldr-2026-Catalogue.pdf',
                     'photometric_ies_file': '/downloads/BAL-TB-22-Photometric.ies',
                     'cad_3d_file': '/downloads/BAL-TB-22-3DModel.step',
                 },
@@ -812,7 +812,7 @@ class Command(BaseCommand):
                 'name_en': 'Seki Warm Timber & Brass Suspension',
                 'category': cat_map['pendant'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'تلفیق چوب طبیعی فرآوری‌شده و ورق برنج مات با نور خطی مستقیم و غیرمستقیم.',
                 'short_description_en': 'Architectural linear pendant combining warm natural timber with anodized brass reflectors.',
@@ -848,9 +848,9 @@ class Command(BaseCommand):
                 'gallery_images': ['/images/flos-cat-pendant.webp'],
                 'dimension_diagram_url': '/diagrams/linear-01.svg',
                 'professional_downloads': {
-                    'data_sheet_pdf': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_fa': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_en': '/downloads/Baldre-2026-Catalogue.pdf',
+                    'data_sheet_pdf': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_fa': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_en': '/downloads/Baldr-2026-Catalogue.pdf',
                     'photometric_ies_file': '/downloads/BAL-PD-27-Photometric.ies',
                     'cad_3d_file': '/downloads/BAL-PD-27-3DModel.step',
                 },
@@ -884,7 +884,7 @@ class Command(BaseCommand):
                 'name_en': 'Arco Carrara Marble Cantilever Floor Lamp',
                 'category': cat_map['wall-floor'],
                 'designer_fa': 'استودیو طراحی بالدر',
-                'designer_en': 'Baldre Design Studio',
+                'designer_en': 'Baldr Design Studio',
                 'year': 2026,
                 'short_description_fa': 'چراغ قوسی تندیس‌گونه با بلوک سنگ مرمر ۶۰ کیلوگرمی و بازوی تلسکوپی استیل برس‌خورده.',
                 'short_description_en': 'Cantilevered architectural floor lamp anchored by a solid honed Carrara marble block.',
@@ -920,9 +920,9 @@ class Command(BaseCommand):
                 'gallery_images': ['/images/flos-prod-floor.webp'],
                 'dimension_diagram_url': '/diagrams/linear-01.svg',
                 'professional_downloads': {
-                    'data_sheet_pdf': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_fa': '/downloads/Baldre-2026-Catalogue.pdf',
-                    'installation_manual_pdf_en': '/downloads/Baldre-2026-Catalogue.pdf',
+                    'data_sheet_pdf': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_fa': '/downloads/Baldr-2026-Catalogue.pdf',
+                    'installation_manual_pdf_en': '/downloads/Baldr-2026-Catalogue.pdf',
                     'photometric_ies_file': '/downloads/BAL-FL-31-Photometric.ies',
                     'cad_3d_file': '/downloads/BAL-FL-31-3DModel.step',
                 },
@@ -970,7 +970,7 @@ class Command(BaseCommand):
                 'summary_fa': 'طراحی روشنایی روز و شب برای فضای ناهارخوری و نشیمن ۳۸۰ متری با استفاده از آویزهای خطی متقاطع بالدر و چراغ‌های ایستاده مرمرین.',
                 'summary_en': 'Harmonizing natural daylight and warm 2700K evening scenes across a sunlit travertine dining hall and minimalist living space.',
                 'description_fa': 'پروژه پنت‌هاوس نیاوران بر پایه تعامل نور طبیعی کوهپایه‌های شمالی تهران و نورپردازی معماری بالدر شکل گرفته است. هدف بنیادین تیم طراحی، پنهان‌سازی منابع نوری تند و دستیابی به سطوحی پیوسته از درخشش نرم بود که بافت سنگ‌های تراورتن کرم و پنل‌های چوب بلوط را بدون خیرگی چشم برجسته سازد.',
-                'description_en': 'The Niavaran Penthouse was conceived around the dialogue between the natural northern mountain light of Tehran and precision architectural lighting by Baldre. The primary design intent was to eliminate intrusive glare and deliver continuous soft luminance that reveals the honed travertine and raw oak surfaces.',
+                'description_en': 'The Niavaran Penthouse was conceived around the dialogue between the natural northern mountain light of Tehran and precision architectural lighting by Baldr. The primary design intent was to eliminate intrusive glare and deliver continuous soft luminance that reveals the honed travertine and raw oak surfaces.',
                 'challenge_fa': 'سقف‌های با ارتفاع بلند (۴.۲ متر) و پنجره‌های سرتاسری جنوبی نیازمند سامانه نوری بود که در طول روز با ورود نور خورشید هماهنگ بوده و در هنگام غروب، بدون افتادن سایه‌های تیز، نوری گرم و صمیمی ایجاد کند.',
                 'challenge_en': 'High 4.2m ceilings and south-facing floor-to-ceiling glass required a responsive lighting scheme that balances bright daytime sunlight and transitions into warm evening intimacy without casting harsh shadows.',
                 'solution_fa': 'نصب سامانه‌های آویز خطی با پخش‌کننده میکروپرینت و کنترل زاویه تابش ۳۵ درجه به همراه چراغ‌های مونوپات مرمرین در گوشه‌ها با پروتکل DALI-2 و Casambi که امکان تنظیم سناریوی نوری متناسب با ساعت بیولوژیک روز را فراهم می‌آورد.',
@@ -1041,13 +1041,13 @@ class Command(BaseCommand):
 
         news_data = [
             {
-                'slug': 'baldre-2026-architectural-catalogue',
+                'slug': 'baldr-2026-architectural-catalogue',
                 'category_fa': 'کالکشن ۲۰۲۶ • طراحی معاصر',
                 'category_en': '2026 Monograph • New Release',
                 'date_fa': 'مهر ۱۴۰۵',
                 'date_en': 'October 2026',
                 'title_fa': 'رونمایی از کالکشن روشنایی روز و معماری بالدر ۲۰۲۶ به همراه کتابخانه کامل IES و 3D',
-                'title_en': 'The 2026 Baldre Architectural & Decorative Collection: Poetic Form Meets Optical Precision',
+                'title_en': 'The 2026 Baldr Architectural & Decorative Collection: Poetic Form Meets Optical Precision',
                 'excerpt_fa': 'مجموعه جدید بالدر با تمرکز بر متریال‌های اصیل همچون شیشه اپال دمیده‌شده، سنگ مرمر سفید، برنج برس‌خورده و آلومینیوم اکسترود شده به همراه فایل‌های BIM/DIALux منتشر شد.',
                 'excerpt_en': 'Exploring the dialogue between mouth-blown opal glass, honed marble, and ultra-slim linear aluminum profiles.',
                 'image_url': '/images/flos-hero-ic.webp',
@@ -1090,4 +1090,4 @@ class Command(BaseCommand):
         for n in news_data:
             NewsHighlight.objects.update_or_create(slug=n['slug'], defaults=n)
 
-        self.stdout.write(self.style.SUCCESS('Successfully updated Baldre database with Flos light-mode assets!'))
+        self.stdout.write(self.style.SUCCESS('Successfully updated Baldr database with Flos light-mode assets!'))

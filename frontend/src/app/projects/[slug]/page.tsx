@@ -15,15 +15,15 @@ import {
 } from 'lucide-react';
 import {
   Lang,
-  BaldreProject,
-  BaldreProduct,
+  BaldrProject,
+  BaldrProduct,
   FALLBACK_HOMEPAGE_DATA,
   UI_TEXT,
 } from '@/data/baldreData';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreProjectDetailPage() {
+export default function BaldrProjectDetailPage() {
   const params = useParams<{ slug: string }>();
   const pathname = usePathname();
   const slug = params?.slug || '';
@@ -40,10 +40,10 @@ export default function BaldreProjectDetailPage() {
   const aboutHref = isFa ? '/about' : '/en/about';
   const contactHref = isFa ? '/contact' : '/en/contact';
 
-  const [allProjects, setAllProjects] = useState<BaldreProject[]>(FALLBACK_HOMEPAGE_DATA.projects);
-  const [allProducts, setAllProducts] = useState<BaldreProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
+  const [allProjects, setAllProjects] = useState<BaldrProject[]>(FALLBACK_HOMEPAGE_DATA.projects);
+  const [allProducts, setAllProducts] = useState<BaldrProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
 
-  const [project, setProject] = useState<BaldreProject | null>(() => {
+  const [project, setProject] = useState<BaldrProject | null>(() => {
     return (
       FALLBACK_HOMEPAGE_DATA.projects.find((p) => p.slug === slug) ||
       FALLBACK_HOMEPAGE_DATA.projects[0]
@@ -72,7 +72,7 @@ export default function BaldreProjectDetailPage() {
         if (!res.ok) throw new Error('Not found');
         return res.json();
       })
-      .then((apiProject: BaldreProject) => {
+      .then((apiProject: BaldrProject) => {
         if (mounted && apiProject?.slug) {
           setProject(apiProject);
           setNotFound(false);
@@ -86,7 +86,7 @@ export default function BaldreProjectDetailPage() {
 
     fetch(`${API_BASE}/projects/`)
       .then((res) => res.json())
-      .then((apiList: BaldreProject[]) => {
+      .then((apiList: BaldrProject[]) => {
         if (mounted && Array.isArray(apiList) && apiList.length > 0) {
           setAllProjects(apiList);
         }
@@ -95,7 +95,7 @@ export default function BaldreProjectDetailPage() {
 
     fetch(`${API_BASE}/products/`)
       .then((res) => res.json())
-      .then((apiProducts: BaldreProduct[]) => {
+      .then((apiProducts: BaldrProduct[]) => {
         if (mounted && Array.isArray(apiProducts) && apiProducts.length > 0) {
           setAllProducts(apiProducts);
         }
@@ -178,15 +178,15 @@ export default function BaldreProjectDetailPage() {
          ===================================================================== */}
       <header className="fixed top-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-b border-[#E5E5E5] transition-all">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo */}
+          {/* Official Baldr Red Logo */}
           <Link
             href={homeHref}
             className="flex items-center group shrink-0 cursor-pointer"
-            aria-label="Baldre Lighting"
+            aria-label="Baldr Lighting"
           >
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -410,7 +410,7 @@ export default function BaldreProjectDetailPage() {
                       {matchedProd ? (isFa ? matchedProd.identity.name_fa : matchedProd.identity.name_en) : sku}
                     </h3>
                     <span className="text-[11px] text-[#666666] block">
-                      {matchedProd ? (isFa ? matchedProd.identity.category_fa : matchedProd.identity.category) : (isFa ? 'چراغ معماری بالدر' : 'Baldre Luminaire')}
+                      {matchedProd ? (isFa ? matchedProd.identity.category_fa : matchedProd.identity.category) : (isFa ? 'چراغ معماری بالدر' : 'Baldr Luminaire')}
                     </span>
                   </div>
                 </Link>
@@ -469,8 +469,8 @@ export default function BaldreProjectDetailPage() {
                 : 'Project specification and lighting engineering inquiry:'}
             </span>
             <div className="flex items-center gap-6 font-bold text-[#111111]">
-              <a href="mailto:projects@baldre.ir" className="hover:text-[#E40521] transition-colors">
-                projects@baldre.ir
+              <a href="mailto:projects@baldr.ir" className="hover:text-[#E40521] transition-colors">
+                projects@baldr.ir
               </a>
               <span className="text-[#CCCCCC]">•</span>
               <a href="tel:+982126204800" className="hover:text-[#E40521] transition-colors" dir="ltr">
@@ -488,7 +488,7 @@ export default function BaldreProjectDetailPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Link href={homeHref} className="shrink-0">
-              <img src="/images/baldre-logo-red.webp" alt="Baldre Lighting" className="h-5 w-auto object-contain" />
+              <img src="/images/baldr-logo-red.webp" alt="Baldr Lighting" className="h-5 w-auto object-contain" />
             </Link>
             <span>•</span>
             <span>{isFa ? 'استودیو مهندسی و طراحی روشنایی معماری' : 'Architectural Lighting Studio'}</span>
@@ -498,8 +498,8 @@ export default function BaldreProjectDetailPage() {
             <a href="tel:+982126204800" className="hover:text-[#E40521] transition-colors cursor-pointer" dir="ltr">
               +98 21 2620 4800
             </a>
-            <a href="mailto:projects@baldre.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
-              projects@baldre.ir
+            <a href="mailto:projects@baldr.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
+              projects@baldr.ir
             </a>
             <Link href={projectsBase} className="hover:text-[#E40521] transition-colors cursor-pointer">
               {isFa ? 'آرشیو پروژه‌ها' : 'Projects'}

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tehran Flagship Showroom | Baldre Lighting Studio',
+  title: 'Tehran Flagship Showroom | Baldr Lighting Studio',
   description:
-    'Visit Baldre Flagship Showroom on Fereshteh St., Tehran. Experience bespoke architectural luminaires at 1:1 scale, test DALI dimming, and book a private consultation.',
+    'Visit Baldr Flagship Showroom on Fereshteh St., Tehran. Experience bespoke architectural luminaires at 1:1 scale, test DALI dimming, and book a private consultation.',
   alternates: {
     canonical: '/en/showroom',
     languages: {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Tehran Flagship Showroom | Baldre Lighting',
+    title: 'Tehran Flagship Showroom | Baldr Lighting',
     description:
       'Private architectural lighting gallery in Elahiyeh, Tehran. Book appointments and explore museum-grade optics.',
     locale: 'en_US',

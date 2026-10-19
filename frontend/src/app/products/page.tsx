@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import {
   Lang,
-  BaldreProduct,
+  BaldrProduct,
   FALLBACK_HOMEPAGE_DATA,
   FLOS_CATEGORY_STRIP,
   UI_TEXT,
@@ -52,7 +52,7 @@ function ProductsCatalogContent() {
   const selectedCategory = categoryFromUrl;
 
   // Full 12-product catalog (merging any backend products with the full 12 architectural items)
-  const [products, setProducts] = useState<BaldreProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
+  const [products, setProducts] = useState<BaldrProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
 
   // Global Card Illumination Mode ('day' = studio photo, 'night' = illuminated secondary photo)
   const [cardLightMode, setCardLightMode] = useState<'day' | 'night'>('day');
@@ -86,7 +86,7 @@ function ProductsCatalogContent() {
   });
 
   // Product Technical Datasheet Modal state
-  const [activeProductModal, setActiveProductModal] = useState<BaldreProduct | null>(null);
+  const [activeProductModal, setActiveProductModal] = useState<BaldrProduct | null>(null);
   const [modalTab, setModalTab] = useState<'identity' | 'electrical'>('identity');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -104,7 +104,7 @@ function ProductsCatalogContent() {
         if (!res.ok) throw new Error('Offline');
         return res.json();
       })
-      .then((apiProducts: BaldreProduct[]) => {
+      .then((apiProducts: BaldrProduct[]) => {
         if (mounted && Array.isArray(apiProducts)) {
           setProducts(apiProducts);
         }
@@ -121,7 +121,7 @@ function ProductsCatalogContent() {
   };
 
   // Helper to classify mounting type for filter
-  const matchesMountingFilter = (p: BaldreProduct, mountFilter: string): boolean => {
+  const matchesMountingFilter = (p: BaldrProduct, mountFilter: string): boolean => {
     if (mountFilter === 'all') return true;
     const mountText =
       `${p.physical_specs.mounting_type_en} ${p.physical_specs.mounting_type_fa} ${p.category_slug}`.toLowerCase();
@@ -418,11 +418,11 @@ function ProductsCatalogContent() {
          ===================================================================== */}
       <header className="fixed top-0 inset-x-0 z-40 w-full rounded-none bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-[#E5E5E5] transition-all duration-300">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo linking back to Home */}
+          {/* Official Baldr Red Logo linking back to Home */}
           <Link href={homeHref} className="flex items-center group shrink-0 cursor-pointer">
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -967,7 +967,7 @@ function ProductsCatalogContent() {
          ===================================================================== */}
       <section className="relative w-full min-h-[75vh] overflow-hidden bg-[#111111] flex items-end py-20 lg:py-24">
         <img
-          src="/images/baldre-catalogue-spread.webp"
+          src="/images/baldr-catalogue-spread.webp"
           alt={t.catalogueSection.title}
           loading="lazy"
           className="w-full h-full object-cover absolute inset-0"
@@ -990,12 +990,12 @@ function ProductsCatalogContent() {
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href={t.catalogueSection.pdfUrl}
-                download="Baldre-2026-Catalogue.pdf"
+                download="Baldr-2026-Catalogue.pdf"
                 onClick={() =>
                   triggerToast(
                     isFa
                       ? 'در حال دانلود فایل PDF کاتالوگ جامع بالدر ۲۰۲۶...'
-                      : 'Downloading Baldre 2026 Master Catalogue PDF...'
+                      : 'Downloading Baldr 2026 Master Catalogue PDF...'
                   )
                 }
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-none bg-[#FFFFFF] text-[#111111] hover:bg-[#EAEAEA] transition-colors text-xs font-bold"
@@ -1027,8 +1027,8 @@ function ProductsCatalogContent() {
             <div className="lg:col-span-4 space-y-4">
               <Link href={homeHref} className="inline-flex flex-col leading-none cursor-pointer">
                 <img
-                  src="/images/baldre-logo-red.webp"
-                  alt="Baldre Lighting"
+                  src="/images/baldr-logo-red.webp"
+                  alt="Baldr Lighting"
                   className="h-7 w-auto object-contain self-start"
                 />
                 <span className="text-[11px] text-[#555555] mt-2 font-medium">
@@ -1110,7 +1110,7 @@ function ProductsCatalogContent() {
                 <li className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-[#111111] shrink-0" />
                   <a
-                    href="mailto:info@baldre.ir"
+                    href="mailto:info@baldr.ir"
                     dir="ltr"
                     className="text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors"
                   >
@@ -1409,7 +1409,7 @@ function ProductsCatalogContent() {
   );
 }
 
-export default function BaldreProductsCatalogPage() {
+export default function BaldrProductsCatalogPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#FFFFFF]" />}>
       <ProductsCatalogContent />

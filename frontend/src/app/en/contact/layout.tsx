@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Baldre Architectural Lighting Studio',
+  title: 'Contact Us | Baldr Architectural Lighting Studio',
   description:
-    'Connect with Baldre Lighting Studio in Tehran. Direct phone lines, project engineering emails, and Fereshteh showroom address with Google Maps directions.',
+    'Connect with Baldr Lighting Studio in Tehran. Direct phone lines, project engineering emails, and Fereshteh showroom address with Google Maps directions.',
   alternates: {
     canonical: '/en/contact',
     languages: {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Contact Us | Baldre Lighting Tehran',
+    title: 'Contact Us | Baldr Lighting Tehran',
     description:
       'Direct contact channels and showroom visit inquiries for architects, designers, and clients.',
     locale: 'en_US',

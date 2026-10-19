@@ -21,7 +21,7 @@ import {
 import {
   Lang,
   HomepagePayload,
-  BaldreProduct,
+  BaldrProduct,
   FALLBACK_HOMEPAGE_DATA,
   FLOS_HERO_SLIDES,
   FLOS_CATEGORY_STRIP,
@@ -31,7 +31,7 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreFlosLightHomePage() {
+export default function BaldrFlosLightHomePage() {
   const pathname = usePathname();
   const lang: Lang = pathname?.startsWith('/en') ? 'en' : 'fa';
   const isFa = lang === 'fa';
@@ -54,7 +54,7 @@ export default function BaldreFlosLightHomePage() {
   );
 
   // Product modal state
-  const [activeProductModal, setActiveProductModal] = useState<BaldreProduct | null>(null);
+  const [activeProductModal, setActiveProductModal] = useState<BaldrProduct | null>(null);
   const [modalTab, setModalTab] = useState<'identity' | 'electrical'>('identity');
 
   // Architectural Spaces ("نور در فضای معماری") Slideshow state
@@ -232,15 +232,15 @@ export default function BaldreFlosLightHomePage() {
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo */}
+          {/* Official Baldr Red Logo */}
           <Link
             href={homeHref}
             onClick={(e) => handleNavClick(e, '#home')}
             className="flex items-center group shrink-0 cursor-pointer"
           >
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -797,7 +797,7 @@ export default function BaldreFlosLightHomePage() {
         className="scroll-mt-20 relative w-full min-h-screen overflow-hidden bg-[#111111] flex items-end py-20 lg:py-24"
       >
         <img
-          src="/images/baldre-catalogue-spread.webp"
+          src="/images/baldr-catalogue-spread.webp"
           alt={t.catalogueSection.title}
           loading="lazy"
           className="w-full h-full object-cover absolute inset-0"
@@ -821,12 +821,12 @@ export default function BaldreFlosLightHomePage() {
               {/* Direct PDF File Download */}
               <a
                 href={t.catalogueSection.pdfUrl}
-                download="Baldre-2026-Catalogue.pdf"
+                download="Baldr-2026-Catalogue.pdf"
                 onClick={() =>
                   triggerToast(
                     isFa
                       ? 'فایل PDF کاتالوگ ۲۰۲۶ بالدر در حال دریافت است.'
-                      : 'Downloading Baldre 2026 Catalogue PDF...'
+                      : 'Downloading Baldr 2026 Catalogue PDF...'
                   )
                 }
                 className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-none bg-white/15 backdrop-blur-sm text-[#FFFFFF] hover:bg-white/25 border border-white/35 transition-colors text-xs sm:text-sm font-semibold"
@@ -972,17 +972,17 @@ export default function BaldreFlosLightHomePage() {
                     </div>
                     <div dir="ltr" className="text-xs sm:text-sm font-bold text-[#FFFFFF] flex items-center gap-2">
                       <a
-                        href="mailto:info@baldre.ir"
+                        href="mailto:info@baldr.ir"
                         className="hover:text-[#E40521] hover:underline transition-colors"
                       >
-                        info@baldre.ir
+                        info@baldr.ir
                       </a>
                       <span>•</span>
                       <a
-                        href="mailto:projects@baldre.ir"
+                        href="mailto:projects@baldr.ir"
                         className="hover:text-[#E40521] hover:underline transition-colors"
                       >
-                        projects@baldre.ir
+                        projects@baldr.ir
                       </a>
                     </div>
                   </div>
@@ -1136,8 +1136,8 @@ export default function BaldreFlosLightHomePage() {
                 className="inline-flex flex-col leading-none cursor-pointer"
               >
                 <img
-                  src="/images/baldre-logo-red.webp"
-                  alt="Baldre Lighting"
+                  src="/images/baldr-logo-red.webp"
+                  alt="Baldr Lighting"
                   className="h-7 w-auto object-contain self-start"
                 />
                 <span className="text-[11px] text-[#555555] mt-2 font-medium">
@@ -1219,7 +1219,7 @@ export default function BaldreFlosLightHomePage() {
                 <li className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-[#111111] shrink-0" />
                   <a
-                    href="mailto:info@baldre.ir"
+                    href="mailto:info@baldr.ir"
                     dir="ltr"
                     className="text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors"
                   >

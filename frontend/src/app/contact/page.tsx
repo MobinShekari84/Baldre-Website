@@ -22,7 +22,7 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreContactPage() {
+export default function BaldrContactPage() {
   const pathname = usePathname();
   const lang: Lang = pathname?.startsWith('/en') ? 'en' : 'fa';
   const isFa = lang === 'fa';
@@ -121,15 +121,15 @@ export default function BaldreContactPage() {
          ===================================================================== */}
       <header className="fixed top-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-b border-[#E5E5E5] transition-all">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo */}
+          {/* Official Baldr Red Logo */}
           <Link
             href={homeHref}
             className="flex items-center group shrink-0 cursor-pointer"
-            aria-label="Baldre Lighting"
+            aria-label="Baldr Lighting"
           >
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -263,13 +263,13 @@ export default function BaldreContactPage() {
                     </a>
                   </div>
                   <div>
-                    <a href="mailto:info@baldre.ir" className="hover:text-[#E40521] transition-colors">
-                      info@baldre.ir
+                    <a href="mailto:info@baldr.ir" className="hover:text-[#E40521] transition-colors">
+                      info@baldr.ir
                     </a>
                   </div>
                   <div>
-                    <a href="mailto:projects@baldre.ir" className="hover:text-[#E40521] transition-colors">
-                      projects@baldre.ir
+                    <a href="mailto:projects@baldr.ir" className="hover:text-[#E40521] transition-colors">
+                      projects@baldr.ir
                     </a>
                   </div>
                 </div>
@@ -390,7 +390,7 @@ export default function BaldreContactPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Link href={homeHref} className="shrink-0">
-              <img src="/images/baldre-logo-red.webp" alt="Baldre Lighting" className="h-5 w-auto object-contain" />
+              <img src="/images/baldr-logo-red.webp" alt="Baldr Lighting" className="h-5 w-auto object-contain" />
             </Link>
             <span>•</span>
             <span>{isFa ? 'استودیو مهندسی و طراحی روشنایی معماری' : 'Architectural Lighting Studio'}</span>
@@ -400,8 +400,8 @@ export default function BaldreContactPage() {
             <a href="tel:+982126204800" className="hover:text-[#E40521] transition-colors cursor-pointer" dir="ltr">
               +98 21 2620 4800
             </a>
-            <a href="mailto:info@baldre.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
-              info@baldre.ir
+            <a href="mailto:info@baldr.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
+              info@baldr.ir
             </a>
             <Link href={projectsHref} className="hover:text-[#E40521] transition-colors cursor-pointer">
               {isFa ? 'پروژه‌های معماری' : 'Projects'}

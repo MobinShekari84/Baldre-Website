@@ -21,14 +21,14 @@ import {
 } from 'lucide-react';
 import {
   Lang,
-  BaldreProject,
+  BaldrProject,
   FALLBACK_HOMEPAGE_DATA,
   UI_TEXT,
 } from '@/data/baldreData';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreProjectsPage() {
+export default function BaldrProjectsPage() {
   const pathname = usePathname();
   const lang: Lang = pathname?.startsWith('/en') ? 'en' : 'fa';
   const isFa = lang === 'fa';
@@ -41,7 +41,7 @@ export default function BaldreProjectsPage() {
   const aboutHref = isFa ? '/about' : '/en/about';
   const contactHref = isFa ? '/contact' : '/en/contact';
 
-  const [projects, setProjects] = useState<BaldreProject[]>(FALLBACK_HOMEPAGE_DATA.projects);
+  const [projects, setProjects] = useState<BaldrProject[]>(FALLBACK_HOMEPAGE_DATA.projects);
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -59,7 +59,7 @@ export default function BaldreProjectsPage() {
         if (!res.ok) throw new Error('Offline');
         return res.json();
       })
-      .then((data: BaldreProject[]) => {
+      .then((data: BaldrProject[]) => {
         if (mounted && Array.isArray(data) && data.length > 0) {
           setProjects(data);
         }
@@ -139,15 +139,15 @@ export default function BaldreProjectsPage() {
          ===================================================================== */}
       <header className="fixed top-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-b border-[#E5E5E5] transition-all">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo */}
+          {/* Official Baldr Red Logo */}
           <Link
             href={homeHref}
             className="flex items-center group shrink-0 cursor-pointer"
-            aria-label="Baldre Lighting"
+            aria-label="Baldr Lighting"
           >
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -243,7 +243,7 @@ export default function BaldreProjectsPage() {
             <p className="text-sm sm:text-base text-[#555555] leading-relaxed text-justify font-light">
               {isFa
                 ? 'مجموعه‌ای از برترین پروژه‌های مسکونی، ویلاها و گالری‌های اختصاصی در تهران و سایر نقاط که با سامانه‌های روشنایی سفارشی، نورپردازی خطی دقیق و مجسمه‌های نوری استودیو بالدر هویت یافته‌اند.'
-                : 'A curated showcase of bespoke residences, private galleries, and architectural pavilions sculpted with Baldre precision optics, minimal linear profiles, and mouth-blown luminaires.'}
+                : 'A curated showcase of bespoke residences, private galleries, and architectural pavilions sculpted with Baldr precision optics, minimal linear profiles, and mouth-blown luminaires.'}
             </p>
           </div>
 
@@ -354,7 +354,7 @@ export default function BaldreProjectsPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Link href={homeHref} className="shrink-0">
-              <img src="/images/baldre-logo-red.webp" alt="Baldre Lighting" className="h-5 w-auto object-contain" />
+              <img src="/images/baldr-logo-red.webp" alt="Baldr Lighting" className="h-5 w-auto object-contain" />
             </Link>
             <span>•</span>
             <span>{isFa ? 'استودیو مهندسی و طراحی روشنایی معماری' : 'Architectural Lighting Studio'}</span>
@@ -364,8 +364,8 @@ export default function BaldreProjectsPage() {
             <a href="tel:+982126204800" className="hover:text-[#E40521] transition-colors cursor-pointer" dir="ltr">
               +98 21 2620 4800
             </a>
-            <a href="mailto:projects@baldre.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
-              projects@baldre.ir
+            <a href="mailto:projects@baldr.ir" className="hover:text-[#E40521] transition-colors cursor-pointer">
+              projects@baldr.ir
             </a>
             <Link href={productsBase} className="hover:text-[#E40521] transition-colors cursor-pointer">
               {isFa ? 'کالکشن محصولات' : 'Products'}

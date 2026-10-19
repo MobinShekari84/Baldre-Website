@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Architects & Professionals Portal | Baldre Lighting',
+  title: 'Architects & Professionals Portal | Baldr Lighting',
   description:
     'Dedicated B2B resource portal for architecture firms and MEP consultants. Download 3D CAD (.dwg), photometric IES files, Dialux calculations, and request project mockups.',
   alternates: {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Architects & Professionals Portal | Baldre Lighting',
+    title: 'Architects & Professionals Portal | Baldr Lighting',
     description:
       'Complete CAD/IES downloads library, bespoke profile manufacturing, and project consultation for architects.',
     locale: 'en_US',

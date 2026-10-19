@@ -38,9 +38,9 @@ def default_gallery_images():
 
 def default_professional_downloads():
     return {
-        "data_sheet_pdf": "/downloads/Baldre-2026-Catalogue.pdf",
-        "installation_manual_pdf_fa": "/downloads/Baldre-2026-Catalogue.pdf",
-        "installation_manual_pdf_en": "/downloads/Baldre-2026-Catalogue.pdf",
+        "data_sheet_pdf": "/downloads/Baldr-2026-Catalogue.pdf",
+        "installation_manual_pdf_fa": "/downloads/Baldr-2026-Catalogue.pdf",
+        "installation_manual_pdf_en": "/downloads/Baldr-2026-Catalogue.pdf",
         "photometric_ies_file": "/downloads/BAL-LS-01-Photometric.ies",
         "cad_3d_file": "/downloads/BAL-LS-01-3DModel.step",
     }
@@ -54,7 +54,7 @@ class Product(models.Model):
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     designer_fa = models.CharField(max_length=120, default='استودیو طراحی بالدر', blank=True)
-    designer_en = models.CharField(max_length=120, default='Baldre Design Studio', blank=True)
+    designer_en = models.CharField(max_length=120, default='Baldr Design Studio', blank=True)
     year = models.PositiveIntegerField(default=2026)
     short_description_fa = models.TextField()
     short_description_en = models.TextField()

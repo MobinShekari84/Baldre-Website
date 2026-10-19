@@ -11,8 +11,8 @@ from catalog.views import (
     ConsultationInquiryAPIView,
 )
 
-admin.site.site_header = "Baldre Lighting — پنل مدیریت جامع بالدر"
-admin.site.site_title = "Baldre Lighting Admin"
+admin.site.site_header = "Baldr Lighting — پنل مدیریت جامع بالدر"
+admin.site.site_title = "Baldr Lighting Admin"
 admin.site.index_title = "مدیریت کاتالوگ محصولات، پروژه‌های معماری و اخبار"
 
 urlpatterns = [

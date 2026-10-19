@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import {
   Lang,
-  BaldreProduct,
+  BaldrProduct,
   FALLBACK_HOMEPAGE_DATA,
   FLOS_CATEGORY_STRIP,
   UI_TEXT,
@@ -27,7 +27,7 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function BaldreProductDetailPage() {
+export default function BaldrProductDetailPage() {
   const params = useParams<{ slug: string }>();
   const pathname = usePathname();
   const slug = params?.slug || '';
@@ -41,10 +41,10 @@ export default function BaldreProductDetailPage() {
   const productsBase = isFa ? '/products' : '/en/products';
 
   // All products (for related products & fallback lookup)
-  const [allProducts, setAllProducts] = useState<BaldreProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
+  const [allProducts, setAllProducts] = useState<BaldrProduct[]>(FALLBACK_HOMEPAGE_DATA.products);
 
   // Current product state (instant lookup from fallback, updated from Django API)
-  const [product, setProduct] = useState<BaldreProduct | null>(() => {
+  const [product, setProduct] = useState<BaldrProduct | null>(() => {
     return (
       FALLBACK_HOMEPAGE_DATA.products.find((p) => p.slug === slug) ||
       FALLBACK_HOMEPAGE_DATA.products[0]
@@ -89,7 +89,7 @@ export default function BaldreProductDetailPage() {
         if (!res.ok) throw new Error('Not found in API');
         return res.json();
       })
-      .then((apiProduct: BaldreProduct) => {
+      .then((apiProduct: BaldrProduct) => {
         if (mounted && apiProduct?.sku) {
           setProduct(apiProduct);
           setNotFound(false);
@@ -107,7 +107,7 @@ export default function BaldreProductDetailPage() {
         if (!res.ok) throw new Error('Offline');
         return res.json();
       })
-      .then((apiList: BaldreProduct[]) => {
+      .then((apiList: BaldrProduct[]) => {
         if (mounted && Array.isArray(apiList) && apiList.length > 0) {
           setAllProducts(apiList);
         }
@@ -208,11 +208,11 @@ export default function BaldreProductDetailPage() {
          ===================================================================== */}
       <header className="fixed top-0 inset-x-0 z-40 w-full rounded-none bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-[#E5E5E5] transition-all duration-300">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 h-20 flex items-center justify-between gap-4">
-          {/* Official Baldre Red Logo linking back to Home */}
+          {/* Official Baldr Red Logo linking back to Home */}
           <Link href={homeHref} className="flex items-center group shrink-0 cursor-pointer">
             <img
-              src="/images/baldre-logo-red.webp"
-              alt="Baldre Lighting"
+              src="/images/baldr-logo-red.webp"
+              alt="Baldr Lighting"
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>
@@ -298,7 +298,7 @@ export default function BaldreProductDetailPage() {
             className="flex flex-wrap items-center gap-2 text-xs text-[#666666] pb-8 mb-10 border-b border-[#E5E5E5]"
           >
             <Link href={homeHref} className="hover:text-[#E40521] transition-colors cursor-pointer">
-              {isFa ? 'بالدر' : 'Baldre'}
+              {isFa ? 'بالدر' : 'Baldr'}
             </Link>
             <BreadcrumbChevron className="w-3.5 h-3.5 text-[#E40521]" />
             <Link href={productsBase} className="hover:text-[#E40521] transition-colors cursor-pointer">
@@ -869,7 +869,7 @@ export default function BaldreProductDetailPage() {
          ===================================================================== */}
       <section className="relative w-full min-h-[70vh] overflow-hidden bg-[#111111] flex items-end py-20 lg:py-24">
         <img
-          src="/images/baldre-catalogue-spread.webp"
+          src="/images/baldr-catalogue-spread.webp"
           alt={t.catalogueSection.title}
           loading="lazy"
           className="w-full h-full object-cover absolute inset-0"
@@ -892,7 +892,7 @@ export default function BaldreProductDetailPage() {
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href={t.catalogueSection.pdfUrl}
-                download="Baldre-2026-Catalogue.pdf"
+                download="Baldr-2026-Catalogue.pdf"
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-none bg-[#FFFFFF] text-[#111111] hover:bg-[#EAEAEA] transition-colors text-xs font-bold"
               >
                 <Download className="w-4 h-4" />
@@ -912,8 +912,8 @@ export default function BaldreProductDetailPage() {
             <div className="lg:col-span-4 space-y-4">
               <Link href={homeHref} className="inline-flex flex-col leading-none cursor-pointer">
                 <img
-                  src="/images/baldre-logo-red.webp"
-                  alt="Baldre Lighting"
+                  src="/images/baldr-logo-red.webp"
+                  alt="Baldr Lighting"
                   className="h-7 w-auto object-contain self-start"
                 />
                 <span className="text-[11px] text-[#555555] mt-2 font-medium">
@@ -990,7 +990,7 @@ export default function BaldreProductDetailPage() {
                 <li className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-[#111111] shrink-0" />
                   <a
-                    href="mailto:info@baldre.ir"
+                    href="mailto:info@baldr.ir"
                     dir="ltr"
                     className="text-xs font-semibold text-[#111111] hover:text-[#E40521] transition-colors"
                   >
