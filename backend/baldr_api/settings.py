@@ -2,7 +2,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-baldre-luxury-lighting-tehran-secret-key-2026'
+SECRET_KEY = 'django-insecure-baldr-luxury-lighting-tehran-secret-key-2026'
 
 DEBUG = True
 
@@ -33,7 +33,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-ROOT_URLCONF = 'baldre_api.urls'
+ROOT_URLCONF = 'baldr_api.urls'
 
 TEMPLATES = [
     {
@@ -51,7 +51,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'baldre_api.wsgi.application'
+WSGI_APPLICATION = 'baldr_api.wsgi.application'
 
 DATABASES = {
     'default': {

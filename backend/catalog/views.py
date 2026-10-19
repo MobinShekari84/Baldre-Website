@@ -25,7 +25,7 @@ class HomepageDataAPIView(APIView):
 
         return Response({
             "brand": {
-                "name_en": "BALDRE",
+                "name_en": "BALDR",
                 "name_fa": "بالدر",
                 "origin_en": "Tehran Architectural Lighting Studio",
                 "origin_fa": "استودیو مهندسی و طراحی روشنایی معماری تهران",

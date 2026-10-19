@@ -27,7 +27,7 @@ import {
   FLOS_CATEGORY_STRIP,
   FLOS_ROOMS,
   UI_TEXT,
-} from '@/data/baldreData';
+} from '@/data/baldrData';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
@@ -861,32 +861,59 @@ export default function BaldrFlosLightHomePage() {
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {data.news.map((item) => (
-              <article
-                key={item.slug}
-                className="group flex flex-col bg-transparent cursor-pointer"
-              >
-                <div className="aspect-[16/10] bg-[#FFFFFF] rounded-none overflow-hidden mb-3.5 relative">
-                  <img
-                    src={item.image_url}
-                    alt={isFa ? item.title_fa : item.title_en}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-[#666666] mb-1">
-                  <span>{isFa ? item.category_fa : item.category_en}</span>
-                  <span>•</span>
-                  <span>{isFa ? item.date_fa : item.date_en}</span>
-                </div>
-                <h4 className="text-sm sm:text-base font-bold text-[#111111] group-hover:text-[#E40521] transition-colors mb-1.5">
-                  {isFa ? item.title_fa : item.title_en}
-                </h4>
-                <p className="text-xs text-[#555555] font-light">
-                  {isFa ? item.excerpt_fa : item.excerpt_en}
-                </p>
-              </article>
-            ))}
+            {data.news.map((item) => {
+              const href =
+                item.slug.includes('catalogue') || item.slug.includes('collection')
+                  ? isFa
+                    ? '/products'
+                    : '/en/products'
+                  : item.slug.includes('philosophy') || item.slug.includes('invisible-light')
+                  ? isFa
+                    ? '/about'
+                    : '/en/about'
+                  : item.slug.includes('dali') || item.slug.includes('casambi') || item.slug.includes('smart')
+                  ? isFa
+                    ? '/professionals'
+                    : '/en/professionals'
+                  : isFa
+                  ? '/about'
+                  : '/en/about';
+
+              return (
+                <Link
+                  key={item.slug}
+                  href={href}
+                  className="group flex flex-col justify-between bg-transparent cursor-pointer"
+                >
+                  <div>
+                    <div className="aspect-[16/10] bg-[#FFFFFF] rounded-none overflow-hidden mb-3.5 relative">
+                      <img
+                        src={item.image_url}
+                        alt={isFa ? item.title_fa : item.title_en}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2 text-[11px] text-[#666666] mb-1">
+                      <span>{isFa ? item.category_fa : item.category_en}</span>
+                      <span>•</span>
+                      <span>{isFa ? item.date_fa : item.date_en}</span>
+                    </div>
+                    <h4 className="text-sm sm:text-base font-bold text-[#111111] group-hover:text-[#E40521] transition-colors mb-1.5">
+                      {isFa ? item.title_fa : item.title_en}
+                    </h4>
+                    <p className="text-xs text-[#555555] font-light">
+                      {isFa ? item.excerpt_fa : item.excerpt_en}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 mt-4 border-t border-[#E5E5E5] flex items-center justify-between text-xs font-semibold text-[#111111] group-hover:text-[#E40521] transition-colors">
+                    <span>{isFa ? 'مطالعه و بررسی' : 'Explore & Read'}</span>
+                    <ArrowIcon className="w-3.5 h-3.5 text-[#E40521]" />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

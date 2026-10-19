@@ -1,5 +1,5 @@
 import os
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'baldre_api.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'baldr_api.settings')
 application = get_wsgi_application()

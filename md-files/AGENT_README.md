@@ -30,14 +30,14 @@
 *   **Backend (`backend/`):** Python + Django 6.1 + Django REST Framework + CORS Headers.
     *   **API Endpoint:** `http://127.0.0.1:8000/api/homepage/`, `/api/products/`, `/api/projects/`, `/api/news/`, `/api/inquiries/`
     *   **Django Admin Panel:** `http://127.0.0.1:8000/admin/` (Default Superuser: `admin` / `baldre2026`)
-    *   **Seed Command:** `python manage.py seed_baldre`
+    *   **Seed Command:** `python manage.py seed_baldr`
 
 ## 4. Organized Workspace File Index
 *   **Application Code:**
-    *   `frontend/` -> Next.js 15 Bilingual Luxury Frontend (`src/app/page.tsx`, `src/data/baldreData.ts`, `src/app/globals.css`, `src/app/layout.tsx`).
-    *   `backend/` -> Django REST Framework API & Admin CMS (`catalog/models.py`, `catalog/serializers.py`, `catalog/views.py`, `catalog/admin.py`).
+    *   `frontend/` -> Next.js 15 Bilingual Luxury Frontend (`src/app/page.tsx`, `src/data/baldrData.ts`, `src/app/globals.css`, `src/app/layout.tsx`).
+    *   `backend/` -> Django REST Framework API & Admin CMS (`catalog/models.py`, `catalog/serializers.py`, `catalog/views.py`, `catalog/admin.py`, `baldr_api/`).
 *   **Strategy & Research (`md-files/01-strategy/`):**
-    *   `md-files/01-strategy/Baldre_Lighting_Project_Plan.md`
+    *   `md-files/01-strategy/Baldr_Lighting_Project_Plan.md`
     *   `md-files/01-strategy/Project_Phases_FA.md`
     *   `md-files/01-strategy/Lighting_Competitor_Analysis.md`
 *   **Architecture & UI Rules (`md-files/02-architecture/`):**
@@ -51,8 +51,8 @@
     *   `md-files/03-data-model/data-template-help.md`
     *   `data-templates/sample-product-template.json`
 *   **Executive PDF Reports (`pdf-reports/`):**
-    *   `pdf-reports/Baldre_Sitemap_FA.pdf`
-    *   `pdf-reports/Baldre_Phases_FA.pdf`
+    *   `pdf-reports/Baldr_Sitemap_FA.pdf`
+    *   `pdf-reports/Baldr_Phases_FA.pdf`
 
 
 ---
@@ -78,7 +78,7 @@ python3 -m venv .venv
 source .venv/bin/activate   # در ویندوز: .venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
-python manage.py seed_baldre
+python manage.py seed_baldr
 python manage.py runserver 127.0.0.1:8000
 ```
 - پنل مدیریت جنگو: `http://127.0.0.1:8000/admin/` (نام کاربری: `admin` / رمز عبور: `baldre2026`)

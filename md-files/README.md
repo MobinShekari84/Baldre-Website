@@ -60,7 +60,7 @@ pip install -r requirements.txt
 
 # ساخت جداول دیتابیس و بارگذاری دیتای اولیه محصولات بالدر
 python manage.py migrate
-python manage.py seed_baldre
+python manage.py seed_baldr
 
 # اجرای سرور جنگو روی پورت 8000
 python manage.py runserver 127.0.0.1:8000
@@ -74,7 +74,7 @@ python -m venv .venv
 pip install -r requirements.txt
 
 python manage.py migrate
-python manage.py seed_baldre
+python manage.py seed_baldr
 python manage.py runserver 127.0.0.1:8000
 ```
 
@@ -91,7 +91,7 @@ python manage.py runserver 127.0.0.1:8000
 ## ۴. راهنمای دپلوی آنلاین آزمایشی روی Vercel
 
 1. وارد سایت **[vercel.com](https://vercel.com)** شوید و با اکانت GitHub خود لاگین کنید.
-2. روی **Add New -> Project** کلیک کنید و مخزن **`Baldre-Website`** را انتخاب (**Import**) نمایید.
+2. روی **Add New -> Project** کلیک کنید و مخزن **`Baldr-Website`** را انتخاب (**Import**) نمایید.
 3. در بخش **Root Directory** روی **Edit** کلیک کرده و پوشه **`frontend`** را انتخاب کنید.
 4. روی دکمه **Deploy** کلیک کنید تا لینک آنلاین سایت در کمتر از ۱ دقیقه آماده شود.
 
@@ -100,7 +100,7 @@ python manage.py runserver 127.0.0.1:8000
 ## ۵. ساختار پوشه‌های پروژه (Directory Structure)
 
 ```text
-Baldre-Website/
+Baldr-Website/
 ├── frontend/                  # اپلیکیشن Next.js 15 (فرانت‌اند دو زبانه فارسی/انگلیسی)
 │   ├── public/
 │   │   ├── fonts/             # فونت‌های محلی Yekan Bakh Fa (8 وزن woff2)
@@ -108,10 +108,10 @@ Baldre-Website/
 │   │   └── diagrams/          # نقشه‌های مهندسی SVG ابعاد چراغ‌ها
 │   └── src/
 │       ├── app/               # صفحات و استایل‌های اصلی (page.tsx, layout.tsx, globals.css)
-│       └── data/              # دیتای ساختاریافته و دیکشنری دو زبانه (baldreData.ts)
+│       └── data/              # دیتای ساختاریافته و دیکشنری دو زبانه (baldrData.ts)
 ├── backend/                   # بک‌اند Django 6.1 + Django REST Framework
-│   ├── baldre_api/            # تنظیمات اصلی پروژه جنگو و روتینگ
-│   ├── catalog/               # مدل‌ها، سریالایزرها، ویوها، پنل ادمین و اسکریپت seed_baldre
+│   ├── baldr_api/             # تنظیمات اصلی پروژه جنگو و روتینگ
+│   ├── catalog/               # مدل‌ها، سریالایزرها، ویوها، پنل ادمین و اسکریپت seed_baldr
 │   └── requirements.txt       # پکیج‌های پایتون مورد نیاز بک‌اند
 ├── fonts/                     # آرشیو اصلی فونت‌های فارسی یکان بخ (woff2)
 ├── data-templates/            # قالب استاندارد JSON شناسنامه فنی محصولات
