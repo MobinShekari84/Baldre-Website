@@ -98,7 +98,7 @@ class ProductSerializer(serializers.ModelSerializer):
                 "energy_class": instance.energy_class or "A++",
             },
             "media": {
-                "hero_image_url": instance.hero_image_url or "/images/flos-prod-pendant.webp",
+                "hero_image_url": instance.hero_image_url or "/images/baldr-prod-pendant-studio.webp",
                 "gallery_images": gallery,
                 "dimension_diagram_url": instance.dimension_diagram_url or "/diagrams/linear-01.svg",
             },

@@ -214,7 +214,7 @@ export default function BaldrAboutPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14">
           <div className="relative aspect-[16/9] lg:aspect-[21/9] w-full rounded-none overflow-hidden bg-[#111111] mb-12">
             <img
-              src="/images/flos-hero-seki.webp"
+              src="/images/baldr-wide-systems.webp"
               alt="Baldr Studio Narrative"
               className="w-full h-full object-cover opacity-80"
             />

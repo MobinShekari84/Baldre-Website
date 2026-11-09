@@ -1,56 +1,51 @@
 ---
 name: nextjs-frontend-guidelines
 description: >-
-  Complete frontend architecture, Flos-inspired light gallery design system, bilingual RTL/LTR rules, Yekan Bakh typography setup, and UI/UX specifications tailored for the Baldre Lighting website (Next.js App Router + Tailwind CSS + Framer Motion).
+  Complete frontend architecture, Flos-inspired sharp minimalist gallery design system, bilingual RTL/LTR rules, Yekan Bakh typography setup, dual-image hover, and UI specifications tailored for the Baldr Lighting website (Next.js 15 App Router + Tailwind CSS v4 + Framer Motion).
 ---
 
-# Baldre Lighting — Specific Frontend Engineering & Design Skill
+# Baldr Lighting — Frontend Engineering & Design Skill
 
-Activate this skill whenever you are planning, scaffolding, styling, or coding the Next.js frontend for **Baldre Lighting**. Every page and component must strictly follow this blueprint.
-
----
-
-## 1. Mandatory Client UI/UX Rules (Non-Negotiable)
-
-1.  **Bright, Modern, Minimal Light Gallery Aesthetic (Inspired by Flos.com):**
-    *   Primary background: Gallery White (`#FFFFFF`) paired with Warm Stone/Alabaster (`#F5F4F0`) and Soft Travertine (`#EFECE6`).
-    *   Primary ink: Deep Carbon (`#111111`) and Muted Stone (`#55534E` / `#686662`).
-2.  **Full-Display Hero Section (`عکس Full Display با یک تیتر و یک متن کوتاه زیرش`):**
-    *   The Hero section MUST be a full-viewport (`min-h-[88vh]` / `h-[92vh]`) atmospheric photograph with **one bold headline (یک تیتر)** and **one short subtitle underneath (یک متن کوتاه زیرش)** so the visitor is captivated in a single glance (`توی یک نگاه مخاطب جذبش بشه`).
-3.  **Local Persian Font from `/fonts/` Folder (`Yekan Bakh Fa`):**
-    *   Load all 8 weights of `Yekan Bakh Fa` (`01 Hairline` to `08 Fat`) directly from `/Users/mobin_shekari/Documents/Baldre lightening website/fonts/` via `next/font/local` in `layout.tsx` AND `@font-face` in `globals.css`.
-    *   Ensure `Yekan Bakh Fa` is applied across all elements (headings, body, buttons, nav, numbers, badges) without being overridden by `font-mono` or system fallbacks.
-4.  **Soft Rounded Geometry — Never Use Sharp Corners (`از مستطیل های گوشه سخت و تیز استفاده نکن`):**
-    *   **FORBIDDEN:** Sharp 90-degree corners (`rounded-none`).
-    *   **REQUIRED:** Soft, modern rounded corners everywhere (`rounded-2xl`, `rounded-3xl` for cards/containers/modals/images, and `rounded-full` or `rounded-xl` for buttons/pills/inputs).
-5.  **All Texts Must Be Justified (`همه تکست ها باید justify باشن`):**
-    *   All paragraphs (`p`), product descriptions, project summaries, editorial stories, and multi-line text blocks MUST use `text-justify` (`text-align: justify`).
-6.  **Attractive Modern Navbar with Minimal Hover Underline Animation:**
-    *   Use a sleek, modern glassmorphic navbar (`backdrop-blur-md`) where hovering over any nav link triggers a smooth, minimal underline animation (`after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300`).
-7.  **Zero Backend / Debug Text in UI (`بخش های live django اینارو همش حذف کن`):**
-    *   Never display developer/backend strings such as `"DJANGO REST API LIVE"`, `"Baldre API"`, or server status badges anywhere in the UI.
+Activate this skill whenever planning, scaffolding, styling, or coding the Next.js frontend for **Baldr Lighting**.
 
 ---
 
-## 2. Typography & Local Font Setup (`Yekan Bakh Fa`)
+## 1. Mandatory Brand UI/UX Rules (Non-Negotiable)
 
-The workspace includes the complete **Yekan Bakh Fa** `.woff2` family in `/fonts/`:
-*   `Yekan Bakh Fa 01 Hairline.woff2` (`weight: '100'`)
-*   `Yekan Bakh Fa 02 Thin.woff2` (`weight: '200'`)
-*   `Yekan Bakh Fa 03 Light.woff2` (`weight: '300'`)
-*   `Yekan Bakh Fa 04 Regular.woff2` (`weight: '400'`)
-*   `Yekan Bakh Fa 05 Medium.woff2` (`weight: '500'`)
-*   `Yekan Bakh Fa 06 Bold.woff2` (`weight: '700'`)
-*   `Yekan Bakh Fa 07 Heavy.woff2` (`weight: '800'`)
-*   `Yekan Bakh Fa 08 Fat.woff2` (`weight: '900'`)
+1. **Brand Identity:**
+   * Official name: **Baldr** (Persian: **بالدر**).
+   * Logo: Always display the red spiral 'B' mark (`/images/baldr-logo-red.webp`).
+   * Primary brand accent: `#E40521`.
 
-Configure these via `next/font/local` in `src/app/layout.tsx` pointing directly to `../../../fonts/Yekan Bakh Fa ...woff2` and bind the CSS variable `--font-yekan` to `html` and `body`.
+2. **Bright, Modern, Minimal Light Gallery Aesthetic (Inspired by Flos.com):**
+   * Primary background: Gallery White (`#FFFFFF`) paired with Soft Alabaster (`#F5F4F0`) and Muted Grey borders (`#E5E5E5`).
+   * Deep Carbon ink (`#111111`) with high readability.
 
-### Technical Metrics in RTL (`lang="fa"`)
-Wrap technical values (`CRI >95`, `220-240V AC`, `1200 × 35 × 40 mm`, `BAL-LS-01-BRS`, `3000K`, `IP20`) in `dir="ltr"` while keeping `Yekan Bakh Fa` as the font family so numbers and symbols align cleanly without switching to an ugly monospace courier font.
+3. **Sharp Rectangular Geometry (`rounded-none`):**
+   * **FORBIDDEN:** Soft rounded corners or rounded pills (`rounded-xl`, `rounded-2xl`, `rounded-3xl`, `rounded-full`).
+   * **REQUIRED:** Strict sharp geometric precision (`rounded-none`) across all cards, modals, buttons, image containers, input fields, and category strips. (Only circular swatches for finish colors are round).
 
----
+4. **Full-Display Hero Section with Seamless 1080p Ambient Video Loop:**
+   * Full viewport height (`h-screen min-h-[680px]`).
+   * Autoplaying seamless 1080p architectural reel (`/videos/baldr-screen-loop.mp4`) as the sole background (`autoPlay`, `loop`, `muted`, `playsInline`, `object-cover`).
+   * Day/Night/Sun/Moon toggle buttons are completely removed per client specification; the clean typographic headline, poetic subtitle, and glass Explore CTA float over the video loop.
 
-## 3. Logical CSS & Bilingual Support (`fa` & `en`)
-*   **Default Language:** Persian (`fa`, `dir="rtl"`), with a 1-click toggle to English (`en`, `dir="ltr"`).
-*   **Logical Properties:** Always use `ms-*`, `me-*`, `ps-*`, `pe-*`, `start-*`, `end-*` instead of `left`/`right`.
+5. **Dual-Image Architectural Hover:**
+   * Every product card features dual imagery:
+     - Normal state: High-resolution studio cutout on pure white (`baldr-prod-*-studio.webp`).
+     - Hover state: Smooth cross-fade to illuminated in-situ architectural context (`baldr-prod-*-arch.webp`).
+
+6. **Authentic 8 Products Catalog:**
+   * The catalog is restricted exclusively to the 8 authentic Baldr fixtures with genuine photos:
+     `vector-linear-suspension`, `vector-r-recessed-downlight`, `vector-sm-surface-mounted`, `tracking-magnet-48v-system`, `aurelia-sculptural-table-lamp`, `monolith-architectural-floor-lamp`, `eclipse-architectural-wall-sconce`, `terra-landscape-bollard-ip65`.
+
+7. **Local Persian Font (`Yekan Bakh Fa`):**
+   * Loaded locally across all 8 weights from `/fonts/` via `next/font/local` in `layout.tsx` and bound to `--font-yekan`. Never overridden by system fonts.
+   * Technical values (`CRI >95`, `3000K`, `IP20`) wrapped with `dir="ltr"` inside `Yekan Bakh Fa`.
+
+8. **Justified Text Everywhere (`text-justify`):**
+   * All paragraphs, product descriptions, editorial stories, and summaries MUST use `text-justify`.
+
+9. **Glassmorphic Navbar with Red Underline Hover:**
+   * Sleek navbar with `after:bg-[#E40521]` underline animation on link hover.
+   * Transparent when over hero at top, turns `#FFFFFF/95` with blur on scroll.

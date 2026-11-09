@@ -33,7 +33,7 @@ def default_materials_en():
 
 
 def default_gallery_images():
-    return ["/images/flos-prod-pendant.webp"]
+    return ["/images/baldr-prod-pendant-arch.webp"]
 
 
 def default_professional_downloads():
@@ -94,7 +94,7 @@ class Product(models.Model):
     energy_class = models.CharField(max_length=20, default='A++', blank=True)
 
     # 5. Media & Downloads
-    hero_image_url = models.CharField(max_length=500, default='/images/flos-prod-pendant.webp')
+    hero_image_url = models.CharField(max_length=500, default='/images/baldr-prod-pendant-studio.webp')
     gallery_images = models.JSONField(default=default_gallery_images, blank=True)
     dimension_diagram_url = models.CharField(max_length=500, default='/diagrams/linear-01.svg', blank=True)
     professional_downloads = models.JSONField(default=default_professional_downloads, blank=True)

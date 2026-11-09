@@ -1,8 +1,13 @@
 # OS & Editor
 .DS_Store
 Thumbs.db
+desktop.ini
+*.ini
 .vscode/
 .idea/
+
+# Raw client assets archive (processed into frontend/public/)
+Final/
 
 # Node / Next.js
 node_modules/

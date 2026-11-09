@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Sun,
-  Moon,
   ArrowUpLeft,
   ArrowUpRight,
   ChevronLeft,
@@ -44,9 +42,6 @@ export default function BaldrFlosLightHomePage() {
 
   // Homepage data from backend (with instant local fallback)
   const [data, setData] = useState<HomepagePayload>(FALLBACK_HOMEPAGE_DATA);
-
-  // Static Hero Scene Daylight/Evening Toggle (No Slideshow)
-  const [heroSceneMode, setHeroSceneMode] = useState<'day' | 'night'>('day');
 
   // Selected Category in Split Category Section (Right 1/3 list, Left 2/3 image + tiny text + button)
   const [activeCategorySlug, setActiveCategorySlug] = useState<string>(
@@ -344,27 +339,23 @@ export default function BaldrFlosLightHomePage() {
       </header>
 
       {/* =====================================================================
-          SECTION 1 (FULL-SCREEN STATIC IMAGE): HERO SECTION (#home)
-          - Single Static Image (No slideshow) with Day/Night switching
-          - Day/Night buttons contain ONLY Sun & Moon icons (no text labels)
+          SECTION 1 (1080P ARCHITECTURAL VIDEO LOOP): HERO SECTION (#home)
+          - Autoplay Looping 1080p Ambient Video Background
+          - Bold Headline + Short Subtitle + Minimal Glass CTA Button
          ===================================================================== */}
       <section
         id="home"
         className="relative w-full h-screen min-h-[680px] overflow-hidden bg-[#111111]"
       >
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={heroSceneMode}
-            src={heroSceneMode === 'day' ? currentSlide.day_image : currentSlide.night_image}
-            alt={isFa ? currentSlide.title_fa : currentSlide.title_en}
-            fetchPriority="high"
-            initial={{ opacity: 0.4 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0.4 }}
-            transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="w-full h-full object-cover absolute inset-0"
-          />
-        </AnimatePresence>
+        {/* Full-Screen Looping 1080p Architectural Video */}
+        <video
+          src="/videos/baldr-screen-loop.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover absolute inset-0"
+        />
 
         {/* Subtle Top & Bottom Scrim */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/70 pointer-events-none" />
@@ -387,36 +378,6 @@ export default function BaldrFlosLightHomePage() {
                 <span>{t.hero.exploreBtn}</span>
                 <ArrowIcon className="w-4 h-4 text-[#E40521]" />
               </Link>
-
-              {/* Icon-Only Daylight / Night Toggle (ONLY Sun & Moon Icons) */}
-              <div className="inline-flex items-center bg-transparent border border-white/25">
-                <button
-                  type="button"
-                  onClick={() => setHeroSceneMode('day')}
-                  aria-label={t.hero.dayMode}
-                  title={t.hero.dayMode}
-                  className={`flex items-center justify-center p-3 rounded-none transition-all cursor-pointer ${
-                    heroSceneMode === 'day'
-                      ? 'bg-white/25 backdrop-blur-xs text-[#FFFFFF]'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  <Sun className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setHeroSceneMode('night')}
-                  aria-label={t.hero.nightMode}
-                  title={t.hero.nightMode}
-                  className={`flex items-center justify-center p-3 rounded-none transition-all cursor-pointer ${
-                    heroSceneMode === 'night'
-                      ? 'bg-white/25 backdrop-blur-xs text-[#FFFFFF]'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  <Moon className="w-4 h-4" />
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -490,7 +451,7 @@ export default function BaldrFlosLightHomePage() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0.35 }}
                     transition={{ duration: 0.4, ease: 'easeOut' }}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </AnimatePresence>
               </div>
@@ -928,7 +889,7 @@ export default function BaldrFlosLightHomePage() {
         className="scroll-mt-20 relative w-full min-h-screen overflow-hidden bg-[#111111] flex items-center py-20 lg:py-28"
       >
         <img
-          src="/images/flos-hero-seki.webp"
+          src="/images/baldr-wide-systems.webp"
           alt={t.aboutSection.title}
           loading="lazy"
           className="w-full h-full object-cover absolute inset-0"
@@ -1341,7 +1302,7 @@ export default function BaldrFlosLightHomePage() {
                           ? activeProductModal.identity.name_fa
                           : activeProductModal.identity.name_en
                       }
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
 

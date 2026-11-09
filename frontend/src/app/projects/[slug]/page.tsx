@@ -399,7 +399,7 @@ export default function BaldrProjectDetailPage() {
                 >
                   <div className="w-20 h-20 rounded-none bg-[#F5F4F0] overflow-hidden shrink-0">
                     <img
-                      src={matchedProd?.media?.hero_image_url || matchedProd?.media?.gallery_images?.[0] || '/images/flos-prod-pendant.webp'}
+                      src={matchedProd?.media?.hero_image_url || matchedProd?.media?.gallery_images?.[0] || '/images/baldr-prod-pendant-studio.webp'}
                       alt={matchedProd ? (isFa ? matchedProd.identity.name_fa : matchedProd.identity.name_en) : sku}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
