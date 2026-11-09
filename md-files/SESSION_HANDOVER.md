@@ -155,5 +155,16 @@ npm run dev -- -p 3000
 3. **گام سوم (Task):** اجرای دقیق خواسته کاربر با رعایت کامل هندسه تیز (`rounded-none`)، فرمت انحصاری `.webp`، فونت یکان‌بخ و کاتالوگ ۸ محصولی.
 4. **گام چهارم (Update):** ثبت بلافاصله تغییرات و تصمیمات جدید در `md-files/` و به‌روزرسانی محتوای فایل‌های Skill در `.agents/skills/` به منظور همگام بودن دائمی دانش ایجنت.
 
+---
+
+## ۸. وضعیت همگام‌سازی گیت‌هاب (GitHub Sync Status)
+
+- **شاخه (Branch):** `main`
+- **مخزن (Remote):** `https://github.com/MobinShekari84/Baldre-Website.git`
+- **آخرین کامیت پوش‌شده:** `7339223` (`feat: integrate authentic assets, 1080p hero video loop, restrict catalog to 8 fixtures, and enforce 4-step workflow`)
+- **تعداد فایل‌های یکپارچه‌شده:** ۶۴ فایل (شامل دارایی‌های وب، کاتالوگ جامع ۱۵۱ صفحه‌ای، ویدیوی لوپ ۱۰۸۰p، قوانین و اسکیل‌ها، و پالایش کاتالوگ به ۸ چراغ اصلی).
+- **وضعیت Working Tree:** کاملاً تمیز (`clean`) و همگام با `origin/main`.
+
+
 
 
