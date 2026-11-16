@@ -161,9 +161,20 @@ npm run dev -- -p 3000
 
 - **شاخه (Branch):** `main`
 - **مخزن (Remote):** `https://github.com/MobinShekari84/Baldre-Website.git`
-- **آخرین کامیت پوش‌شده:** `7339223` (`feat: integrate authentic assets, 1080p hero video loop, restrict catalog to 8 fixtures, and enforce 4-step workflow`)
-- **تعداد فایل‌های یکپارچه‌شده:** ۶۴ فایل (شامل دارایی‌های وب، کاتالوگ جامع ۱۵۱ صفحه‌ای، ویدیوی لوپ ۱۰۸۰p، قوانین و اسکیل‌ها، و پالایش کاتالوگ به ۸ چراغ اصلی).
+- **آخرین کامیت پوش‌شده در main:** `ade86fa` (`chore: add backups to gitignore and save current sqlite db state`)
 - **وضعیت Working Tree:** کاملاً تمیز (`clean`) و همگام با `origin/main`.
+
+---
+
+## ۹. نسخه پشتیبان پیش از تغییر تم سایت (Pre-Theme Redesign Backup)
+
+پیش از اعمال تغییرات جدید در تم و طراحی درخواستی کارفرما، پشتیبان‌گیری ۳ سطحی انجام گردید:
+1. **شاخه گیت پشتیبان در گیت‌هاب:** `backup/flos-light-theme-v1`
+2. **تگ رسمی گیت:** `backup-light-theme-v1.0`
+3. **پوشه اسنپ‌شات مستقیم محلی:** `backups/light-theme-v1-snapshot/` (حاوی کل سورس کد، تمام تصاویر WebP، ویدیوی ۱۰۸۰p، کاتالوگ و کلیه اسناد `md-files`)
+4. **آرشیو فشرده:** `backups/baldr-light-theme-backup-2026-11-16.tar.gz` (حجم ۱۰۰ مگابایت)
+5. **سند راهنمای بازگردانی:** [md-files/BACKUP_RESTORATION_GUIDE.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/BACKUP_RESTORATION_GUIDE.md)
+
 
 
 
