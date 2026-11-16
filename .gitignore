@@ -9,6 +9,11 @@ desktop.ini
 # Raw client assets archive (processed into frontend/public/)
 Final/
 
+# Local Project Backups
+backups/
+*.tar.gz
+*.backup
+
 # Node / Next.js
 node_modules/
 frontend/node_modules/
