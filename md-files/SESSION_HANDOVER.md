@@ -179,23 +179,33 @@ npm run dev -- -p 3000
 
 ## ۱۰. پیاده‌سازی نسخه هنری و مینیمال فوسکارینی (Foscarini-Inspired Artistic Edition)
 
-بر اساس خواسته صریح کارفرما جهت ایجاد یک نسخه هنری مجزا با هویت بصری الهام‌گرفته از **Foscarini** با حفظ محوریت محصولات و تصاویر اصلی `Final/`:
+بر اساس خواسته صریح کارفرما و تحلیل عمیق و کالبدشکافی وب‌سایت رسمی فوسکارینی ([foscarini.com/en](https://www.foscarini.com/en/))، نسخه جدیدی بر پایه زیبایی‌شناسی بدون دکمه (Zero-Button Aesthetic) و تایپوگرافی یکپارچه در شاخه `theme/foscarini-artistic` پیاده‌سازی شد:
 
-1. **انشعاب و شاخه مجزا در گیت (Separate Git Branch):**
-   - توسعه این نسخه در شاخه مجزای `theme/foscarini-artistic` انجام شد تا از نسخه قبلی کاملاً ایزوله بماند.
-2. **نوبار با عکس (Image-Rich Visual Navbar):**
-   - تعبیه نشانگر تصویری چراغ وکتور در نوار هدر با افکت پالس قرمز
-   - مگامنو تصویری تمام‌عرض دسکتاپ شامل ۸ کارت عکس‌دار از چراغ‌های اصلی بالدر، مشخصات فوتومتریک و هایلایت ادیتوریال ماه
-   - منوی تمام‌صفحه تصویری موبایل (Mobile Visual Drawer) با کارت‌های تصویری بزرگ برای تمام بخش‌ها
-3. **سکشن اختصاصی مانیفست فوسکارینی ("What's in a Lamp? / چراغ چیست؟"):**
-   - تبیین نور به عنوان تندیس معماری و گفتگوی سکوت و روشنایی
-   - شبیه‌ساز تعاملی طیف دمای نور (2700K / 3000K / 4000K)
-4. **مدیریت تصاویر هوش مصنوعی (`ai-docs/`):**
-   - ایجاد پوشه اختصاصی `ai-docs/` و کپی WebP در `frontend/public/images/ai-docs/`
-   - جنریت تصویر تندیس نوری آتلیه معماری با هوش مصنوعی و مستندسازی در `ai-docs/README.md`
-5. **مستندات اختصاصی تم جدید:**
-   - [md-files/FOSCARINI_ARTISTIC_EDITION_SPEC.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/FOSCARINI_ARTISTIC_EDITION_SPEC.md)
-   - [md-files/Foscarini_Benchmark_and_Implementation_Log.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/Foscarini_Benchmark_and_Implementation_Log.md)
+### الف) اصول کشف‌شده از تحلیل زنده Foscarini:
+1. **زیبایی‌شناسی بدون دکمه (The Zero-Button Aesthetic):** حذف تمامی دکمه‌های باکسی، رنگی یا مستطیلی شلوغ. تمامی تعاملات صرفاً با یک فلش مورب قرمز ظریف (`↗`) به رنگ `#E40521` یا متن‌های دارای هاور انجام می‌شود.
+2. **یکپارچگی مطلق سلسله‌مراتب تایپوگرافی (Strict 4-Layer Hierarchy):** در تمام سکشن‌های صفحه اصلی، دقیقاً ۴ لایه با سایزهای کاملاً یکسان تکرار می‌شوند:
+   - لایه ۱ (Kicker): اندازه **12px**، حروف بزرگ / فونت یکان‌بخ، رنگ `#777777`
+   - لایه ۲ (Action): آیکون فلش قرمز `↗` (`#E40521`)
+   - لایه ۳ (Story Title): اندازه **24px**، وزن Medium، فاصله خطوط 32px، رنگ `#141416` یا `#FFFFFF`
+   - لایه ۴ (Body): اندازه **15px**، وزن Regular، فاصله خطوط 26px، رنگ `#444444` یا `#CCCCCC`
+3. **ساختار اسپردهای مجله‌ای معماری (1/3 to 2/3 Grid):** ریتم متناوب یک‌سوم متن و دوسوم عکاسی باکیفیت معماری شبیه به صفحات یک کتاب یا مجله نفیس معماری.
+4. **هدر متین و آرام (Quiet Floating Header):** لوگوی قرمز بالدر، ۳ عنوان اصلی (محصولات، جهان بالدر، معماران و پروژه‌ها)، سوئیچر آرام زبان (`FA | EN`) و مگامنوی تصویری با ۸ عکس واقعی.
+
+### ب) اسپردهای ۶ گانه پیاده‌سازی‌شده در صفحه اصلی (`frontend/src/app/page.tsx`):
+- **Hero Spread:** ویدیوی فول‌ویوپورت ۱۰۸۰p با چرخه بی‌نهایت، مانیفست در گوشه و فلش تعاملی `↗`.
+- **Spread 1 (فلسفه نور / مانیفست):** ترکیب ۱/۳ متن فلسفه بالدر + ۲/۳ عکاسی معماری سیستم مگنت (`baldr-inspiration-magnet-system.webp`).
+- **Spread 2 (پروژه‌ها و معماری زنده):** عکس عمودی پنت‌هاوس تهران + عکس افقی گالری هنر همراه با بلاک متنی ۴ لایه.
+- **Spread 3 (محصول در بستر تاریک / Velvet In-Situ):** پس‌زمینه زغالی با شکوه (`#121214`)، چراغ آویز وکتور در فضای مسکونی واقعی و مشخصات نوری.
+- **Spread 4 (صنعتگری و لمس متریال - Maestrie):** عکاسی ماکرو و لمسی از سنگ تراورتن، آلومینیوم و برنج با فلش `↗` برای دریافت مستند متریال.
+- **Spread 5 (انتخاب‌گر ۸ خانواده محصولی - مشابه بخش ۸ فوسکارینی):** لیست متنی ۱/۳ خانواده‌های اصیل با تغییر روان و بدون لگ تصویر معماری متناظر در ۲/۳ سمت دیگر با هاور ماوس.
+- **Spread 6 (مونوگراف و کاتالوگ معماری):** تصویر ژورنال فیزیکی بازشده (`baldr-catalogue-spread.webp`) و لینک دانلود رسمی کاتالوگ ۱۵۱ صفحه‌ای.
+- **Footer:** فوتر ۳ ستونه متین، مینیمال و آرام با اطلاعات رسمی و تماس.
+
+### ج) اسناد تخصصی مرتبط در `md-files/`:
+- [md-files/FOSCARINI_DEEP_RESEARCH_AND_HOMEPAGE_REDESIGN_FA.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/FOSCARINI_DEEP_RESEARCH_AND_HOMEPAGE_REDESIGN_FA.md)
+- [md-files/Foscarini_Benchmark_and_Implementation_Log.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/Foscarini_Benchmark_and_Implementation_Log.md)
+- [md-files/FOSCARINI_ARTISTIC_EDITION_SPEC.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/FOSCARINI_ARTISTIC_EDITION_SPEC.md)
+- [md-files/BACKUP_RESTORATION_GUIDE.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/BACKUP_RESTORATION_GUIDE.md)
 
 
 
