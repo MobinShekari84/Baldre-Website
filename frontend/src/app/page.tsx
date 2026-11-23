@@ -804,157 +804,120 @@ export default function BaldrFoscariniEditorialHomePage() {
       </section>
 
       {/* =====================================================================
-          SPREAD 5: 4-CATEGORY ARCHITECTURAL GRID (Desktop 4-in-a-Row + Subdued <> Slider)
-          - 4 categories in one row on desktop (lg:grid-cols-4)
-          - Subdued pale <> button pair for smooth set switching
-          - Dual-image hover: high-res architectural in-situ context + studio cutout
-          - Direct collection filtering link to /products?category=...
+          SPREAD 5: 4-CATEGORY ULTRA-MINIMAL GRID (Photo + Title Only)
+          - Absolute Minimalism: Exactly 1 photo and 1 title per box, no noise
+          - 4 categories in one single row on desktop (lg:grid-cols-4)
+          - Subdued pale <> buttons positioned on the left and right of the row
+          - Dual-image hover: high-res architectural context + studio cutout reveal
+          - Direct link to /products?category=...
          ===================================================================== */}
       <section className="py-24 sm:py-32 bg-[#FFFFFF] border-b border-[#EBEAE6]">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14">
-          {/* Header Row: Kicker, Title and Subdued <> Navigation Controls */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+          {/* Header Row: Title Only (No descriptive paragraph) */}
+          <div className="flex items-end justify-between gap-6 mb-10">
             <div>
               <span className="block text-xs uppercase tracking-widest text-[#777777] font-mono mb-2">
-                {isFa ? 'کاتالوگ و دسته‌بندی‌ها | ARCHITECTURAL TYPOLOGIES' : 'COLLECTIONS & TYPOLOGIES | ARCHITECTURAL FAMILIES'}
+                {isFa ? 'کاتالوگ و دسته‌بندی‌ها | TYPOLOGY' : 'COLLECTIONS | ARCHITECTURAL FAMILIES'}
               </span>
               <h2 className="text-xl sm:text-3xl font-medium text-[#141416] tracking-tight">
                 {isFa ? 'کاوش در ۸ خانواده چراغ‌های بالدر' : 'Explore the 8 Baldr Luminaire Collections'}
               </h2>
-              <p className="text-xs sm:text-sm text-[#777777] mt-1.5 font-light">
-                {isFa
-                  ? (categoryPage === 0
-                      ? 'مجموعه اول: چراغ‌های آویز و خطی، دان‌لایت توکار، روکار استوانه‌ای و سیستم ریل مگنتی ۴۸V'
-                      : 'مجموعه دوم: رومیزی تندیس‌گون، ایستاده مونولیت تراورتن، دیواری اکلیپس و پرتابل محوطه IP65')
-                  : (categoryPage === 0
-                      ? 'Collection 01: Suspensions, recessed downlights, surface cylinders & 48V magnetic tracks'
-                      : 'Collection 02: Sculptural table lamps, travertine monoliths, wall sconces & landscape bollards')}
-              </p>
             </div>
 
-            {/* Subdued page indicator + Pale <> button group */}
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="text-xs font-mono text-[#888888] tracking-widest select-none">
-                {categoryPage === 0 ? '01 / 02' : '02 / 02'}
-              </span>
-
-              {/* Subdued pale <> buttons */}
-              <div className="inline-flex items-center border border-[#141416]/15 bg-white divide-x divide-[#141416]/15 rtl:divide-x-reverse">
-                <button
-                  type="button"
-                  onClick={() => setCategoryPage((prev) => (prev === 0 ? 1 : 0))}
-                  aria-label={isFa ? 'دسته‌بندی‌های قبلی' : 'Previous categories'}
-                  title={isFa ? 'جابه‌جایی دسته‌بندی‌ها' : 'Switch categories'}
-                  className="w-10 h-10 flex items-center justify-center text-[#141416]/35 hover:text-[#141416] hover:bg-[#141416]/5 transition-colors cursor-pointer rounded-none active:scale-95"
-                >
-                  <ChevronRight className="w-4 h-4 rtl:inline ltr:hidden" />
-                  <ChevronLeft className="w-4 h-4 rtl:hidden ltr:inline" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCategoryPage((prev) => (prev === 0 ? 1 : 0))}
-                  aria-label={isFa ? 'دسته‌بندی‌های بعدی' : 'Next categories'}
-                  title={isFa ? 'جابه‌جایی دسته‌بندی‌ها' : 'Switch categories'}
-                  className="w-10 h-10 flex items-center justify-center text-[#141416]/35 hover:text-[#141416] hover:bg-[#141416]/5 transition-colors cursor-pointer rounded-none active:scale-95"
-                >
-                  <ChevronLeft className="w-4 h-4 rtl:inline ltr:hidden" />
-                  <ChevronRight className="w-4 h-4 rtl:hidden ltr:inline" />
-                </button>
-              </div>
-            </div>
+            <span className="text-xs font-mono text-[#888888] tracking-widest select-none">
+              {categoryPage === 0 ? '01 / 02' : '02 / 02'}
+            </span>
           </div>
 
-          {/* 4-Category Grid on Desktop */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={categoryPage}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          {/* Row with Flanking Subdued <> Buttons (Left & Right of the 4-Category Grid) */}
+          <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
+            {/* Start Arrow Button (< in RTL, > in LTR) */}
+            <button
+              type="button"
+              onClick={() => setCategoryPage((prev) => (prev === 0 ? 1 : 0))}
+              aria-label={isFa ? 'دسته‌بندی‌های قبلی' : 'Previous categories'}
+              className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center border border-[#141416]/15 hover:border-[#141416]/40 text-[#141416]/30 hover:text-[#141416] bg-white transition-colors cursor-pointer rounded-none active:scale-95"
             >
-              {visibleCategories.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`${productsBase}?category=${item.slug}`}
-                  className="group block bg-[#FFFFFF] border border-[#EBEAE6] hover:border-[#141416]/40 transition-all duration-500 rounded-none overflow-hidden cursor-pointer flex flex-col justify-between"
+              <ChevronRight className="w-4 h-4 rtl:inline ltr:hidden" />
+              <ChevronLeft className="w-4 h-4 rtl:hidden ltr:inline" />
+            </button>
+
+            {/* 4-Category Grid: Exactly 1 Photo + 1 Title per Box */}
+            <div className="flex-1 min-w-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={categoryPage}
+                  initial={{ opacity: 0, x: isFa ? -12 : 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: isFa ? 12 : -12 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
                 >
-                  {/* Top: 4/5 Portrait Image with Dual-Image Architectural Hover */}
-                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#F6F5F2]">
-                    {/* Architectural context photo */}
-                    <img
-                      src={item.image_url}
-                      alt={isFa ? item.name_fa : item.name_en}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    {/* Studio cutout crossfade reveal on hover */}
-                    <img
-                      src={item.studio_image}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-contain p-6 bg-white/95 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      loading="lazy"
-                    />
-                    {/* Subtle bottom vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity pointer-events-none" />
+                  {visibleCategories.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`${productsBase}?category=${item.slug}`}
+                      className="group block rounded-none overflow-hidden cursor-pointer"
+                    >
+                      {/* Pure Photo (4/5 portrait ratio with dual-image architectural hover) */}
+                      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#F6F5F2] border border-[#EBEAE6] group-hover:border-[#141416]/30 transition-colors duration-500">
+                        {/* Architectural context photo */}
+                        <img
+                          src={item.image_url}
+                          alt={isFa ? item.name_fa : item.name_en}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-104"
+                          loading="lazy"
+                        />
+                        {/* Studio cutout reveal on hover */}
+                        <img
+                          src={item.studio_image}
+                          alt=""
+                          className="absolute inset-0 w-full h-full object-contain p-8 bg-white/95 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                          loading="lazy"
+                        />
+                      </div>
 
-                    {/* Micro badges: SKU & Count */}
-                    <div className="absolute top-3.5 inset-x-3.5 flex items-center justify-between text-[11px] font-mono pointer-events-none">
-                      <span className="bg-black/50 backdrop-blur-xs text-white/90 px-2 py-0.5 border border-white/15">
-                        {item.sku}
-                      </span>
-                      <span className="bg-black/50 backdrop-blur-xs text-white/90 px-2 py-0.5 border border-white/15">
-                        {item.count} {isFa ? 'مدل' : 'Models'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Bottom: Typography Info Box */}
-                  <div className="p-5 flex flex-col justify-between flex-1 bg-white">
-                    <div>
-                      <span className="block text-[11px] uppercase tracking-widest text-[#888888] font-mono mb-2">
-                        {item.id} / 08 • {isFa ? 'خانواده نوری' : 'COLLECTION'}
-                      </span>
-                      <div className="flex items-start justify-between gap-2 mb-2">
+                      {/* Pure Title Only */}
+                      <div className="pt-3.5 flex items-center justify-between gap-2">
                         <h3 className="text-base sm:text-lg font-medium text-[#141416] group-hover:text-[#E40521] transition-colors leading-snug">
                           {isFa ? item.name_fa : item.name_en}
                         </h3>
-                        <ActionArrow className="w-4 h-4 text-[#E40521] shrink-0 mt-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <ActionArrow className="w-4 h-4 text-[#E40521] shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </div>
-                      <p className="text-xs sm:text-[13px] text-[#555555] font-light leading-relaxed text-justify line-clamp-2">
-                        {isFa ? item.tagline_fa : item.tagline_en}
-                      </p>
-                    </div>
+                    </Link>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-                    <div className="pt-4 mt-4 border-t border-[#F0EFEA] flex items-center justify-between text-[11px] font-mono text-[#888888]">
-                      <span>{isFa ? 'مشاهده کاتالوگ' : 'View Catalog'}</span>
-                      <span className="text-[#E40521] group-hover:underline">
-                        {isFa ? 'ورود به کالکشن ←' : 'Explore All →'}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+            {/* End Arrow Button (> in RTL, < in LTR) */}
+            <button
+              type="button"
+              onClick={() => setCategoryPage((prev) => (prev === 0 ? 1 : 0))}
+              aria-label={isFa ? 'دسته‌بندی‌های بعدی' : 'Next categories'}
+              className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center border border-[#141416]/15 hover:border-[#141416]/40 text-[#141416]/30 hover:text-[#141416] bg-white transition-colors cursor-pointer rounded-none active:scale-95"
+            >
+              <ChevronLeft className="w-4 h-4 rtl:inline ltr:hidden" />
+              <ChevronRight className="w-4 h-4 rtl:hidden ltr:inline" />
+            </button>
+          </div>
 
-          {/* Subdued Pagination Indicator Dots/Lines */}
-          <div className="mt-10 flex items-center justify-center gap-2.5">
+          {/* Subdued Pagination Indicator Lines */}
+          <div className="mt-8 flex items-center justify-center gap-2">
             <button
               type="button"
               onClick={() => setCategoryPage(0)}
               aria-label={isFa ? 'مجموعه اول' : 'Collection 01'}
-              className={`h-1 transition-all duration-300 cursor-pointer rounded-none ${
-                categoryPage === 0 ? 'w-10 bg-[#E40521]' : 'w-4 bg-[#141416]/20 hover:bg-[#141416]/40'
+              className={`h-0.5 transition-all duration-300 cursor-pointer rounded-none ${
+                categoryPage === 0 ? 'w-8 bg-[#E40521]' : 'w-3 bg-[#141416]/20 hover:bg-[#141416]/40'
               }`}
             />
             <button
               type="button"
               onClick={() => setCategoryPage(1)}
               aria-label={isFa ? 'مجموعه دوم' : 'Collection 02'}
-              className={`h-1 transition-all duration-300 cursor-pointer rounded-none ${
-                categoryPage === 1 ? 'w-10 bg-[#E40521]' : 'w-4 bg-[#141416]/20 hover:bg-[#141416]/40'
+              className={`h-0.5 transition-all duration-300 cursor-pointer rounded-none ${
+                categoryPage === 1 ? 'w-8 bg-[#E40521]' : 'w-3 bg-[#141416]/20 hover:bg-[#141416]/40'
               }`}
             />
           </div>

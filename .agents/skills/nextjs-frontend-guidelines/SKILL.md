@@ -56,3 +56,10 @@ Activate this skill whenever planning, scaffolding, styling, or coding the Next.
     * Features an editorial architectural manifesto section ("چراغ چیست؟ — What's in a Lamp?") establishing luminaires as architectural sculptures.
     * Incorporates an interactive CCT lighting warmth selector (2700K Sunset Gold / 3000K Gallery Soft / 4000K Crisp Modern) demonstrating spectral clarity and changing ambient glow dynamically.
     * AI-generated atmospheric imagery is stored distinctly in `ai-docs/` (WebP in `frontend/public/images/ai-docs/`) to maintain clear segregation from authentic product photos.
+
+11. **Radical Minimalism for Category Displays (Photo + Title Only):**
+    * In category grids and homepage product strips, each box must contain ONLY:
+      1. A high-resolution architectural photo (`baldr-prod-*-arch.webp` with studio cutout reveal on hover).
+      2. A concise Title (`item.name_fa` / `item.name_en`) with subtle red action arrow `↗`.
+    * **STRICTLY FORBIDDEN on category cards:** No descriptions, no taglines, no SKU badges, no model counts, no secondary subtitles or verbose explanatory paragraphs beneath section titles. The site must remain strictly minimal and artistic.
+    * **Left/Right Flanking Navigation:** Category slider navigation `<>` buttons must flank the row on the left and right sides with a subtle, pale aesthetic (`border-[#141416]/15`, `text-[#141416]/30`).
