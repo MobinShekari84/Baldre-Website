@@ -175,6 +175,29 @@ npm run dev -- -p 3000
 4. **آرشیو فشرده:** `backups/baldr-light-theme-backup-2026-11-16.tar.gz` (حجم ۱۰۰ مگابایت)
 5. **سند راهنمای بازگردانی:** [md-files/BACKUP_RESTORATION_GUIDE.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/BACKUP_RESTORATION_GUIDE.md)
 
+---
+
+## ۱۰. پیاده‌سازی نسخه هنری و مینیمال فوسکارینی (Foscarini-Inspired Artistic Edition)
+
+بر اساس خواسته صریح کارفرما جهت ایجاد یک نسخه هنری مجزا با هویت بصری الهام‌گرفته از **Foscarini** با حفظ محوریت محصولات و تصاویر اصلی `Final/`:
+
+1. **انشعاب و شاخه مجزا در گیت (Separate Git Branch):**
+   - توسعه این نسخه در شاخه مجزای `theme/foscarini-artistic` انجام شد تا از نسخه قبلی کاملاً ایزوله بماند.
+2. **نوبار با عکس (Image-Rich Visual Navbar):**
+   - تعبیه نشانگر تصویری چراغ وکتور در نوار هدر با افکت پالس قرمز
+   - مگامنو تصویری تمام‌عرض دسکتاپ شامل ۸ کارت عکس‌دار از چراغ‌های اصلی بالدر، مشخصات فوتومتریک و هایلایت ادیتوریال ماه
+   - منوی تمام‌صفحه تصویری موبایل (Mobile Visual Drawer) با کارت‌های تصویری بزرگ برای تمام بخش‌ها
+3. **سکشن اختصاصی مانیفست فوسکارینی ("What's in a Lamp? / چراغ چیست؟"):**
+   - تبیین نور به عنوان تندیس معماری و گفتگوی سکوت و روشنایی
+   - شبیه‌ساز تعاملی طیف دمای نور (2700K / 3000K / 4000K)
+4. **مدیریت تصاویر هوش مصنوعی (`ai-docs/`):**
+   - ایجاد پوشه اختصاصی `ai-docs/` و کپی WebP در `frontend/public/images/ai-docs/`
+   - جنریت تصویر تندیس نوری آتلیه معماری با هوش مصنوعی و مستندسازی در `ai-docs/README.md`
+5. **مستندات اختصاصی تم جدید:**
+   - [md-files/FOSCARINI_ARTISTIC_EDITION_SPEC.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/FOSCARINI_ARTISTIC_EDITION_SPEC.md)
+   - [md-files/Foscarini_Benchmark_and_Implementation_Log.md](file:///home/mobin_shekari/Documents/Baldre-Website/md-files/Foscarini_Benchmark_and_Implementation_Log.md)
+
+
 
 
 

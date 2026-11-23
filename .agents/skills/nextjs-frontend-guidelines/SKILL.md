@@ -46,6 +46,13 @@ Activate this skill whenever planning, scaffolding, styling, or coding the Next.
 8. **Justified Text Everywhere (`text-justify`):**
    * All paragraphs, product descriptions, editorial stories, and summaries MUST use `text-justify`.
 
-9. **Glassmorphic Navbar with Red Underline Hover:**
-   * Sleek navbar with `after:bg-[#E40521]` underline animation on link hover.
-   * Transparent when over hero at top, turns `#FFFFFF/95` with blur on scroll.
+9. **Image-Rich Visual Navbar & Mega Menu (Foscarini Benchmark):**
+   * The navbar features visual photo previews (`home navbar هم عکس باشه`):
+     - Desktop: Header bar contains a live photo thumbnail button with pulsing crimson indicator that toggles a full-width **Visual Mega Menu**.
+     - Visual Mega Menu displays an 8-card grid of authentic categories with high-resolution photography (`baldr-prod-*-arch.webp`), real-time zoom on hover, and an editorial spotlight card linking to the 151-page official catalogue.
+     - Mobile: Full-screen visual navigation drawer where every single section card is paired with its authentic high-definition architectural photo.
+
+10. **Foscarini-Inspired Artistic Manifesto & CCT Spectrum:**
+    * Features an editorial architectural manifesto section ("چراغ چیست؟ — What's in a Lamp?") establishing luminaires as architectural sculptures.
+    * Incorporates an interactive CCT lighting warmth selector (2700K Sunset Gold / 3000K Gallery Soft / 4000K Crisp Modern) demonstrating spectral clarity and changing ambient glow dynamically.
+    * AI-generated atmospheric imagery is stored distinctly in `ai-docs/` (WebP in `frontend/public/images/ai-docs/`) to maintain clear segregation from authentic product photos.
