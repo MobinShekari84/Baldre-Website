@@ -11,6 +11,8 @@ import {
   CheckCircle2,
   X,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Menu,
 } from 'lucide-react';
 import {
@@ -31,6 +33,7 @@ interface TypologyItem {
   tagline_fa: string;
   tagline_en: string;
   image_url: string;
+  studio_image: string;
   wide_image: string;
   sku: string;
   count: number;
@@ -45,6 +48,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'خطوط خالص نور معلق در فضا با خیرگی صفر (UGR <16)',
     tagline_en: 'Pure weightless suspended lines with zero glare optics',
     image_url: '/images/baldr-prod-pendant-arch.webp',
+    studio_image: '/images/baldr-prod-pendant-studio.webp',
     wide_image: '/images/baldr-wide-pendant.webp',
     sku: 'BAL-VEC-SUS-01',
     count: 86,
@@ -57,6 +61,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'تلفیق مقعر در سقف معماری با تفکیک رنگ استثنایی CRI >95',
     tagline_en: 'Architectural recessed ceiling flush with CRI >95 clarity',
     image_url: '/images/baldr-prod-ceiling-arch.webp',
+    studio_image: '/images/baldr-prod-ceiling-studio.webp',
     wide_image: '/images/baldr-wide-ceiling.webp',
     sku: 'BAL-VEC-REC-02',
     count: 52,
@@ -69,6 +74,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'پروفیل یکپارچه آلومینیوم آنودایز شده بدون اتصالات نمایان',
     tagline_en: 'Seamless machined aluminum extrusion without visible fasteners',
     image_url: '/images/baldr-prod-surface-arch.webp',
+    studio_image: '/images/baldr-prod-surface-studio.webp',
     wide_image: '/images/baldr-wide-surface.webp',
     sku: 'BAL-VEC-SM-03',
     count: 48,
@@ -81,6 +87,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'چیدمان ماژولار با پروتکل هوشمند DALI-2 و تغییر منعطف موقعیت',
     tagline_en: 'Modular magnetic track ecosystems with DALI-2 smart control',
     image_url: '/images/baldr-prod-systems-arch.webp',
+    studio_image: '/images/baldr-prod-systems-studio.webp',
     wide_image: '/images/baldr-wide-systems.webp',
     sku: 'BAL-TRK-MAG-04',
     count: 64,
@@ -93,6 +100,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'هم‌نشینی برنز تراش‌خورده و شیشه اپال دست‌ساز با دیمر لمسی',
     tagline_en: 'Hand-blown opal glass paired with milled bronze and tactile dimming',
     image_url: '/images/baldr-prod-table-arch.webp',
+    studio_image: '/images/baldr-prod-table-studio.webp',
     wide_image: '/images/baldr-wide-table.webp',
     sku: 'BAL-AUR-TAB-05',
     count: 42,
@@ -105,6 +113,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'تندیس صامت سنگ تراورتن طبیعی با بازتاب نرم نور بر دیوار',
     tagline_en: 'Natural travertine stone monolith radiating soft ambient grazing',
     image_url: '/images/baldr-prod-floor-arch.webp',
+    studio_image: '/images/baldr-prod-floor-studio.webp',
     wide_image: '/images/baldr-wide-floor.webp',
     sku: 'BAL-MON-FLR-06',
     count: 34,
@@ -117,6 +126,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'هاله نور غیرمستقیم محاط بر هندسه دیوار و بافت‌های معماری',
     tagline_en: 'Atmospheric halo grazing sculpting wall relief and masonry',
     image_url: '/images/baldr-prod-wall-arch.webp',
+    studio_image: '/images/baldr-prod-wall-studio.webp',
     wide_image: '/images/baldr-wide-wall.webp',
     sku: 'BAL-ECL-WAL-07',
     count: 48,
@@ -129,6 +139,7 @@ const BALDR_TYPOLOGIES: TypologyItem[] = [
     tagline_fa: 'آلومینیوم مقاوم در برابر شرایط اقلیمی با باطری لیتیومی یکپارچه',
     tagline_en: 'All-weather architectural IP65 bollards with integrated battery',
     image_url: '/images/baldr-prod-outdoor-arch.webp',
+    studio_image: '/images/baldr-prod-outdoor-studio.webp',
     wide_image: '/images/baldr-wide-outdoor.webp',
     sku: 'BAL-TER-OUT-08',
     count: 38,
@@ -149,8 +160,14 @@ export default function BaldrFoscariniEditorialHomePage() {
   const [isVisualMegaMenuOpen, setIsVisualMegaMenuOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
-  // Active typology in Spread 5 (Foscarini Section 8 mirror)
-  const [activeTypologyIndex, setActiveTypologyIndex] = useState<number>(0);
+  // Category grid pagination state (4 categories per row on desktop, 2 sets of 4)
+  const [categoryPage, setCategoryPage] = useState<number>(0);
+
+  // Visible 4 categories based on active page
+  const visibleCategories = useMemo(() => {
+    const start = categoryPage * 4;
+    return BALDR_TYPOLOGIES.slice(start, start + 4);
+  }, [categoryPage]);
 
   // Product modal state
   const [activeProductModal, setActiveProductModal] = useState<BaldrProduct | null>(null);
@@ -200,7 +217,6 @@ export default function BaldrFoscariniEditorialHomePage() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const activeTypology = BALDR_TYPOLOGIES[activeTypologyIndex];
   const productsBase = isFa ? '/products' : '/en/products';
   const projectsHref = isFa ? '/projects' : '/en/projects';
   const professionalsHref = isFa ? '/professionals' : '/en/professionals';
@@ -788,101 +804,159 @@ export default function BaldrFoscariniEditorialHomePage() {
       </section>
 
       {/* =====================================================================
-          SPREAD 5: THE TYPOLOGY NAVIGATOR (Foscarini Section 8 Mirror)
-          - Vertical list of 8 typologies on 1/3 (clean text with hover swap)
-          - Full-height crossfading architectural photo on 2/3
+          SPREAD 5: 4-CATEGORY ARCHITECTURAL GRID (Desktop 4-in-a-Row + Subdued <> Slider)
+          - 4 categories in one row on desktop (lg:grid-cols-4)
+          - Subdued pale <> button pair for smooth set switching
+          - Dual-image hover: high-res architectural in-situ context + studio cutout
+          - Direct collection filtering link to /products?category=...
          ===================================================================== */}
       <section className="py-24 sm:py-32 bg-[#FFFFFF] border-b border-[#EBEAE6]">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14">
-          <div className="mb-12">
-            <span className="block text-xs uppercase tracking-widest text-[#777777] font-mono mb-2">
-              {isFa ? 'کاتالوگ و دسته‌بندی‌ها | TYPOLOGY' : 'BROWSE BY ARCHITECTURAL TYPOLOGY'}
-            </span>
-            <h2 className="text-xl sm:text-3xl font-medium text-[#141416] tracking-tight">
-              {isFa ? 'کاوش در ۸ خانواده چراغ بالدر' : 'Explore the 8 Baldr Luminaire Families'}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            {/* 1/3 Column: Vertical List of 8 Typologies */}
-            <div className="lg:col-span-5 divide-y divide-[#EBEAE6] border-t border-b border-[#EBEAE6]">
-              {BALDR_TYPOLOGIES.map((item, idx) => {
-                const isSelected = activeTypologyIndex === idx;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setActiveTypologyIndex(idx)}
-                    onMouseEnter={() => setActiveTypologyIndex(idx)}
-                    className={`w-full py-4 sm:py-5 flex items-center justify-between gap-4 text-start transition-colors cursor-pointer bg-transparent ${
-                      isSelected
-                        ? 'text-[#141416] font-medium'
-                        : 'text-[#888888] hover:text-[#141416]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className={`w-1.5 h-1.5 rounded-full transition-colors ${isSelected ? 'bg-[#E40521]' : 'bg-transparent'}`} />
-                      <span className="text-base sm:text-lg">
-                        {isFa ? item.name_fa : item.name_en}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-3 shrink-0">
-                      <span className="text-xs font-mono text-[#AAAAAA]">{item.count}</span>
-                      <ActionArrow
-                        className={`w-4 h-4 text-[#E40521] transition-transform duration-300 ${
-                          isSelected ? 'scale-115 opacity-100' : 'opacity-40'
-                        }`}
-                      />
-                    </div>
-                  </button>
-                );
-              })}
+          {/* Header Row: Kicker, Title and Subdued <> Navigation Controls */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+            <div>
+              <span className="block text-xs uppercase tracking-widest text-[#777777] font-mono mb-2">
+                {isFa ? 'کاتالوگ و دسته‌بندی‌ها | ARCHITECTURAL TYPOLOGIES' : 'COLLECTIONS & TYPOLOGIES | ARCHITECTURAL FAMILIES'}
+              </span>
+              <h2 className="text-xl sm:text-3xl font-medium text-[#141416] tracking-tight">
+                {isFa ? 'کاوش در ۸ خانواده چراغ‌های بالدر' : 'Explore the 8 Baldr Luminaire Collections'}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#777777] mt-1.5 font-light">
+                {isFa
+                  ? (categoryPage === 0
+                      ? 'مجموعه اول: چراغ‌های آویز و خطی، دان‌لایت توکار، روکار استوانه‌ای و سیستم ریل مگنتی ۴۸V'
+                      : 'مجموعه دوم: رومیزی تندیس‌گون، ایستاده مونولیت تراورتن، دیواری اکلیپس و پرتابل محوطه IP65')
+                  : (categoryPage === 0
+                      ? 'Collection 01: Suspensions, recessed downlights, surface cylinders & 48V magnetic tracks'
+                      : 'Collection 02: Sculptural table lamps, travertine monoliths, wall sconces & landscape bollards')}
+              </p>
             </div>
 
-            {/* 2/3 Column: Full-Height Cross-fading Architectural Scene */}
-            <div className="lg:col-span-7">
-              <Link
-                href={`${productsBase}?category=${activeTypology.slug}`}
-                className="group block relative overflow-hidden bg-black/5 cursor-pointer border border-[#EBEAE6]"
-              >
-                <div className="aspect-[16/10] w-full overflow-hidden bg-black relative">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={activeTypology.slug}
-                      src={activeTypology.wide_image}
-                      alt={isFa ? activeTypology.name_fa : activeTypology.name_en}
-                      initial={{ opacity: 0.35, scale: 1.02 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0.35 }}
-                      transition={{ duration: 0.45, ease: 'easeOut' }}
-                      className="w-full h-full object-contain bg-[#121214]"
-                    />
-                  </AnimatePresence>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+            {/* Subdued page indicator + Pale <> button group */}
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="text-xs font-mono text-[#888888] tracking-widest select-none">
+                {categoryPage === 0 ? '01 / 02' : '02 / 02'}
+              </span>
 
-                  {/* Caption floating in the image */}
-                  <div className="absolute bottom-5 inset-x-5 flex items-end justify-between gap-4 text-white">
-                    <div>
-                      <span className="block text-xs uppercase tracking-widest text-white/70 font-mono mb-1">
-                        {activeTypology.sku}
+              {/* Subdued pale <> buttons */}
+              <div className="inline-flex items-center border border-[#141416]/15 bg-white divide-x divide-[#141416]/15 rtl:divide-x-reverse">
+                <button
+                  type="button"
+                  onClick={() => setCategoryPage((prev) => (prev === 0 ? 1 : 0))}
+                  aria-label={isFa ? 'دسته‌بندی‌های قبلی' : 'Previous categories'}
+                  title={isFa ? 'جابه‌جایی دسته‌بندی‌ها' : 'Switch categories'}
+                  className="w-10 h-10 flex items-center justify-center text-[#141416]/35 hover:text-[#141416] hover:bg-[#141416]/5 transition-colors cursor-pointer rounded-none active:scale-95"
+                >
+                  <ChevronRight className="w-4 h-4 rtl:inline ltr:hidden" />
+                  <ChevronLeft className="w-4 h-4 rtl:hidden ltr:inline" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCategoryPage((prev) => (prev === 0 ? 1 : 0))}
+                  aria-label={isFa ? 'دسته‌بندی‌های بعدی' : 'Next categories'}
+                  title={isFa ? 'جابه‌جایی دسته‌بندی‌ها' : 'Switch categories'}
+                  className="w-10 h-10 flex items-center justify-center text-[#141416]/35 hover:text-[#141416] hover:bg-[#141416]/5 transition-colors cursor-pointer rounded-none active:scale-95"
+                >
+                  <ChevronLeft className="w-4 h-4 rtl:inline ltr:hidden" />
+                  <ChevronRight className="w-4 h-4 rtl:hidden ltr:inline" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* 4-Category Grid on Desktop */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={categoryPage}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
+              {visibleCategories.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`${productsBase}?category=${item.slug}`}
+                  className="group block bg-[#FFFFFF] border border-[#EBEAE6] hover:border-[#141416]/40 transition-all duration-500 rounded-none overflow-hidden cursor-pointer flex flex-col justify-between"
+                >
+                  {/* Top: 4/5 Portrait Image with Dual-Image Architectural Hover */}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#F6F5F2]">
+                    {/* Architectural context photo */}
+                    <img
+                      src={item.image_url}
+                      alt={isFa ? item.name_fa : item.name_en}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Studio cutout crossfade reveal on hover */}
+                    <img
+                      src={item.studio_image}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-contain p-6 bg-white/95 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      loading="lazy"
+                    />
+                    {/* Subtle bottom vignette */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity pointer-events-none" />
+
+                    {/* Micro badges: SKU & Count */}
+                    <div className="absolute top-3.5 inset-x-3.5 flex items-center justify-between text-[11px] font-mono pointer-events-none">
+                      <span className="bg-black/50 backdrop-blur-xs text-white/90 px-2 py-0.5 border border-white/15">
+                        {item.sku}
                       </span>
-                      <h3 className="text-base sm:text-lg font-medium leading-snug">
-                        {isFa ? activeTypology.name_fa : activeTypology.name_en}
-                      </h3>
-                      <p className="text-xs text-white/80 line-clamp-1 mt-0.5">
-                        {isFa ? activeTypology.tagline_fa : activeTypology.tagline_en}
+                      <span className="bg-black/50 backdrop-blur-xs text-white/90 px-2 py-0.5 border border-white/15">
+                        {item.count} {isFa ? 'مدل' : 'Models'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bottom: Typography Info Box */}
+                  <div className="p-5 flex flex-col justify-between flex-1 bg-white">
+                    <div>
+                      <span className="block text-[11px] uppercase tracking-widest text-[#888888] font-mono mb-2">
+                        {item.id} / 08 • {isFa ? 'خانواده نوری' : 'COLLECTION'}
+                      </span>
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h3 className="text-base sm:text-lg font-medium text-[#141416] group-hover:text-[#E40521] transition-colors leading-snug">
+                          {isFa ? item.name_fa : item.name_en}
+                        </h3>
+                        <ActionArrow className="w-4 h-4 text-[#E40521] shrink-0 mt-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </div>
+                      <p className="text-xs sm:text-[13px] text-[#555555] font-light leading-relaxed text-justify line-clamp-2">
+                        {isFa ? item.tagline_fa : item.tagline_en}
                       </p>
                     </div>
 
-                    <div className="inline-flex items-center gap-1.5 text-xs text-[#E40521] font-semibold shrink-0 bg-black/50 backdrop-blur-xs px-3 py-1.5 border border-white/20">
-                      <span>{isFa ? 'مشاهده کالکشن' : 'Explore'}</span>
-                      <ActionArrow className="w-3.5 h-3.5" />
+                    <div className="pt-4 mt-4 border-t border-[#F0EFEA] flex items-center justify-between text-[11px] font-mono text-[#888888]">
+                      <span>{isFa ? 'مشاهده کاتالوگ' : 'View Catalog'}</span>
+                      <span className="text-[#E40521] group-hover:underline">
+                        {isFa ? 'ورود به کالکشن ←' : 'Explore All →'}
+                      </span>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </div>
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Subdued Pagination Indicator Dots/Lines */}
+          <div className="mt-10 flex items-center justify-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => setCategoryPage(0)}
+              aria-label={isFa ? 'مجموعه اول' : 'Collection 01'}
+              className={`h-1 transition-all duration-300 cursor-pointer rounded-none ${
+                categoryPage === 0 ? 'w-10 bg-[#E40521]' : 'w-4 bg-[#141416]/20 hover:bg-[#141416]/40'
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setCategoryPage(1)}
+              aria-label={isFa ? 'مجموعه دوم' : 'Collection 02'}
+              className={`h-1 transition-all duration-300 cursor-pointer rounded-none ${
+                categoryPage === 1 ? 'w-10 bg-[#E40521]' : 'w-4 bg-[#141416]/20 hover:bg-[#141416]/40'
+              }`}
+            />
           </div>
         </div>
       </section>
